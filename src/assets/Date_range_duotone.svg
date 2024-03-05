@@ -1,0 +1,24 @@
+<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Date_range_duotone" filter="url(#filter0_d_576_1115)">
+<path id="Rectangle 26" d="M8.75 21.5C8.75 19.6144 8.75 18.6716 9.33579 18.0858C9.92157 17.5 10.8644 17.5 12.75 17.5H57.25C59.1356 17.5 60.0784 17.5 60.6642 18.0858C61.25 18.6716 61.25 19.6144 61.25 21.5V29.1667H8.75V21.5Z" fill="#7E869E" fill-opacity="0.5"/>
+<rect id="Rectangle 25" x="8.75" y="17.5" width="52.5" height="43.75" rx="2" stroke="#9BA8AB" stroke-width="1.2"/>
+<path id="Line 1" d="M20.4167 8.75L20.4167 17.5" stroke="#9BA8AB" stroke-width="1.2" stroke-linecap="round"/>
+<path id="Line 2" d="M49.5833 8.75L49.5833 17.5" stroke="#9BA8AB" stroke-width="1.2" stroke-linecap="round"/>
+<rect id="Rectangle 27" x="20.4167" y="35" width="11.6667" height="5.83333" rx="0.5" fill="#9BA8AB"/>
+<rect id="Rectangle 29" x="20.4167" y="46.6667" width="11.6667" height="5.83334" rx="0.5" fill="#9BA8AB"/>
+<rect id="Rectangle 28" x="37.9167" y="35" width="11.6667" height="5.83333" rx="0.5" fill="#9BA8AB"/>
+<rect id="Rectangle 30" x="37.9167" y="46.6667" width="11.6667" height="5.83334" rx="0.5" fill="#9BA8AB"/>
+</g>
+<defs>
+<filter id="filter0_d_576_1115" x="-6" y="-2" width="78" height="78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-2" dy="2"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_576_1115"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_576_1115" result="shape"/>
+</filter>
+</defs>
+</svg>

@@ -1,0 +1,43 @@
+<div class="UserProfileCard" *ngIf="userData">
+  <div class="ProfileHeader">
+    <div class="Profiles">
+    <img />
+  </div>
+    <div class="Name">
+      <p>{{ userData.firstname }}</p>
+      <p>{{ userData.lastname }}</p>
+    </div>
+    <button class="confirmButton gray" (click)="viewSettings()">Settings</button>
+  </div>
+  <div class="separator"></div>
+  <app-user-invitations></app-user-invitations>
+  <div class="separator"></div>
+  <form class="userInfoForm" [formGroup]="userForm">
+    <div class="Inputs">
+      <div class="inputName">
+        <label for="email">Email</label>
+        <input type="text" id="email" formControlName="email" required />
+      </div>
+      <div class="inputName">
+        <label for="lastname">Firstname</label>
+        <input type="text" id="firstname" formControlName="firstname" required />
+      </div>
+      <div class="inputName">
+        <label for="lastname">Lastname</label>
+        <input type="text" id="lastname" formControlName="lastname" required />
+      </div>
+      <div class="inputName">
+        <label for="lastname">Phone Number</label>
+        <input type="tel" id="phoneNumber" formControlName="phoneNumber" required />
+      </div>
+      <div class="inputName">
+        <label for="lastname">Birth Date</label>
+        <input type="date" id="birthDate" formControlName="birthDate" required />
+      </div>
+    </div>
+    <div class="saveButton">
+      <button *ngIf="isFormDirty()" (click)="submitChanges()">Save Changes</button>
+    </div>
+  </form>
+</div>
+

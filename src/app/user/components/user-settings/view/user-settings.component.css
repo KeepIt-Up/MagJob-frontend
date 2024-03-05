@@ -1,0 +1,20 @@
+.saveChangesButton {
+    width: 181px;
+    height: 56px;
+    flex-shrink: 0;
+    justify-items: center;
+
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: var(--Gold, #FFC700);
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.50);
+
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: uppercase;
+}

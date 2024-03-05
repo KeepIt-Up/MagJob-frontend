@@ -1,0 +1,14 @@
+<div>
+    <label>Wyszukaj użytkownika: </label>
+    <div class="inline">
+    <input type="text" [(ngModel)]="searchText" />
+    <button (click)="searchUsers()">Search</button>
+  </div>
+  </div>
+
+  <div *ngFor="let user of filteredUsers">
+    <div class="inline">
+    <h4>{{ user.email }}</h4>
+    <button (click)="inviteUser(user)">Invite</button>
+  </div>
+  </div>

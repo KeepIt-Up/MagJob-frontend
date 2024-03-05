@@ -1,0 +1,29 @@
+<div class="organizationMenu">
+    <a name="Home" class="navButton" [routerLink]="['/organization', getCurrentOrganizationId(), 'home']"><img src="../../../assets/Home_duotone.svg"/></a>
+    <a name="Schedule" class="navButton" [routerLink]="['/organization', getCurrentOrganizationId(), 'schedule']"><img src="../../../assets/Date_range_duotone.svg"/></a>
+    <a name="Tasks" class="navButton" [routerLink]="['/organization', getCurrentOrganizationId(), 'tasks']"><img src="../../../assets/Done_ring_round_duotone_line.svg"/></a>
+    <a name="Members" class="navButton" [routerLink]="['/organization', getCurrentOrganizationId(), 'members']"><img src="../../../assets/Group_light.svg"/></a>
+    <div name="Documents" class="navButton"><a [routerLink]="['/organization', getCurrentOrganizationId(), 'documents']"><svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g filter="url(#filter0_d_576_486)">
+        <rect x="14.9833" y="9.15" width="40.0333" height="51.7" rx="1.6" fill="#7E869E" fill-opacity="0.7" stroke="#9BA8AB" stroke-width="0.8"/>
+        <path d="M52.0001 48.125C52.0001 51.8759 48.9594 54.9167 45.2084 54.9167C41.4575 54.9167 38.4167 51.8759 38.4167 48.125C38.4167 44.3741 41.4575 41.3333 45.2084 41.3333C48.9594 41.3333 52.0001 44.3741 52.0001 48.125Z" stroke="#06141B"/>
+        <path d="M52.5 55.4167L56.875 59.7917" stroke="#06141B" stroke-linecap="round"/>
+        <path d="M21.875 18.9583L42.2917 18.9583" stroke="#9BA8AB" stroke-linecap="round"/>
+        <path d="M21.875 27.7083L33.5417 27.7083" stroke="#9BA8AB" stroke-linecap="round"/>
+        </g>
+        <defs>
+        <filter id="filter0_d_576_486" x="-6" y="-2" width="78" height="78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="-2" dy="2"/>
+        <feGaussianBlur stdDeviation="2"/>
+        <feComposite in2="hardAlpha" operator="out"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_576_486"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_576_486" result="shape"/>
+        </filter>
+        </defs>
+        </svg>
+    </a></div>
+    <a name="Settings" class="navButton" [routerLink]="['/organization', getCurrentOrganizationId(), 'settings']"><img src="../../../assets/Setting_line_duotone.svg"/></a>
+</div>

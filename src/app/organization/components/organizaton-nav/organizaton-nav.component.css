@@ -1,0 +1,28 @@
+.organizationMenu {
+    display: flex;
+    
+    padding: 30px 20px 30px 10px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-radius: 0px 0px 50px 0px;
+    border-top: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    background: var(--Color-2, #11212D);
+}
+
+.navButton {
+    flex-shrink: 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    border-radius: 15px;
+    border: 1px solid #000;
+    background: var(--Color-3, #243745);
+}
+
+.navButton > svg {
+    flex-shrink: 0;
+}

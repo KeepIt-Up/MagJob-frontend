@@ -1,0 +1,11 @@
+<div class="header">
+  <h2>Members List</h2>
+<button [routerLinkActive]="['link-active']" [routerLink]="['../addMembers']">Add New</button>
+</div>
+
+<div class="memberListItem" *ngFor="let member of members">
+  <h4>{{ member.pseudonym }} {{member.firstName}} {{member.lastName}}</h4>
+  <button class="gray">Edit</button>
+  <button class="red">Delete</button>
+</div>
+

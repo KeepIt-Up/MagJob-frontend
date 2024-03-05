@@ -1,0 +1,45 @@
+.Invitation {
+    display: flex;
+padding: 10px 20px;
+align-items: center;
+align-content: center;
+gap: 50px;
+align-self: stretch;
+flex-wrap: wrap;
+
+border-radius: 18px;
+}
+.organizationName
+{
+    color: var(--Gold, #FFC700);
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: uppercase;
+}
+.text
+{
+    color: #FFF;
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-transform: capitalize;
+}
+
+.gray
+{
+    background: var(--Color-4, #4A5C6A);
+}
+.gold
+{
+    color: var(--Gold);
+}
+
+.group 
+{
+    padding: 15px;
+}

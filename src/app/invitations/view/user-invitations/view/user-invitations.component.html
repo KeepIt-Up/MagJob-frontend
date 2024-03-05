@@ -1,0 +1,10 @@
+<div class="Invitation" *ngFor="let invitation of invitations">
+  <div class="group">
+    <div class="organizationName">{{ invitation.organizationName }}</div>
+    <div class="text">invited you to join their organization</div>
+  </div>
+  <div class="group">
+    <button (click)="accept(invitation)">Accept</button>
+    <button class="gray" (click)="reject(invitation)">Reject</button>
+  </div>
+</div>

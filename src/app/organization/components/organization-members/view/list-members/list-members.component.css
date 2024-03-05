@@ -1,0 +1,28 @@
+.red
+{
+    background-color: red;
+}
+
+.gray
+{
+    background: var(--Color-4, #4A5C6A);
+}
+
+.memberListItem {
+    display: flex;
+    padding: 10px 10px 10px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 18px;
+    border: 4px solid #000;
+}
+
+.header
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}

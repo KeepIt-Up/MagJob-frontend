@@ -1,0 +1,22 @@
+button 
+{
+    width: 150px;
+    height: 40px;
+}
+
+input[type=text]
+{
+    height: 10px;
+    width: auto;
+}
+
+.inline
+{
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    align-content: center;
+    gap: 50px;
+    align-self: stretch;
+    flex-wrap: wrap;
+}

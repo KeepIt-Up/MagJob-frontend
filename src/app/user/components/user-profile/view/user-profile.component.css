@@ -1,0 +1,126 @@
+.UserProfileCard {
+    display: flex;
+    padding: 40px 60px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    align-self: stretch;
+
+    border-radius: 6px;
+    border: 1px dashed #000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.ProfileHeader {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    align-self: stretch;
+}
+
+.Profiles {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.Profiles>img {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    border-radius: 150px;
+    /*background: url(<path-to-image>), lightgray 50% / cover no-repeat;*/
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.Name {
+    flex: 1 0 0;
+}
+
+.Name>p {
+    width: 723px;
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
+    font-family: Inter;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+button {
+    width: 181px;
+    height: 56px;
+    flex-shrink: 0;
+    justify-items: center;
+
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: var(--Gold, #FFC700);
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.50);
+
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: uppercase;
+}
+.gray
+{
+    background: var(--Color-4, #4A5C6A);
+}
+
+.separator {
+    height: 5px;
+    align-self: stretch;
+    border-radius: 10px;
+    background: #000;
+}
+
+.userInfoForm {
+    display: flex;
+    padding: 40px 60px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    align-self: stretch;
+
+    border-radius: 60px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.Inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 30px;
+    align-self: stretch;
+    flex-wrap: wrap;
+}
+
+.inputWithTag {
+    display: flex;
+    width: 431px;
+    height: 78px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.inputWithTag>input {
+    width: 431px;
+    height: 47px;
+    flex-shrink: 0;
+}

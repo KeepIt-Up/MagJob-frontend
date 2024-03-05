@@ -1,0 +1,7 @@
+<div class="container">
+<h2>Choose your Organization</h2>
+<form>
+    <div *ngFor="let organization of organizations">
+        <button [routerLink]="'/organization/' + organization.id + '/home'" (click)="setOrganizationId(organization)">{{ organization.name }}</button>
+      </div>
+    </form></div>

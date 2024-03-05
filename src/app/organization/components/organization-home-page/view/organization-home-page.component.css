@@ -1,0 +1,41 @@
+.homeContainer {
+
+    display: flex;
+justify-content: center;
+align-items: center;
+align-content: center;
+gap: 20px;
+flex: 1 0 0;
+align-self: stretch;
+flex-wrap: wrap;
+}
+
+.announcement
+{
+    display: flex;
+
+padding: 7px 14px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 14px;
+
+border-radius: 15px;
+background: rgba(36, 55, 69, 0.25);
+}
+
+.title
+{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+flex-shrink: 0;
+
+color: var(--Color-4, #4A5C6A);
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: uppercase;
+}

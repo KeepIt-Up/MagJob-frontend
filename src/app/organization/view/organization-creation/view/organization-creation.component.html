@@ -1,0 +1,16 @@
+<div class="organization-form">
+  <h2>Create Organization</h2>
+  <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" required>
+
+    <label>Type:</label>
+    <div class="banner-options">
+      <button class="typeOfOrganization" type="button" (click)="selectBannerUrl('url1')" [class.selected]="selectedBannerUrl === 'url1'">Study</button>
+      <button class="typeOfOrganization" type="button" (click)="selectBannerUrl('url2')" [class.selected]="selectedBannerUrl === 'url2'">Company</button>
+      <button class="typeOfOrganization" type="button" (click)="selectBannerUrl('url3')" [class.selected]="selectedBannerUrl === 'url3'">Community</button>
+    </div>
+
+    <button class="createButton" type="submit" [disabled]="organizationForm.invalid">Create</button>
+  </form>
+</div>
