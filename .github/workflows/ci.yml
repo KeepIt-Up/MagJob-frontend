@@ -29,8 +29,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
          node-version: 21
-      - name: Grant execute permission for npm
-        run: chmod +x npm
       - name: Install dependencies with npm
         run: npm install
       - name: Test with npm
