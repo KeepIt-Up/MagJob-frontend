@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
   update-config-repository:
-    needs: [ build-and-deploy-to-registry-backend ]
+    needs: [ build-and-deploy-to-registry-frontend ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
