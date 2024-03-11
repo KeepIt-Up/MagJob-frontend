@@ -5,16 +5,16 @@
     <div class="navbar">
       <ul class="navbar-list">
 
-        <li class="nav-item" *ngIf="!isLoggedIn" [routerLinkActive]="['link-active']">
-          <a (click)="login()">Login</a>
+        <li class="nav-item" *ngIf="!isLoggedIn()" [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/login']">Login</a>
         </li>
-        <li class="nav-item second" *ngIf="!isLoggedIn" [routerLinkActive]="['link-active']">
+        <li class="nav-item second" *ngIf="!isLoggedIn()" [routerLinkActive]="['link-active']">
           <a [routerLink]="['/register']">Register</a>
         </li>
-        <li class="nav-item second" *ngIf="isLoggedIn" [routerLinkActive]="['link-active']">
+        <li class="nav-item second" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
           <a  [routerLink]="['/user', getUserId()]">Profile</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn" [routerLinkActive]="['link-active']">
+        <li class="nav-item" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
           <a [routerLink]="['/']" (click)="logout()">Logout</a>
         </li>
       </ul>
