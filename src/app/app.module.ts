@@ -10,12 +10,12 @@ import { LoginComponent } from './login/view/login.component';
 import { RegisterComponent } from './register/view/register.component';
 import { HomeComponent } from './home/view/home.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserProfileComponent } from './user/components/user-profile/view/user-profile.component';
 import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { OrganizationHomePageComponent } from './organization/components/organization-home-page/view/organization-home-page.component';
 import { OrganizationSettingsComponent } from './organization/components/organization-settings/view/organization-settings.component';
-import { TokenInterceptor } from './auth/interceptor/token.interceptor';
+import { JwtInterceptor } from './jwt/jwt.interceptor';
 import { UserOrganizationComponent } from './user/components/user-organization/view/user-organization.component';
 import { OrganizationCreationComponent } from './organization/view/organization-creation/view/organization-creation.component';
 import { NoOrganizationComponent } from './organization/view/no-organization/view/no-organization.component';
@@ -29,7 +29,6 @@ import { EditMemberComponent } from './organization/components/organization-memb
 import { OrganizationScheduleComponent } from './organization/components/organization-schedule/organization-schedule.component';
 import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
-import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [
@@ -61,17 +60,17 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot([]),
-    OAuthModule.forRoot({
-      resourceServer: {
-        allowedUrls: ['http://localhost:8080/api'],
-      sendAccessToken: true
-      }
-    }),
+    RouterModule.forRoot([
+    ]),
     ReactiveFormsModule,
     HttpClientModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

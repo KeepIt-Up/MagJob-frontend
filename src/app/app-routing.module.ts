@@ -6,6 +6,7 @@ import { HomeComponent } from './home/view/home.component';
 import { LoginComponent } from './login/view/login.component';
 import { RegisterComponent } from './register/view/register.component';
 import { NoOrganizationComponent } from './organization/view/no-organization/view/no-organization.component';
+import { AuthGuard } from './jwt/auth.guard';
 import { OrganizationCreationComponent } from './organization/view/organization-creation/view/organization-creation.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
 import { OrganizationHomePageComponent } from './organization/components/organization-home-page/view/organization-home-page.component';
@@ -18,14 +19,15 @@ import { OrganizationTasksComponent } from './organization/components/organizati
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'user/:id', component: UserProfileComponent },
-  { path: 'user/:userId/settings', component: UserSettingsComponent },
-  { path: 'create-organization', component: OrganizationCreationComponent },
-  { path: 'noorganization', component: NoOrganizationComponent },
-  { path: 'chooseorganization', component: ChooseOrganizationComponent },
+  { path: 'user/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'user/:userId/settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
+  { path: 'create-organization', component: OrganizationCreationComponent, canActivate: [AuthGuard] },
+  { path: 'noorganization', component: NoOrganizationComponent, canActivate: [AuthGuard] },
+  { path: 'chooseorganization', component: ChooseOrganizationComponent, canActivate: [AuthGuard] },
   {
     path: 'organization/:id',
     component: OrganizationComponent,
@@ -39,6 +41,7 @@ const routes: Routes = [
       { path: 'addMembers',component: AddMembersComponent}
     ]
   },
+  { path: '**', redirectTo: '/welcome' },
 
 ];
 

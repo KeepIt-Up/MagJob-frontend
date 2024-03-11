@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './../../../jwt/auth.service';
 import { OrganizationService } from '../../service/organization.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { OrganizationService } from '../../service/organization.service';
 })
 export class OrganizatonNavComponent {
 
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private authService: AuthService, private organizationService: OrganizationService) {}
 
   getCurrentOrganizationId(): number | null {
     const currentOrganization = this.organizationService.getCurrentOrganizationId();
