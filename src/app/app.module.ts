@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -8,7 +8,7 @@ import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './home/view/home.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { UserProfileComponent } from './user/components/user-profile/view/user-profile.component';
 import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { OrganizationHomePageComponent } from './organization/components/organization-home-page/view/organization-home-page.component';
@@ -26,6 +26,9 @@ import { EditMemberComponent } from './organization/components/organization-memb
 import { OrganizationScheduleComponent } from './organization/components/organization-schedule/organization-schedule.component';
 import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
+import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from './auth/auth.config';
+import { TokenInterceptor } from './auth/interceptor/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,36 @@ import { OrganizationDocumentsComponent } from './organization/components/organi
     HttpClientModule,
   ],
   providers: [
+    provideHttpClient(),
+    provideOAuthClient(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (oauthService: OAuthService) => {
+        return () => {
+          initializeOAuth(oauthService);
+        }
+      },
+      multi: true,
+      deps: [
+        OAuthService
+      ]
+    },
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: TokenInterceptor,
+      multi: true 
+    }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+function initializeOAuth(oauthService: OAuthService): Promise<void>
+{
+    return new Promise((resolve) => {
+        oauthService.configure(authCodeFlowConfig);
+        oauthService.setupAutomaticSilentRefresh();
+        oauthService.loadDiscoveryDocumentAndLogin()
+        .then(() => resolve());
+    });
+}
