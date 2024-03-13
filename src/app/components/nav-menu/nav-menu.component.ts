@@ -1,6 +1,7 @@
 import { UserService } from './../../user/service/user.service';
-import { AuthService } from './../../jwt/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from 'src/app/auth/auth.config';
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,30 +9,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  constructor(private authService: AuthService, private userService: UserService) {}
 
-  isExpanded = false;
-  isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
+  constructor(
+    private _oauthService: OAuthService,
+    private userService: UserService
+  ) { }
+
+  login() 
+  {
+    this._oauthService.initCodeFlow();
   }
 
-  getUserId(): number | null {
-    const currentUser = this.userService.getCurrentUserId();
-    return currentUser ? currentUser : null;
+  logout() 
+  {
+    this._oauthService.logOut();
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.userService.clearCurrentUser();
-    // Optionally, navigate to the login page or another route
-    // this.router.navigate(['/login']);
+  getUserId()
+  {
+    this.userService.getCurrentUserId();
   }
 
-  collapse() {
-    this.isExpanded = false;
+  isLoggedIn(): boolean
+  {
+    return this._oauthService.hasValidAccessToken();
   }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
 }
