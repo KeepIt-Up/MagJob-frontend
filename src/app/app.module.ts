@@ -13,7 +13,6 @@ import { UserProfileComponent } from './user/components/user-profile/view/user-p
 import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { OrganizationHomePageComponent } from './organization/components/organization-home-page/view/organization-home-page.component';
 import { OrganizationSettingsComponent } from './organization/components/organization-settings/view/organization-settings.component';
-import { JwtInterceptor } from './jwt/jwt.interceptor';
 import { UserOrganizationComponent } from './user/components/user-organization/view/user-organization.component';
 import { OrganizationCreationComponent } from './organization/view/organization-creation/view/organization-creation.component';
 import { NoOrganizationComponent } from './organization/view/no-organization/view/no-organization.component';
@@ -62,11 +61,6 @@ import { OrganizationDocumentsComponent } from './organization/components/organi
     HttpClientModule,
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true,
-    },
   ],
   bootstrap: [AppComponent]
 })

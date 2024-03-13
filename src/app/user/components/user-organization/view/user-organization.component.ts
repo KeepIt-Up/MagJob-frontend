@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../../../service/user-profile.service';
 import { UserProfile } from '../../../model/user-profile';
-import {AuthService} from "../../../../jwt/auth.service";
+import { OAuthService } from 'angular-oauth2-oidc';
 @Component({
   selector: 'app-user-organization',
   templateUrl: './user-organization.component.html',
@@ -15,13 +15,13 @@ export class UserOrganizationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userProfileService: UserProfileService,
-    private authService: AuthService
+    private _oauthService: OAuthService
   ) {}
 
   ngOnInit(): void {
     const userIdParam = this.route.snapshot.paramMap.get('id');
 
-    const isAuthenticated = this.authService.isAuthenticated();
+    const isAuthenticated = this._oauthService.hasValidAccessToken();
 
     if (userIdParam !== null && isAuthenticated) {
       this.userId = +userIdParam;
