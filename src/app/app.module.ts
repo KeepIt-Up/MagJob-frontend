@@ -6,8 +6,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { LoginComponent } from './login/view/login.component';
-import { RegisterComponent } from './register/view/register.component';
 import { HomeComponent } from './home/view/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -35,8 +33,6 @@ import { OrganizationDocumentsComponent } from './organization/components/organi
     AppComponent,
     HomeComponent,
     NavMenuComponent,
-    LoginComponent,
-    RegisterComponent,
     FooterComponent,
     UserProfileComponent,
     UserSettingsComponent,
