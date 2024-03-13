@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from './../../../jwt/auth.service';
 import { OrganizationService } from '../../service/organization.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 })
 export class OrganizatonNavComponent {
 
-  constructor(private authService: AuthService, private organizationService: OrganizationService) {}
+  constructor(private _oauthService: OAuthService, private organizationService: OrganizationService) {}
 
   getCurrentOrganizationId(): number | null {
     const currentOrganization = this.organizationService.getCurrentOrganizationId();

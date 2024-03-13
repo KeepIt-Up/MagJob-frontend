@@ -6,7 +6,7 @@
       <ul class="navbar-list">
 
         <li class="nav-item" *ngIf="!isLoggedIn()" [routerLinkActive]="['link-active']">
-          <a [routerLink]="['/login']">Login</a>
+          <a (click)="login()">Login</a>
         </li>
         <li class="nav-item second" *ngIf="!isLoggedIn()" [routerLinkActive]="['link-active']">
           <a [routerLink]="['/register']">Register</a>

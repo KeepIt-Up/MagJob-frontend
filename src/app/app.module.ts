@@ -28,11 +28,6 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true,
-    },
   ],
   bootstrap: [AppComponent]
 })

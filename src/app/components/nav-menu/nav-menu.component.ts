@@ -1,5 +1,4 @@
 import { UserService } from './../../user/service/user.service';
-import { AuthService } from './../../jwt/auth.service';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -11,12 +10,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  constructor(private authService: AuthService, private userService: UserService) {}
+  constructor( private userService: UserService) {}
 
   isExpanded = false;
-  isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
-  }
+  // isLoggedIn(): boolean {
+  //   return this.authService.isAuthenticated();
+  // }
 
   getUserId(): number | null {
     const currentUser = this.userService.getCurrentUserId();
@@ -24,7 +23,7 @@ export class NavMenuComponent {
   }
 
   logout(): void {
-    this.authService.logout();
+//    this.authService.logout();
     this.userService.clearCurrentUser();
     // Optionally, navigate to the login page or another route
     // this.router.navigate(['/login']);
