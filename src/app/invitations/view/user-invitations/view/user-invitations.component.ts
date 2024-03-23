@@ -3,9 +3,12 @@ import { Invitation } from './../../../model/invitation';
 import { UserService } from 'src/app/user/service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { InvitationsService } from 'src/app/invitations/service/invitations.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-user-invitations',
+  standalone: true,
+  imports: [NgFor],
   templateUrl: './user-invitations.component.html',
   styleUrls: ['./user-invitations.component.css']
 })
