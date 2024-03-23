@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from './user/components/user-profile/view/user-profile.component';
-import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { HomeComponent } from './home/view/home.component';
 import { NoOrganizationComponent } from './organization/view/no-organization/view/no-organization.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -22,7 +21,6 @@ const routes: Routes = [
   { path: 'welcome', component: HomeComponent},
   { path: 'signUp', component: UpdateUserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
-  { path: 'user/:userId/settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'create-organization', component: OrganizationCreationComponent, canActivate: [AuthGuard] },
   { path: 'noorganization', component: NoOrganizationComponent, canActivate: [AuthGuard] },
   { path: 'chooseorganization', component: ChooseOrganizationComponent, canActivate: [AuthGuard] },

@@ -10,7 +10,6 @@ import { HomeComponent } from './home/view/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { UserProfileComponent } from './user/components/user-profile/view/user-profile.component';
-import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { OrganizationHomePageComponent } from './organization/components/organization-home-page/view/organization-home-page.component';
 import { OrganizationSettingsComponent } from './organization/components/organization-settings/view/organization-settings.component';
 import { UserOrganizationComponent } from './user/components/user-organization/view/user-organization.component';
@@ -37,13 +36,12 @@ import { TokenInterceptor } from './auth/interceptor/token.interceptor';
     NavMenuComponent,
     FooterComponent,
     UserProfileComponent,
-    UserSettingsComponent,
     OrganizationHomePageComponent,
     OrganizationSettingsComponent,
     UserOrganizationComponent,
     OrganizationCreationComponent,
     NoOrganizationComponent,
-    UserInvitationsComponent,
+UserInvitationsComponent,
     ListMembersComponent,
     OrganizatonNavComponent,
     OrganizationComponent,
