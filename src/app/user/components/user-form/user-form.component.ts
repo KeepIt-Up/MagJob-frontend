@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -6,8 +6,8 @@ import {
   FormControl,
   NonNullableFormBuilder,
 } from '@angular/forms';
-import { CreateUserRequest } from '../../model/create-user-request';
 import { NgIf } from '@angular/common';
+import { User } from '../../model/user';
 
 type UserForm = FormGroup<{
   email: FormControl<string>;
@@ -25,32 +25,35 @@ type UserForm = FormGroup<{
   styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent {
-  @Output() createUser = new EventEmitter<CreateUserRequest>();
+  @Input() user!: User;
+  @Output() submitUser = new EventEmitter<User>();
 
   private _formBuilder = inject(NonNullableFormBuilder);
 
   userForm: UserForm = this._formBuilder.group({
-    email: this._formBuilder.control<string>('', [
-      Validators.email,
-      Validators.required,
-    ]),
-    firstname: this._formBuilder.control<string>('', [
-      Validators.pattern('^[a-zA-Z0-9]*$'),
-      Validators.required,
-    ]),
-    lastname: this._formBuilder.control<string>('', [
-      Validators.pattern('^[a-zA-Z0-9]*$'),
-      Validators.required,
-    ]),
-    phoneNumber: this._formBuilder.control<string>(''),
-    birthDate: this._formBuilder.control<Date>(new Date(), [
-      Validators.required,
-    ]),
+    email: this._formBuilder.control<string>(
+      this.user?.email ? this.user.email : '',
+      [Validators.email, Validators.required]
+    ),
+    firstname: this._formBuilder.control<string>(
+      this.user?.firstname ? this.user.firstname : '',
+      [Validators.pattern('^[a-zA-Z0-9]*$'), Validators.required]
+    ),
+    lastname: this._formBuilder.control<string>(
+      this.user?.lastname ? this.user.lastname : '',
+      [Validators.pattern('^[a-zA-Z0-9]*$'), Validators.required]
+    ),
+    phoneNumber: this._formBuilder.control<string>(
+      this.user?.phoneNumber ? this.user.phoneNumber : '', [Validators.pattern(/^\+?\d{9,15}$/)]
+    ),
+    birthDate: this._formBuilder.control<Date>(
+      this.user?.birthDate ? this.user.birthDate : new Date()
+    ),
   });
 
   onSubmit() {
     if (this.userForm.valid) {
-      this.createUser.emit(this.userForm.value as CreateUserRequest);
+      this.submitUser.emit(this.userForm.value as User);
     }
   }
 

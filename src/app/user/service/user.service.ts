@@ -1,10 +1,12 @@
 import { Organization } from './../../organization/model/organization';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../model/user';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
 import { CreateUserRequest } from '../model/create-user-request';
+import { UpdateUserRequest } from '../model/update-user-request';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +17,24 @@ export class UserService {
   private apiUrl = '/api/users';
 
   constructor(private organizationService: OrganizationService,
-    private http: HttpClient)
+    private http: HttpClient, private oauthService: OAuthService)
   {
 
   }
 
   create(user: CreateUserRequest): Observable<User>
   {
-    return this.http.post<User>(this.apiUrl, user);
+    return this.http.post<User>(`${this.apiUrl}`, user);
+  }
+  
+  get(userId: number): Observable<User>
+  {
+    return this.http.get<User>(`${this.apiUrl}/${userId}`);
+  }
+
+  update(userId: number, userData: UpdateUserRequest): Observable<User>
+  {
+    return this.http.patch<User>(`${this.apiUrl}/${userId}`, userData);
   }
 
   getUsers(): Observable<any> {
@@ -70,17 +82,4 @@ belongToAnyOrganization(): Observable<boolean> {
     );
   });
 }
-
-
-  getUserData(userId: number): Observable<any>
-  {
-    const url = `${this.apiUrl}/${userId}`;
-    return this.http.get(url);
-  }
-
-  updateUserData(userId: number, userData: User): Observable<any>
-  {
-    const url = `${this.apiUrl}/${userId}`;
-    return this.http.patch(url, userData);
-  }
 }

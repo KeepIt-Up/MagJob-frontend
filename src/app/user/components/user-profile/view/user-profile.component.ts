@@ -3,77 +3,84 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../service/user.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { User } from '../../../model/user';
-import { NgIf } from '@angular/common';
 import { UserInvitationsComponent } from 'src/app/invitations/view/user-invitations/view/user-invitations.component';
+import { NgIf } from '@angular/common';
+import { UserFormComponent } from '../../user-form/user-form.component';
+import { User } from 'src/app/user/model/user';
+import { UpdateUserRequest } from 'src/app/user/model/update-user-request';
 
+type GetError = { status: number; message: string };
+
+type IdleState = { state: 'idle' };
+type LoadingState = { state: 'loading' };
+type GetSuccessState = { state: 'get-success'; result: User };
+type UpdateSuccessState = { state: 'update-success'; result: User };
+type ErrorState = { state: 'error'; error: GetError };
+
+export type ComponentState =
+  | IdleState
+  | LoadingState
+  | GetSuccessState
+  | UpdateSuccessState
+  | ErrorState;
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, UserInvitationsComponent],
+  imports: [UserInvitationsComponent, NgIf, UserFormComponent],
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  styleUrls: ['./user-profile.component.css'],
 })
-export class UserProfileComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  userForm!: FormGroup;
-  userData: User | null = null;
-  userId!: number;
-  originalFormData: any;
+export class UserProfileComponent implements OnInit {
+  componentState: ComponentState = { state: 'idle' };
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private userService: UserService,
-    private formBuilder: FormBuilder
-  ) { }
+    private _userService: UserService
+  ) {}
 
   ngOnInit(): void {
+    this.componentState = { state: 'loading' };
 
-    this.route.params.subscribe(params => {
-      this.userId = params['id'];
-
-      this.userService.getUserData(this.userId).subscribe((data: User) => {
-        this.userData = { ...data };
-        this.originalFormData = { ...this.userData };
-
-        this.userForm = this.formBuilder.group({
-          firstname: [this.userData?.firstname],
-          lastname: [this.userData?.lastname],
-          email: [this.userData?.email],
-          phoneNumber: [this.userData?.phoneNumber],
-          birthDate: [this.userData?.birthDate]
-        });
-      });
-
-
+    const userId = this.getUserIdFromRoute();
+    this._userService.get(userId).subscribe({
+      next: (response) => {
+        this.componentState = { state: 'get-success', result: response };
+      },
+      error: (err) => {
+        this.componentState = { state: 'error', error: err };
+      },
+      complete: () => console.log(),
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   viewSettings(): void {
-    this.route.params.subscribe(params => {
-      this.userId = params['id'];
-      this.router.navigate([`/user/${this.userId}/settings`]);
+    const userId = this.getUserIdFromRoute();
+    this.router.navigate([`/user/${userId}/settings`]);
+  }
+
+  updateUser(user: UpdateUserRequest) {
+    this._userService.update(this.getUserIdFromRoute(), user).subscribe({
+      next: (response) => {
+        this.componentState = { state: 'update-success', result: response };
+      },
+      error: (err) => {
+        this.componentState = { state: 'error', error: err };
+      },
     });
   }
 
-  isFormDirty(): boolean {
-    return this.userForm.dirty;
+  getUserIdFromRoute(): number {
+    let userId = -1;
+    this.route.params.subscribe({
+      next: (params) => {
+        userId = params['id'];
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    return userId;
   }
-
-  submitChanges(): void {
-    this.userService.updateUserData(this.userId, this.userForm.value).subscribe(response => {
-      console.log('User updated successfully', response);
-      this.userForm.reset(this.userForm.value);
-    }
-    )
-  }
-
-  
 }
