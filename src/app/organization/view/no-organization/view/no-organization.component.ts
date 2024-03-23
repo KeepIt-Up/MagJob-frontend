@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-no-organization',
+  standalone: true,
+  imports: [],
   templateUrl: './no-organization.component.html',
   styleUrls: ['./no-organization.component.css']
 })

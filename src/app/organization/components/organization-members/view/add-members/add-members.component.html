@@ -1,8 +1,10 @@
 <div>
     <label>Wyszukaj użytkownika: </label>
     <div class="inline">
-    <input type="text" [(ngModel)]="searchText" />
+      <form [formGroup]="searchForm">
+    <input type="text" formControlName="text" id="text" />
     <button (click)="searchUsers()">Search</button>
+  </form>
   </div>
   </div>
 

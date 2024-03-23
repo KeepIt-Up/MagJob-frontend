@@ -5,6 +5,8 @@ import { UserProfile } from '../../../model/user-profile';
 import {AuthService} from "../../../../jwt/auth.service";
 @Component({
   selector: 'app-user-organization',
+  standalone: true,
+  imports: [],
   templateUrl: './user-organization.component.html',
   styleUrls: ['./user-organization.component.css']
 })

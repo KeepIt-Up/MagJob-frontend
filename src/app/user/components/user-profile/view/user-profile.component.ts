@@ -3,12 +3,16 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../service/user.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../../model/user';
+import { NgIf } from '@angular/common';
+import { UserInvitationsComponent } from 'src/app/invitations/view/user-invitations/view/user-invitations.component';
 
 
 @Component({
   selector: 'app-user-profile',
+  standalone: true,
+  imports: [NgIf, ReactiveFormsModule, UserInvitationsComponent],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })

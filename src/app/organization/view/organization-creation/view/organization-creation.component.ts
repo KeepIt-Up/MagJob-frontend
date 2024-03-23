@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrganizationCreation } from "../../../model/organization-creation";
 import { OrganizationCreationService } from '../../organization-creation/service/organization-creation.service';
@@ -7,6 +7,8 @@ import { OrganizationService } from 'src/app/organization/service/organization.s
 
 @Component({
   selector: 'app-organization-creation',
+  standalone: true,
+  imports: [ReactiveFormsModule],
   templateUrl: './organization-creation.component.html',
   styleUrls: ['./organization-creation.component.css']
 })

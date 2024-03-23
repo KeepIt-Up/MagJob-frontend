@@ -1,21 +1,34 @@
 import { Invitation } from './../../../../../invitations/model/invitation';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
 import { InvitationsService } from 'src/app/invitations/service/invitations.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/user/model/user';
 import { UserService } from 'src/app/user/service/user.service';
+import { NgFor } from '@angular/common';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+
+type SearchForm = FormGroup<{
+  text: FormControl<string>;
+}>
 
 @Component({
   selector: 'app-add-members',
+  standalone: true,
+  imports: [NgFor, ReactiveFormsModule],
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.css']
 })
 export class AddMembersComponent implements OnInit{
   users: User[] = [];
   filteredUsers: User[] = [];
-  searchText: string = '';
 
   constructor(private userService: UserService, private invitationsService: InvitationsService, private organizationService: OrganizationService)  {}
+
+  private _formBuilder = inject(NonNullableFormBuilder);
+
+  searchForm: SearchForm = this._formBuilder.group({
+    text: this._formBuilder.control<string>('')
+  })
 
   ngOnInit(): void {
     this.searchUsers();
@@ -31,8 +44,9 @@ export class AddMembersComponent implements OnInit{
   }
 
   filterUsers() {
-    this.filteredUsers = this.users.filter((user) =>
-      user.email.toLowerCase().includes(this.searchText.toLowerCase())
+      const searchText: string = this.searchForm.get('text')?.value as string;
+      this.filteredUsers = this.users.filter((user) =>
+      user.email.toLowerCase().includes(searchText.toLowerCase())
     );
   }
 
