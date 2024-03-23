@@ -2,9 +2,13 @@ import { UserService } from 'src/app/user/service/user.service';
 import { Organization } from './../../../model/organization';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-choose-organization',
+  standalone: true,
+  imports: [RouterLink, NgFor],
   templateUrl: './choose-organization.component.html',
   styleUrls: ['./choose-organization.component.css']
 })

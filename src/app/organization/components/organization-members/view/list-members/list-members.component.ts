@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { OrganizationService } from '../../../../service/organization.service';
 import { Member } from 'src/app/organization/components/organization-members/model/member';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-list-members',
+  standalone: true,
+  imports: [RouterLinkActive, RouterLink, NgFor],
   templateUrl: './list-members.component.html',
   styleUrls: ['./list-members.component.css']
 })

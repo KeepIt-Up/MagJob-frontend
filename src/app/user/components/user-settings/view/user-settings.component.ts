@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { UserSettingsService } from '../../../service/user-settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { PasswordChange } from '../../../model/password-change';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-settings',
+  standalone: true,
+  imports: [NgIf, ReactiveFormsModule],
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.css']
 })
