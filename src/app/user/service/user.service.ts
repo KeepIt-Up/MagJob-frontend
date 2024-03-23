@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../model/user';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
+import { CreateUserRequest } from '../model/create-user-request';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,11 @@ export class UserService {
     private http: HttpClient)
   {
 
+  }
+
+  create(user: CreateUserRequest): Observable<User>
+  {
+    return this.http.post<User>(this.apiUrl, user);
   }
 
   getUsers(): Observable<any> {

@@ -15,10 +15,12 @@ import { OrganizationScheduleComponent } from './organization/components/organiz
 import { OrganizationSettingsComponent } from './organization/components/organization-settings/view/organization-settings.component';
 import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
+import { UpdateUserProfileComponent } from './user/components/update-user-profile/create-user-profile.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: HomeComponent},
+  { path: 'signUp', component: UpdateUserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'user/:userId/settings', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'create-organization', component: OrganizationCreationComponent, canActivate: [AuthGuard] },
