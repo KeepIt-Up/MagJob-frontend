@@ -48,7 +48,7 @@ import { authCodeFlowConfig } from './auth/auth.config';
       provide: HTTP_INTERCEPTORS, 
       useClass: TokenInterceptor,
       multi: true 
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

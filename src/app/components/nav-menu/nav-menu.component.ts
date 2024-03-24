@@ -2,7 +2,6 @@ import { UserService } from './../../user/service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from 'src/app/auth/auth.config';
 
 @Component({
   selector: 'app-nav-menu',
@@ -37,5 +36,4 @@ export class NavMenuComponent {
   {
     return this._oauthService.hasValidAccessToken();
   }
-
 }

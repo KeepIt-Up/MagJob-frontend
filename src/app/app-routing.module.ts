@@ -44,6 +44,7 @@ const routes: Routes = [
     ]
   },
   //{ path: '**', redirectTo: '/welcome' },
+  //{ path: '**', redirectTo: '/welcome' },
 
 ];
 
