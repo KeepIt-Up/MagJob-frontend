@@ -1,4 +1,4 @@
-.UserProfileCard {
+/*.UserProfileCard {
     display: flex;
     padding: 40px 60px;
     flex-direction: column;
@@ -20,24 +20,7 @@
     align-self: stretch;
 }
 
-.Profiles {
-    display: flex;
-    width: 150px;
-    height: 150px;
-    justify-content: center;
-    align-items: center;
 
-
-}
-
-.Profiles>img {
-    width: 150px;
-    height: 150px;
-    flex-shrink: 0;
-    border-radius: 150px;
-    /*background: url(<path-to-image>), lightgray 50% / cover no-repeat;*/
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
 
 .Name {
     flex: 1 0 0;
@@ -123,4 +106,23 @@ button {
     width: 431px;
     height: 47px;
     flex-shrink: 0;
+} */
+
+.profile-image {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.profile-image>img {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    border-radius: 150px;
+    /*background: url(<path-to-image>), lightgray 50% / cover no-repeat;*/
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }

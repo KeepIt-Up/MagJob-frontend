@@ -1,16 +1,15 @@
 <div>
-    <label>Wyszukaj użytkownika: </label>
-    <div class="inline">
-      <form [formGroup]="searchForm">
-    <input type="text" formControlName="text" id="text" />
-    <button (click)="searchUsers()">Search</button>
+  <form [formGroup]="searchForm" class="d-flex justify-content-center self-align-center">
+    <input class="form-control m-1" type="text" formControlName="text" id="text" placeholder="Find user" />
+    <button class="btn btn-primary m-1" (click)="searchUsers()">Search</button>
   </form>
-  </div>
-  </div>
+</div>
 
-  <div *ngFor="let user of filteredUsers">
-    <div class="inline">
-    <h4>{{ user.email }}</h4>
-    <button (click)="inviteUser(user)">Invite</button>
+<div class="card m-2" *ngFor="let user of filteredUsers">
+  <div class="card-header d-flex justify-content-between">
+    <div class="d-flex flex-column align-self-center">
+        {{user.email}}
+    </div>
+    <button class="btn btn-outline-warning" (click)="inviteUser(user)">Invite</button>
   </div>
-  </div>
+</div>

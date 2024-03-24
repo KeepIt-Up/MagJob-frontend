@@ -1,8 +1,16 @@
-<div class="WelcomePanel">
-    <h2>Welcome!</h2>
-    <p>You do not join to organization.
-        Ask your organization for an invitation.</p>
-        <button (click)="viewOrganization()">View Organization</button>
-        <p>Or create your own organization</p>
-        <button class="gray" (click)="createOrganization()">Create Organization</button>
+<div class="container w-25 d-flex flex-column justify-content-center">
+    <div class="d-flex flex-column justify-content-center align-self-center text-center">
+        <h1 style="color: var(--Gold);">Welcome!</h1>
+        <h6>You do not join to organization.<br/>
+            Ask your organization for an invitation.</h6>
+    </div>
+    <div class="container d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-center m-3">
+            <button type="button" class="btn btn-secondary btn-lg" (click)="viewOrganization()">View
+                Organization</button>
+        </div>
+        <h5 class="text-center">Or create your own organization</h5>
+        <div class="d-flex justify-content-center m-3"><button type="button" class="btn btn-warning btn-lg"
+                (click)="createOrganization()">Create Organization</button></div>
+    </div>
 </div>

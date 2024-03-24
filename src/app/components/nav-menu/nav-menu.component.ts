@@ -2,11 +2,12 @@ import { UserService } from './../../user/service/user.service';
 import { AuthService } from './../../jwt/auth.service';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-nav-menu',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NgIf],
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })

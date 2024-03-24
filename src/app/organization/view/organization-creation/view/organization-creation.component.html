@@ -1,16 +1,28 @@
-<div class="organization-form">
-  <h2>Create Organization</h2>
-  <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
-    <label for="name">Name:</label>
-    <input type="text" id="name" formControlName="name" required>
+<div class="container w-25 d-flex flex-column justify-content-center">
+  <h2 class="d-flex justify-content-center">Create Organization</h2>
 
-    <label>Type:</label>
-    <div class="banner-options">
-      <button class="typeOfOrganization" type="button" (click)="selectBannerUrl('url1')" [class.selected]="selectedBannerUrl === 'url1'">Study</button>
-      <button class="typeOfOrganization" type="button" (click)="selectBannerUrl('url2')" [class.selected]="selectedBannerUrl === 'url2'">Company</button>
-      <button class="typeOfOrganization" type="button" (click)="selectBannerUrl('url3')" [class.selected]="selectedBannerUrl === 'url3'">Community</button>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name of organization</label>
+          <input type="text" class="form-control" id="name" placeholder="Name of organization" formControlName="name"
+            required>
+        </div>
+
+        <label class="form-label" for="predefinedTemplate">Choose your template</label>
+        <div class="form-control d-flex justify-content-center flex-wrap" id="predefinedTemplate">
+          <button class="btn btn-outline-secondary m-1" type="button" (click)="selectBannerUrl('url1')"
+            [class.selected]="selectedBannerUrl === 'url1'">Study</button>
+          <button class="btn btn-outline-secondary m-1" type="button" (click)="selectBannerUrl('url2')"
+            [class.selected]="selectedBannerUrl === 'url2'">Company</button>
+          <button class="btn btn-outline-secondary m-1" type="button" (click)="selectBannerUrl('url3')"
+            [class.selected]="selectedBannerUrl === 'url3'">Community</button>
+        </div>
+        <div class="d-flex justify-content-center m-2">
+        <button class="btn btn-outline-warning m-2" type="submit" [disabled]="organizationForm.invalid">Create</button>
+      
+      </div></form>
     </div>
-
-    <button class="createButton" type="submit" [disabled]="organizationForm.invalid">Create</button>
-  </form>
+  </div>
 </div>

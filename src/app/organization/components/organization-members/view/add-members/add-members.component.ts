@@ -45,8 +45,8 @@ export class AddMembersComponent implements OnInit{
 
   filterUsers() {
       const searchText: string = this.searchForm.get('text')?.value as string;
-      this.filteredUsers = this.users.filter((user) =>
-      user.email.toLowerCase().includes(searchText.toLowerCase())
+      this.filteredUsers = this.users.filter((user: User) => 
+        user.email.toLowerCase().includes(searchText.toLowerCase())
     );
   }
 
