@@ -1,0 +1,10 @@
+app-role-list-item {
+    border-radius: 10px;
+}
+
+.header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+}

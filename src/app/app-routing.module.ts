@@ -15,9 +15,15 @@ import { OrganizationSettingsComponent } from './organization/components/organiz
 import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
 import { UpdateUserProfileComponent } from './user/components/update-user-profile/create-user-profile.component';
+import { RoleListComponent } from './role/view/role-list/role-list.component';
+import { RoleEditComponent } from './role/view/role-edit/role-edit.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: 'role', component: RoleListComponent, 
+  children: [
+    {path: ':roleId', component: RoleEditComponent}
+  ]},
   { path: 'welcome', component: HomeComponent},
   { path: 'signUp', component: UpdateUserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user/:id', component: UserProfileComponent, canActivate: [AuthGuard] },

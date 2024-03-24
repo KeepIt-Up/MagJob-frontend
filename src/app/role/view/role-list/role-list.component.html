@@ -1,0 +1,16 @@
+<div class="container w-50">
+    <h2>Roles</h2>
+    <div *ngIf="roleListState.state == 'loading'" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div *ngIf="roleListState.state == 'success'">
+        <div class="list-group" *ngFor="let role of roleListState.result">
+            <app-role-list-item class="m-1" [role]="role"></app-role-list-item>
+        </div>
+    </div>
+    <div *ngIf="roleListState.state == 'error'">
+        <p>Error while fetching data</p>
+    </div>
+</div>
