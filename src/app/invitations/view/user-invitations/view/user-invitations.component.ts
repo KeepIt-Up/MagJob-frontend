@@ -9,8 +9,7 @@ import { NgFor } from '@angular/common';
   selector: 'app-user-invitations',
   standalone: true,
   imports: [NgFor],
-  templateUrl: './user-invitations.component.html',
-  styleUrls: ['./user-invitations.component.css']
+  templateUrl: './user-invitations.component.html'
 })
 export class UserInvitationsComponent implements OnInit {
 

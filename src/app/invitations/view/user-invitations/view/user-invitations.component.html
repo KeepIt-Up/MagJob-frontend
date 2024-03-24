@@ -1,10 +1,10 @@
-<div class="Invitation" *ngFor="let invitation of invitations">
-  <div class="group">
-    <div class="organizationName">{{ invitation.organizationName }}</div>
-    <div class="text">invited you to join their organization</div>
+<div class="container w-75 d-flex justify-content-between" *ngFor="let invitation of invitations">
+  <div class="d-flex flex-column">
+    <div><h3 style="color: var(--Gold);">{{ invitation.organizationName }}</h3></div>
+    <div>invited you to join their organization</div>
   </div>
-  <div class="group">
-    <button (click)="accept(invitation)">Accept</button>
-    <button class="gray" (click)="reject(invitation)">Reject</button>
+  <div class="d-flex align-self-center">
+    <button class="btn btn-outline-warning m-1" (click)="accept(invitation)">Accept</button>
+    <button class="btn btn-outline-danger m-1" (click)="reject(invitation)">Reject</button>
   </div>
 </div>
