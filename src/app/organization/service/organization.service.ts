@@ -12,6 +12,11 @@ export class OrganizationService {
   private apiUrl = '/api/organizations';
   constructor(private http: HttpClient) { }
 
+  getAll(): Observable<any>
+  {
+    return this.http.get<any>(`${this.apiUrl}`);
+  }
+
   getAllOrganizations(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
