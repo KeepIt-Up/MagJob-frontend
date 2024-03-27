@@ -13,10 +13,9 @@ export class AuthService {
   readonly apiUrl = '/api/users';
   constructor(private http: HttpClient) {}
 
-  login(loginData: Login): Observable<any> {
-
-    const loginEndpoint = `${this.apiUrl}/login`;
-    return this.http.post(loginEndpoint, loginData);
+  login(loginData: Login): Observable<any> 
+  {
+    return this.http.post<any>(`${this.apiUrl}/login`, loginData);
   }
 
   logout() {
