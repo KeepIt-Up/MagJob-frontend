@@ -1,0 +1,15 @@
+<div class="container">
+    <!--Header-->
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Dashboard</h1>
+        <div>
+            <button class="btn btn-outline-secondary m-1" [routerLink]="['/organization']">All Organizations</button>
+            <button class="btn btn-warning m-1" [routerLink]="['/organization/create']">Create Organization</button>
+        </div>
+    </div>
+    <!--Body-->
+    <div class="d-flex flex-wrap m-2">
+        <app-user-organizations class="m-2" [userId]="userId"></app-user-organizations>
+        <app-user-invitations class="m-2" [userId]="userId"></app-user-invitations>
+    </div>
+</div>
