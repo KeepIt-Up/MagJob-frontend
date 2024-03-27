@@ -52,8 +52,9 @@ export class AddMembersComponent implements OnInit{
 
   inviteUser(user: any) {
     const invitation: Invitation = {
-      user: user.id,
-      organization: this.organizationService.getCurrentOrganizationId(),
+      userId: user.id,
+      organizationId: this.organizationService.getCurrentOrganizationId(),
+      organizationName: ''
     }
     this.invitationsService.invite(invitation).subscribe(
       (response) => {
