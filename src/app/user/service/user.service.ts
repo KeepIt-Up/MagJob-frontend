@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../model/user';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
+import { UserProfile } from '../model/user-profile';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private currentUserId: number | null = null;
+  private currentUserId?: string;
   organizations: Organization[] = [];
   private apiUrl = '/api/users';
 
@@ -24,26 +25,29 @@ export class UserService {
   }
 
   setCurrentUserId(user: User): void {
-    this.currentUserId = user.id;
+    this.currentUserId = user.id.toString();
     localStorage.setItem("User",this.currentUserId.toString());
   }
 
-  getCurrentUserId(): number | null {
+  getCurrentUserId(): string {
     if(this.currentUserId == null)
-      this.currentUserId =  parseInt(localStorage.getItem("User") || '0')
+    {
+      this.currentUserId = localStorage.getItem("User") as string;
+    }
+      
     return this.currentUserId;
   }
 
   clearCurrentUser(): void {
-    this.currentUserId = null;
+    this.currentUserId = '';
   }
 
 
 belongToAnyOrganization(): Observable<boolean> {
-  const userId: number = parseInt(localStorage.getItem("User") || '0', 10);
+  const userId: string = localStorage.getItem("User") || '';
 
   return new Observable<boolean>((observer) => {
-    this.organizationService.getUserOrganizations(userId).subscribe(
+    this.organizationService.getAllByUserId(userId).subscribe(
       (data: any) => {
         this.organizations = data.organizations;
         console.log(data);
@@ -76,5 +80,10 @@ belongToAnyOrganization(): Observable<boolean> {
   {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.patch(url, userData);
+  }
+
+  getUserProfile(userId: string): Observable<UserProfile> {
+    const url = `${this.apiUrl}/${userId}`;
+    return this.http.get<UserProfile>(url);
   }
 }
