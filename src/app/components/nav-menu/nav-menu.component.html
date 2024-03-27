@@ -18,7 +18,7 @@
             <a class="nav-link me-2" [routerLink]="['/user', getUserId()]">Profile</a>
           </li>
           <li class="nav-item" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
-            <a class="btn btn-outline-light me-2" [routerLink]="['/']" (click)="logout()">Logout</a>
+            <a class="btn btn-outline-light me-2" [routerLink]="['/welcome']" (click)="logout()">Logout</a>
           </li>
           <li class="nav-item">
             <a class="btn btn-outline-light me-2" *ngIf="!isLoggedIn()" [routerLink]="['/register']">Sign up</a>
