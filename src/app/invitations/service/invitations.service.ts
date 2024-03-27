@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { AcceptInvitationRequest } from '../model/accept-invitation-request';
 import { RejectInvitationRequest } from '../model/reject-invitation-request';
+import { SendInvitationRequest } from '../model/send-invitation-request';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class InvitationsService {
     return this.http.get<any>(`/api/users/${userId}/invitations`);
   }
 
-  invite(invitation: Invitation) {
+  invite(invitation: SendInvitationRequest) {
     return this.http.post(this.apiUrl, invitation).pipe(
       catchError((error: any) => {
         console.error('Error occurred:', error);
