@@ -5,6 +5,7 @@ import { UserSettingsComponent } from './user/components/user-settings/view/user
 import { HomeComponent } from './home/view/home.component';
 import { LoginComponent } from './login/view/login.component';
 import { RegisterComponent } from './register/view/register.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NoOrganizationComponent } from './organization/view/no-organization/view/no-organization.component';
 import { AuthGuard } from './jwt/auth.guard';
 import { OrganizationCreationComponent } from './organization/view/organization-creation/view/organization-creation.component';
@@ -41,7 +42,8 @@ const routes: Routes = [
       { path: 'addMembers',component: AddMembersComponent}
     ]
   },
-  { path: '**', redirectTo: '/welcome' },
+  //{ path: '**', redirectTo: '/welcome' },
+  { path: '**', component: PageNotFoundComponent },
 
 ];
 
