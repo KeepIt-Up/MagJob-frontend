@@ -17,6 +17,7 @@ import { OrganizationScheduleComponent } from './organization/components/organiz
 import { OrganizationSettingsComponent } from './organization/components/organization-settings/view/organization-settings.component';
 import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
+import { RolesComponent } from './roles/roles.page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -38,7 +39,8 @@ const routes: Routes = [
       { path: 'settings', component: OrganizationSettingsComponent },
       { path: 'tasks', component: OrganizationTasksComponent },
       { path: 'documents', component: OrganizationDocumentsComponent },
-      { path: 'addMembers',component: AddMembersComponent}
+      { path: 'addMembers',component: AddMembersComponent},
+      { path: 'roles',component: RolesComponent},
     ]
   },
   { path: '**', redirectTo: '/welcome' },

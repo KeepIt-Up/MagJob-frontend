@@ -12,6 +12,7 @@ import { HomeComponent } from './home/view/home.component';
 import { JwtInterceptor } from './jwt/jwt.interceptor';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { RoleDetailsComponent } from './roles/role-details/role-details.page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FooterComponent } from './components/footer/footer.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    RoleDetailsComponent,
   ],
   imports: [
     FooterComponent,
