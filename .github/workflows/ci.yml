@@ -43,19 +43,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-  update-config-repository:
-    needs: [ build-and-deploy-to-registry-frontend ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Download and run deploy script
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_IP }}
-          username: ${{ secrets.AWS_USER }}
-          key: ${{ secrets.AWS_KEY }}
-          port: ${{ secrets.AWS_PORT }}
-          script: |
-            wget "https://raw.githubusercontent.com/KeepIt-Up/MagJob/main/deploy.sh" -O deploy.sh
-            chmod 777 deploy.sh
-            ./deploy.sh
+  #update-config-repository:
+  #  needs: [ build-and-deploy-to-registry-frontend ]
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: actions/checkout@v3
+  #    - name: Download and run deploy script
+  #      uses: appleboy/ssh-action@master
+  #      with:
+  #        host: ${{ secrets.AWS_IP }}
+  #        username: ${{ secrets.AWS_USER }}
+  #        key: ${{ secrets.AWS_KEY }}
+  #        port: ${{ secrets.AWS_PORT }}
+  #        script: |
+  #          wget "https://raw.githubusercontent.com/KeepIt-Up/MagJob/main/deploy.sh" -O deploy.sh
+  #          chmod 777 deploy.sh
+  #          ./deploy.sh
