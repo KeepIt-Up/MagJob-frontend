@@ -9,7 +9,7 @@ import { NoOrganizationComponent } from './organization/view/no-organization/vie
 import { AuthGuard } from './jwt/auth.guard';
 import { OrganizationCreationComponent } from './organization/view/organization-creation/view/organization-creation.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
-import { OrganizationHomePageComponent } from './organization/components/organization-home-page/view/organization-home-page.component';
+import { OrganizationHomeComponent } from './organization/components/organization-home-page/view/organization-home.page.component';
 import { ChooseOrganizationComponent } from './organization/view/choose-organization/view/choose-organization.component';
 import { ListMembersComponent } from './organization/components/organization-members/view/list-members/list-members.component';
 import { AddMembersComponent } from './organization/components/organization-members/view/add-members/add-members.component';
@@ -32,7 +32,7 @@ const routes: Routes = [
     path: 'organization/:id',
     component: OrganizationComponent,
     children: [
-      { path: 'home', component: OrganizationHomePageComponent },
+      { path: 'home', component: OrganizationHomeComponent },
       { path: 'schedule', component: OrganizationScheduleComponent },
       { path: 'members', component: ListMembersComponent },
       { path: 'settings', component: OrganizationSettingsComponent },
