@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Signal, computed, inject } from '@angular/core';
 import { AnnouncementCardComponent } from '../announcement-card/announcement-card.component';
 import { AnnouncementService } from '../../service/announcement.service';
 import { LIST_STATE_VALUE } from '../../utils/list-state.type';
@@ -13,6 +13,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AnnouncementCreatePayload } from '../../model/announcement-create-payload';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 type TasksListFiltersForm = FormGroup<{
   title: FormControl<string>;
@@ -27,10 +29,15 @@ type TasksListFiltersForm = FormGroup<{
   templateUrl: './announcements-card.component.html',
   styleUrls: ['./announcements-card.component.css'],
 })
-export class AnnouncementsCardComponent implements OnInit {
+export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   @Input({ required: true }) organizationId!: string;
+  @Input() id!: Signal<string>;
   private roleService = inject(AnnouncementService);
   private formBuilder = inject(NonNullableFormBuilder);
+  private route = inject(ActivatedRoute);
+
+  routeSub?: Subscription;
+
   listStateValue = LIST_STATE_VALUE;
   listState$ = this.roleService.listState$;
 
@@ -40,8 +47,27 @@ export class AnnouncementsCardComponent implements OnInit {
     dateOfExpiration: this.formBuilder.control<Date>(new Date(), Validators.required),
   });
 
+  
   ngOnInit() {
+    this.routeSub = this.route.parent?.paramMap.subscribe({
+      next: (value) => {
+        const organizationId = value.get('organizationId');
+        if (organizationId !== null) {
+          this.organizationId = organizationId;
+        } else {
+          alert('Error while getting organizationId from route');
+        }
+      },
+      error: (err) =>
+        {
+          console.log(err)
+        }
+    });
     this.roleService.getAllByOrganizationId(this.organizationId);
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
   }
 
   deleteAnnouncemnet(id: string) {
