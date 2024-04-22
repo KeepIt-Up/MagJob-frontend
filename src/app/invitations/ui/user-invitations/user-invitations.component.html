@@ -1,0 +1,8 @@
+<div *ngIf="userInvitationState.state == 'get-success' && userInvitationState.result.length > 0">
+    <div class="card d-flex">
+        <div class="card-body">
+            <app-invitation-card *ngFor="let invitation of userInvitationState.result" [invitation]="invitation"
+                (accept)="accept($event)" (reject)="reject($event)"></app-invitation-card>
+        </div>
+    </div>
+</div>

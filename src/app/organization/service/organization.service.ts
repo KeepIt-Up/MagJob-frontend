@@ -12,15 +12,20 @@ export class OrganizationService {
   private apiUrl = '/api/organizations';
   constructor(private http: HttpClient) { }
 
+  getAll(): Observable<any>
+  {
+    return this.http.get<any>(`${this.apiUrl}`);
+  }
+
   getAllOrganizations(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
 
-  getUserOrganizations(userId: number): Observable<any> {
+  getAllByUserId(userId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/users/${userId}`);
   }
 
-  getMembers(organizationId: number): Observable<any>
+  getMembers(organizationId: string): Observable<any>
   {
     return this.http.get<any>(`${this.apiUrl}/${organizationId}/members`);
   }

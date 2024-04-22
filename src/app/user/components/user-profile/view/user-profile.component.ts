@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,7 @@ import { UserService } from '../../../service/user.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../../model/user';
 import { NgIf } from '@angular/common';
-import { UserInvitationsComponent } from 'src/app/invitations/view/user-invitations/view/user-invitations.component';
+import { UserInvitationsComponent } from 'src/app/invitations/ui/user-invitations/user-invitations.component';
 
 
 @Component({
@@ -17,6 +17,7 @@ import { UserInvitationsComponent } from 'src/app/invitations/view/user-invitati
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
+  @Input() id?:string;
   private destroy$ = new Subject<void>();
   userForm!: FormGroup;
   userData: User | null = null;
