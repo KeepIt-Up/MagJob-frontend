@@ -19,9 +19,9 @@
 <ng-template #editModeView>
   <div class="card m-2" style="min-width: 20rem; max-width: 20rem">
     <div class="d-flex justify-content-between m-2 mx-2 align-items-center">
-      <input #titleInput class="form-control mx-1 me-3" id="title" [value]="announcement.title"/>
+      <input #title class="form-control mx-1 me-3" id="title" [value]="announcement.title"/>
       <div class="d-flex flex-nowrap">
-        <button class="btn btn-primary" (click)="update.emit({id: announcement.id, title: titleInput.value, content: textarea.value})">Save</button>
+        <button id="saveButton" class="btn btn-primary" (click)="update.emit({id: announcement.id, title: title.value, content: textarea.value})">Save</button>
       </div>
     </div>
     <div class="card-body">
