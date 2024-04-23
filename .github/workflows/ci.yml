@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies with npm
         run: npm install
       - name: Test with npm
-        run: npm test
+        run: npm test --watch=false
       - name: Build with npm
         run: npm run build
       - name: Build and push Docker Image
