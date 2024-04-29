@@ -11,17 +11,17 @@
       </div>
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item" *ngIf="!isLoggedIn()" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="authState.state !== authStateValue.LOGGED_IN" [routerLinkActive]="['link-active']">
             <a class="nav-link me-2" [routerLink]="['/login']">Login</a>
           </li>
-          <li class="nav-item second" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
-            <a class="nav-link me-2" [routerLink]="['/user', getUserId()]">Profile</a>
+          <li class="nav-item second" *ngIf="authState.state == authStateValue.LOGGED_IN" [routerLinkActive]="['link-active']">
+            <a class="nav-link me-2" [routerLink]="['/user', authState.user.externalId]">Profile</a>
           </li>
-          <li class="nav-item" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="authState.state == authStateValue.LOGGED_IN" [routerLinkActive]="['link-active']">
             <a class="btn btn-outline-light me-2" [routerLink]="['/welcome']" (click)="logout()">Logout</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-light me-2" *ngIf="!isLoggedIn()" [routerLink]="['/register']">Sign up</a>
+            <a class="btn btn-outline-light me-2" *ngIf="authState.state !== authStateValue.LOGGED_IN" [routerLink]="['/register']">Sign up</a>
           </li>
         </ul>
       </div>

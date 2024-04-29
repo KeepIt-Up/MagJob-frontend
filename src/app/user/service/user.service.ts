@@ -10,7 +10,6 @@ import { UserProfile } from '../model/user-profile';
   providedIn: 'root',
 })
 export class UserService {
-  private currentUserId?: string;
   organizations: Organization[] = [];
   private apiUrl = '/api/users';
 
@@ -24,24 +23,15 @@ export class UserService {
     return this.http.get<any>(this.apiUrl);
   }
 
-  setCurrentUserId(user: User): void {
-    this.currentUserId = user.id.toString();
-    localStorage.setItem("User",this.currentUserId.toString());
+  getByUid(uid: string): Observable<User>
+  {
+    return this.http.get<User>(`${this.apiUrl}/${uid}`);
   }
 
-  getCurrentUserId(): string {
-    if(this.currentUserId == null)
-    {
-      this.currentUserId = localStorage.getItem("User") as string;
-    }
-      
-    return this.currentUserId;
+  create(): Observable<User>
+  {
+    return this.http.post<User>(`${this.apiUrl}`, null);
   }
-
-  clearCurrentUser(): void {
-    this.currentUserId = '';
-  }
-
 
 belongToAnyOrganization(): Observable<boolean> {
   const userId: string = localStorage.getItem("User") || '';
