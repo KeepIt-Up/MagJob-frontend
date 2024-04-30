@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/user/model/user';
 import { UserService } from 'src/app/user/service/user.service';
 import { AUTH_STATE_VALUE, AuthState } from 'src/app/utils/auth-state.type';
+import { ENTITY_STATE_VALUE } from 'src/app/utils/entity-state.type';
 
 @Injectable({
   providedIn: 'root',
@@ -21,25 +22,25 @@ export class AuthStateService {
   state$ = toObservable(this.$authState);
 
   constructor() {
-
     if (this.oauthService.hasValidAccessToken()) {
       const claims = this.oauthService.getIdentityClaims();
       this.userExistingCheck(claims['sub']);
+
+          console.log("true")
+          this.initUserData(claims['sub']);
+
     }
 
     this.subscribeOAuthEvents();
-    
   }
 
-  logOut()
-  {
+  logOut() {
     this.oauthService.logOut();
     this.oauthEventsSubscription?.unsubscribe();
-    this.$authState.set({state: AUTH_STATE_VALUE.NOT_LOGGED_IN });
+    this.$authState.set({ state: AUTH_STATE_VALUE.NOT_LOGGED_IN });
   }
 
-  login()
-  {
+  login() {
     this.oauthService.initCodeFlow();
     this.subscribeOAuthEvents();
   }
@@ -47,8 +48,7 @@ export class AuthStateService {
   /**
    * Listen for token_received event
    */
-  private subscribeOAuthEvents()
-  {
+  private subscribeOAuthEvents() {
     this.oauthEventsSubscription = this.oauthService.events.subscribe({
       next: (value) => {
         if (
@@ -57,6 +57,9 @@ export class AuthStateService {
         ) {
           const claims = this.oauthService.getIdentityClaims();
           this.userExistingCheck(claims['sub']);
+              console.log("true")
+              this.initUserData(claims['sub']);
+            console.log(this.state$)
         }
       },
     });
@@ -79,11 +82,22 @@ export class AuthStateService {
     });
   }
 
+  private initUserData(userUid: string) {
+    this.userService.state$.subscribe({
+      next: (state) => {
+        if (
+          state.state == ENTITY_STATE_VALUE.IDLE
+        ) {
+          this.userService.initUserData(userUid);
+        }
+      },
+    });
+  }
+
   /**
-   * Create user from the token 
+   * Create user from the token
    */
-  private createUser()
-  {
+  private createUser() {
     this.userService.create().subscribe({
       next: (value) => {
         this.$authState.set({
