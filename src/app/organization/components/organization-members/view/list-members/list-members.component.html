@@ -21,7 +21,7 @@
         <td>{{member.pseudonym}}</td>
         <td>
           <div class="d-flex justify-content-end"><button class="btn btn-outline-secondary m-1">Edit</button>
-            <button class="btn btn-danger m-1">Delete</button> </div>
+            <app-delete-members [member]="member" (requestListRefreshEvent)="this.loadMembers(this.organizationId!)"/> </div>
           
         </td>
       </tr>

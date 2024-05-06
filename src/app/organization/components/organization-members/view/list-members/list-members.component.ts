@@ -3,11 +3,12 @@ import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { OrganizationService } from '../../../../service/organization.service';
 import { Member } from 'src/app/organization/components/organization-members/model/member';
 import { NgFor } from '@angular/common';
+import { DeleteMembersComponent } from 'src/app/organization/components/organization-members/view/delete-members/delete-members.component';
 
 @Component({
   selector: 'app-list-members',
   standalone: true,
-  imports: [RouterLinkActive, RouterLink, NgFor],
+  imports: [RouterLinkActive, RouterLink, NgFor, DeleteMembersComponent],
   templateUrl: './list-members.component.html',
   styleUrls: ['./list-members.component.css']
 })
@@ -28,7 +29,7 @@ export class ListMembersComponent implements OnInit {
     
     this.organizationService.getMembers(organizationId).subscribe(
       (data) => {
-        this.members = data.members;
+        this.members = data.members as Member[];
       },
       (error) => {
         console.error('Error fetching members:', error);
