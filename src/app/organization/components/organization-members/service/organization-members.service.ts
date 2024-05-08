@@ -23,4 +23,20 @@ export class OrganizationMembersService {
         console.error('Error:', error);
       });
   }
+
+  update(memberId: number, newPseudonym: string) {
+    return fetch(`${this.apiUrl}/${memberId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({pseudonym: newPseudonym}),
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+
+      return new Error("Cant update task");
+    });
+  }
 }

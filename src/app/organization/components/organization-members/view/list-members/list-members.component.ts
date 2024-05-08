@@ -4,13 +4,14 @@ import { OrganizationService } from '../../../../service/organization.service';
 import { Member } from 'src/app/organization/components/organization-members/model/member';
 import { NgFor } from '@angular/common';
 import { DeleteMembersComponent } from 'src/app/organization/components/organization-members/view/delete-members/delete-members.component';
+import { EditMemberComponent } from "../edit-member/edit-member.component";
 
 @Component({
-  selector: 'app-list-members',
-  standalone: true,
-  imports: [RouterLinkActive, RouterLink, NgFor, DeleteMembersComponent],
-  templateUrl: './list-members.component.html',
-  styleUrls: ['./list-members.component.css']
+    selector: 'app-list-members',
+    standalone: true,
+    templateUrl: './list-members.component.html',
+    styleUrls: ['./list-members.component.css'],
+    imports: [RouterLinkActive, RouterLink, NgFor, DeleteMembersComponent, EditMemberComponent]
 })
 export class ListMembersComponent implements OnInit {
   members: Member[] = [];

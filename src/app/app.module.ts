@@ -18,7 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     FooterComponent,
