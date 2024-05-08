@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -24,6 +24,7 @@ type MemberEditForm = FormGroup<{
 export class EditMemberComponent {
 
   @Input({ required: true }) member!: Member;
+  @Output() requestMemberUpdate = new EventEmitter<{id: number, pseudonym: string}>();
   private formBuilder = inject(NonNullableFormBuilder);
   constructor( private organizationMembersService: OrganizationMembersService ) {}
 
@@ -35,7 +36,7 @@ export class EditMemberComponent {
   confirmMemberEdit() {
     if (this.form.valid) {
       let formValue = this.form.value;
-      this.organizationMembersService.update(this.member.id, formValue.newPseudonym!);
+      this.requestMemberUpdate.emit({id: this.member.id, pseudonym: formValue.newPseudonym!});
     }
   }
 }

@@ -5,6 +5,7 @@ import { Member } from 'src/app/organization/components/organization-members/mod
 import { NgFor } from '@angular/common';
 import { DeleteMembersComponent } from 'src/app/organization/components/organization-members/view/delete-members/delete-members.component';
 import { EditMemberComponent } from "../edit-member/edit-member.component";
+import { OrganizationMembersService } from '../../service/organization-members.service';
 
 @Component({
     selector: 'app-list-members',
@@ -17,7 +18,7 @@ export class ListMembersComponent implements OnInit {
   members: Member[] = [];
   organizationId: number | null = null;
 
-  constructor(private route: ActivatedRoute, private organizationService: OrganizationService) {}
+  constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private organizationMembersService: OrganizationMembersService) {}
 
   ngOnInit(): void {
       this.organizationId = this.organizationService.getCurrentOrganizationId();
@@ -34,6 +35,18 @@ export class ListMembersComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching members:', error);
+      }
+    );
+  }
+
+  updateMember(payload: {id: number, pseudonym: string}) {
+    this.organizationMembersService.update(payload.id, payload.pseudonym).subscribe(
+      (response) => {
+        console.log('Response:', response);
+        this.loadMembers(this.organizationId!);
+      },
+      (error) => {
+        console.error('Error:', error);
       }
     );
   }

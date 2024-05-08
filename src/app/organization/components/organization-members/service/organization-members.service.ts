@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
+export interface UpdateMemberPayload {
+  pseudonym: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,19 +28,11 @@ export class OrganizationMembersService {
       });
   }
 
+  
+  
   update(memberId: number, newPseudonym: string) {
-    return fetch(`${this.apiUrl}/${memberId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({pseudonym: newPseudonym}),
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-
-      return new Error("Cant update task");
-    });
+    const payload: UpdateMemberPayload = {pseudonym: newPseudonym};
+    return this.http.patch(`${this.apiUrl}/${memberId}`, payload);
+    
   }
 }

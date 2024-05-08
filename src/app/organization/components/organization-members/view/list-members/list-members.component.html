@@ -21,7 +21,7 @@
         <td>{{member.pseudonym}}</td>
         <td>
           <div class="d-flex justify-content-end">
-            <app-edit-member [member]="member"/>
+            <app-edit-member [member]="member" (requestMemberUpdate)="this.updateMember($event)"/>
             <app-delete-members [member]="member" (requestListRefreshEvent)="this.loadMembers(this.organizationId!)"/> 
           </div>
             
