@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { AuthService } from './../../../jwt/auth.service';
-import { OrganizationService } from '../../service/organization.service';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,11 +9,6 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./organizaton-nav.component.css']
 })
 export class OrganizatonNavComponent {
+  @Input({required:true}) organizationId?: string;
 
-  constructor(private authService: AuthService, private organizationService: OrganizationService) {}
-
-  getCurrentOrganizationId(): number | null {
-    const currentOrganization = this.organizationService.getCurrentOrganizationId();
-    return currentOrganization ? currentOrganization : null;
-  }
 }

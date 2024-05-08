@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { OrganizationService } from '../../../../service/organization.service';
 import { Member } from 'src/app/organization/components/organization-members/model/member';
@@ -13,10 +13,11 @@ import { OrganizationMembersService } from '../../service/organization-members.s
     templateUrl: './list-members.component.html',
     styleUrls: ['./list-members.component.css'],
     imports: [RouterLinkActive, RouterLink, NgFor, DeleteMembersComponent, EditMemberComponent]
+
 })
 export class ListMembersComponent implements OnInit {
+  @Input() organizationId?: string;
   members: Member[] = [];
-  organizationId: number | null = null;
 
   constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private organizationMembersService: OrganizationMembersService) {}
 
@@ -33,10 +34,10 @@ export class ListMembersComponent implements OnInit {
       (data) => {
         this.members = data.members as Member[];
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching members:', error);
       }
-    );
+    });
   }
 
   updateMember(payload: {id: number, pseudonym: string}) {

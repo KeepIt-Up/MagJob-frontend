@@ -12,7 +12,7 @@
     <button class="btn btn-outline-secondary" (click)="viewSettings()">Settings</button>
   </div>
   </div>
-  <app-user-invitations></app-user-invitations>
+  <app-user-invitations [userId]="id"></app-user-invitations>
   <form class="m-2" [formGroup]="userForm">
     <div class="card-body d-flex flex-wrap justify-content-center container w-75">
       <div class="m-3">

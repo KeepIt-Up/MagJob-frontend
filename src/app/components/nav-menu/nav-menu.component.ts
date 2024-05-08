@@ -19,7 +19,7 @@ export class NavMenuComponent {
     return this.authService.isAuthenticated();
   }
 
-  getUserId(): number | null {
+  getUserId(): string | null {
     const currentUser = this.userService.getCurrentUserId();
     return currentUser ? currentUser : null;
   }

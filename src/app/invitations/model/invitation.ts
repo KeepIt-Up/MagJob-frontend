@@ -1,4 +1,5 @@
 export interface Invitation {
-    organization: number,
-    user: number,
+    organizationId: number,
+    organizationName: string,
+    userId: number,
 }
