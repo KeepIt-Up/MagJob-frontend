@@ -20,9 +20,11 @@
         <td>{{member.lastName}}</td>
         <td>{{member.pseudonym}}</td>
         <td>
-          <div class="d-flex justify-content-end"><button class="btn btn-outline-secondary m-1">Edit</button>
-            <button class="btn btn-danger m-1">Delete</button> </div>
-          
+          <div class="d-flex justify-content-end">
+            <app-edit-member [member]="member" (requestMemberUpdate)="this.updateMember($event)"/>
+            <app-delete-members [member]="member" (requestListRefreshEvent)="this.loadMembers(this.organizationId!)"/> 
+          </div>
+            
         </td>
       </tr>
     </tbody>
