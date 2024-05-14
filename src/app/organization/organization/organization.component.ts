@@ -17,7 +17,7 @@ export class OrganizationComponent {
   handleRouterActivation(component: any) {
     if(component instanceof ListMembersComponent)
     {
-      component.organizationId = this.organizationId;
+      component.organizationId = Number(this.organizationId);
     }
     if(component instanceof AddMembersComponent)
     {

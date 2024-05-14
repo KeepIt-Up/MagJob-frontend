@@ -16,7 +16,7 @@ import { OrganizationMembersService } from '../../service/organization-members.s
 
 })
 export class ListMembersComponent implements OnInit {
-  @Input() organizationId?: string;
+  organizationId?: number;
   members: Member[] = [];
 
   constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private organizationMembersService: OrganizationMembersService) {}
@@ -30,14 +30,15 @@ export class ListMembersComponent implements OnInit {
 
   loadMembers(organizationId: number): void {
     
-    this.organizationService.getMembers(organizationId).subscribe(
-      (data) => {
+    this.organizationService.getMembers(String(organizationId)).subscribe({
+      next:(data) => {
+        console.log("ashdjsa")
         this.members = data.members as Member[];
       },
       error: (error) => {
         console.error('Error fetching members:', error);
       }
-    });
+  });
   }
 
   updateMember(payload: {id: number, pseudonym: string}) {
