@@ -3,9 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from './user/components/user-profile/view/user-profile.component';
 import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { HomeComponent } from './home/view/home.component';
-import { LoginComponent } from './login/view/login.component';
 import { RegisterComponent } from './register/view/register.component';
-import { AuthGuard } from './jwt/auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { OrganizationCreationComponent } from './organization/view/organization-creation/view/organization-creation.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
 import { OrganizationHomeComponent } from './organization/components/organization-home-page/view/organization-home.page.component';
@@ -19,14 +18,13 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.page.compone
 import { OrganizationListComponent } from './organization/view/organization-list/organization-list.page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   {
     path: 'dashboard/:userId',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
   { path: 'welcome', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
     path: 'user/:id',
@@ -58,7 +56,7 @@ const routes: Routes = [
       { path: 'addMembers', component: AddMembersComponent },
     ],
   },
-  { path: '**', redirectTo: '/dashboard' },
+  { path: '**', redirectTo: '/welcome' },
 ];
 
 @NgModule({
