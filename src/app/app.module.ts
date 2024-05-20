@@ -1,24 +1,22 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './components/app/app.component';
-import { LoginComponent } from './login/view/login.component';
-import { RegisterComponent } from './register/view/register.component';
 import { HomeComponent } from './home/view/home.component';
-import { JwtInterceptor } from './jwt/jwt.interceptor';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from './auth/auth.config';
+import { TokenInterceptor } from './auth/token.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
-    RegisterComponent,
   ],
   imports: [
     FooterComponent,
@@ -32,12 +30,36 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
   ],
   providers: [
+    provideHttpClient(),
+    provideOAuthClient(),
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
+      provide: APP_INITIALIZER,
+      useFactory: (oauthService: OAuthService) => {
+        return () => {
+          initializeOAuth(oauthService);
+        }
+      },
       multi: true,
+      deps: [
+        OAuthService
+      ]
     },
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: TokenInterceptor,
+      multi: true 
+    }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+function initializeOAuth(oauthService: OAuthService): Promise<void>
+{
+    return new Promise((resolve) => {
+        oauthService.configure(authCodeFlowConfig);
+        oauthService.setupAutomaticSilentRefresh();
+        oauthService.loadDiscoveryDocumentAndLogin()
+        .then(() => {resolve()});
+    });
+}

@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="">
+        <h1>List of all organizations</h1>
+    </div>
+    <div *ngIf="organizationListState.state == 'get-success'">
+        <div class="d-flex flex-wrap">
+            <div *ngFor="let organization of organizationListState.result" class="card m-2">
+                <div class="card-body">
+                    {{organization.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
