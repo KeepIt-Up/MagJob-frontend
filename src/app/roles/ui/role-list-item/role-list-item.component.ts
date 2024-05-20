@@ -22,7 +22,7 @@ import { RoleStateService } from '../../service/role.state.service';
     <div class="d-flex justify-content-between align-items-center ms-5">
         <a class="btn btn-sm btn-outline-secondary m-1 rounded-circle" [routerLink]="[role.id]"><i
             class="bi bi-pencil-fill"></i></a>
-        <a *ngIf="canDelete" class="btn btn-sm btn-outline-danger m-1 rounded-circle" (click)="delete.emit(role.id)"><i
+        <a *ngIf="canDelete" class="btn btn-sm btn-outline-danger m-1 rounded-circle" (click)="delete.emit(role.id.toString())"><i
                 class="bi bi-trash3"></i></a>
     </div>
 </div>`

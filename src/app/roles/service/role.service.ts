@@ -36,7 +36,7 @@ export class RoleService {
       .pipe(
         tap((response) => {
           if (response.body) {
-            this.state.setRoles(response.body);
+            this.state.setRoles(response.body.roles);
           }
         })
       )
@@ -58,15 +58,18 @@ export class RoleService {
 
   create(newRole: RoleCreatePayload) {
     return this.httpService.create(newRole).pipe(
-      tap((role) => {
-        this.state.addRole(role);
+      tap((response) => {
+        if(response)
+          {
+            this.state.addRole(response);
+          }
       })
-    );
+    ).subscribe();
   }
 
   update(
     id: string,
-    payload: RoleUpdatePayload //change type of payload
+    payload: RoleUpdatePayload
   ) {
     return this.httpService.update(id, payload).pipe(
       tap((role) => {

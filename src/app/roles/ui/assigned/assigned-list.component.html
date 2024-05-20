@@ -1,0 +1,19 @@
+
+    <div class="d-inline-flex flex-row justify-content-between m-2">
+        <div class="mb-3">
+           <app-search placeholder="Find member" (submit)="filterMembers($event)"></app-search>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary mx-2">Add members</button> <!--TODO-->
+        </div>
+    </div>
+    <div *ngIf="listState$ | async as listState">
+        <div *ngIf="listState.state === listStateValue.SUCCESS">
+            <div *ngIf="listState.results.length === 0">
+                No one was assign
+            </div>
+            <app-member-card *ngFor="let member of listState.results" [member]="member" (remove)="removeMember(member.id.toString())"></app-member-card>
+        </div>
+        
+    </div>
+    

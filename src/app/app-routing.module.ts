@@ -18,6 +18,7 @@ import { OrganizationSettingsComponent } from './organization/components/organiz
 import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
 import { RolesComponent } from './roles/roles.page.component';
+import { RoleDetailsComponent } from './roles/role-details.page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -41,14 +42,16 @@ const routes: Routes = [
       { path: 'documents', component: OrganizationDocumentsComponent },
       { path: 'addMembers',component: AddMembersComponent},
       { path: 'roles',component: RolesComponent},
+      { path: 'roles/:roleId',component: RoleDetailsComponent},
     ]
   },
   { path: '**', redirectTo: '/welcome' },
+  
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {bindToComponentInputs: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

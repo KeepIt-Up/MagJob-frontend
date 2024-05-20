@@ -23,6 +23,7 @@ export class RoleStateService {
 
   addRole(role: Role)
   {
+    console.log(role)
     this.state$.next({
       roles: [...this.state$.value.roles, role]
     });
@@ -38,7 +39,7 @@ export class RoleStateService {
   removeRole(roleId: string)
   {
     const updatedRoles = this.state$.value.roles.filter((role) => {
-      return role.id !== roleId;
+      return role.id.toString() !== roleId;
     });
 
     this.state$.next({

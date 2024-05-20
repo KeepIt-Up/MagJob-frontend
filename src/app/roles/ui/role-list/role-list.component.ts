@@ -2,9 +2,9 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, computed, inject } 
 import { CommonModule } from '@angular/common';
 import { RoleListItemComponent } from '../role-list-item/role-list-item.component';
 import { RouterLink } from '@angular/router';
-import { RoleStateService } from '../../service/role.state.service';
 import { RoleService } from '../../service/role.service';
 import { LIST_STATE_VALUE } from '../../utils/list-state.type';
+import { RoleCreatePayload } from '../../model/role-create-payload';
 
 
 @Component({
@@ -32,8 +32,9 @@ export class RoleListComponent implements OnInit, OnChanges {
     this.roleService.getAll();
   }
 
-  createRole() {
-    //TODO
+  createRole(name: string) {
+    console.log(name);
+    this.roleService.create({name: name, organization: 5} as RoleCreatePayload)
   }
 
   updateRole(id: string) {

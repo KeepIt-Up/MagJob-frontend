@@ -1,17 +1,15 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Role } from '../model/role';
-import { RoleUpdatePayload } from '../model/role-update-payload';
-import { RoleCreatePayload } from '../model/role-create-payload';
-import { FetchingError } from '../utils/list-state.type';
 import { EMPTY, Observable, catchError, tap } from 'rxjs';
+import { FetchingError } from '../utils/list-state.type';
+import { Member } from 'src/app/organization/components/organization-members/model/member';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class RoleApiService {
+export class RoleAssignedApiService {
   private _http = inject(HttpClient);
-  readonly apiEndpoint: string = 'api/roles';
+  readonly apiEndpoint: string = 'http://localhost:3000/roles';
 
   private $idle = signal(true);
   private $loading = signal(false);
@@ -43,36 +41,24 @@ export class RoleApiService {
     );
   }
 
-  getById(roleId: string) {
+  getAllByRoleId(roleId:string) {
     return this.withLoadingState(
-      this._http.get<Role>(`${this.apiEndpoint}/${roleId}`, {
-        observe: 'response',
-      })
-    );
-  }
-  getAll() {
-    return this.withLoadingState(
-      this._http.get<any>(this.apiEndpoint, {
+      this._http.get<Member[]>(`${this.apiEndpoint}/${roleId}/role-members`, {
         observe: 'response',
       })
     );
   }
 
-  create(payload: RoleCreatePayload) {
+  addToRole(payload: {roleId: string, memberId:string}) {
     return this.withLoadingState(
-      this._http.post<Role>(`${this.apiEndpoint}`, payload)
-    )
-  }
-
-  update(roleId: string, payload: RoleUpdatePayload) {
-    return this.withLoadingState(
-      this._http.put<Role>(`${this.apiEndpoint}/${roleId}`, payload)
+      this._http.post<Member>(`api/role-members`, payload)
     );
   }
 
-  delete(roleId: string) {
+  removeFromRole(assignedId: string) {
     return this.withLoadingState(
-      this._http.delete<any>(`${this.apiEndpoint}/${roleId}`)
+      this._http.delete<any>(`api/role-members/${assignedId}`)
     );
   }
 }
+
