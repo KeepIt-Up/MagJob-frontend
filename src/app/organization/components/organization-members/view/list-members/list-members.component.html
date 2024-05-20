@@ -1,7 +1,10 @@
 <div class="container d-flex flex-column justify-content-center" style="width: 100vw;">
   <div class="d-flex justify-content-between">
     <h2>Members List</h2>
-    <button class="btn btn-outline-warning m-1" [routerLink]="['../addMembers']">Add New</button>
+    <div>
+      <button class="btn btn-outline-secondary" [routerLink]="['../roles']">Roles</button>
+      <button class="btn btn-outline-warning m-1" [routerLink]="['../addMembers']">Add New</button>
+    </div>
   </div>
   <table class="table table-dark table-hover">
     <thead>

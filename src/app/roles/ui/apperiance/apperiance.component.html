@@ -1,0 +1,9 @@
+<form class="" [formGroup]="roleForm">
+    <div class="mb-3">
+        <label class="form-label" for="name">Role name</label>
+        <input class="form-control" type="text" id="name" formControlName="name"/>
+    </div>
+    <button *ngIf="roleForm.dirty" class="btn btn-outline-warning">Save</button>
+</form>
+
+

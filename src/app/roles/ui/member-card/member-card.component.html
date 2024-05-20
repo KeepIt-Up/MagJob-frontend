@@ -1,0 +1,14 @@
+<div class="card mb-2">
+    <div class="card-body d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex">
+            <img class="rounded-circle" style="width: 3rem; height: 3rem;"
+                src="../../../../assets/cool-profile-picture.jpg" />
+            <div class="d-flex align-items-center">
+                <p class="m-2">{{member.firstName}} {{member.lastName}}</p>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-outline-secondary" (click)="remove.emit(member)"><i class="bi bi-x"></i></button>
+        </div>
+    </div>
+</div>
