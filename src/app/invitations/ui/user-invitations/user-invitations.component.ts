@@ -40,16 +40,16 @@ export class UserInvitationsComponent implements OnInit, OnDestroy {
     this.invitationsSub.unsubscribe();
   }
 
-  accept(invitation: any): void {
+  accept(invitation: Invitation): void {
     const acceptInvitationRequest: AcceptInvitationRequest = {
       organization: invitation.organizationId,
       pseudonym: 'changeme',
-      user: invitation.userId,
+      userId: invitation.userId,
     };
     this.invitationsService.accept(acceptInvitationRequest).subscribe({
       next: (response) => {
         if (this.userInvitationState.state == 'get-success') {
-          this.userInvitationState.result.splice(invitation, 1);
+          this.userInvitationState.result = this.userInvitationState.result.filter(item => item.organizationName != invitation.organizationName );
         }
       },
       error: (error) => {
@@ -58,15 +58,15 @@ export class UserInvitationsComponent implements OnInit, OnDestroy {
     });
   }
 
-  reject(invitation: any): void {
+  reject(invitation: Invitation): void {
     const rejectInvitationRequest: RejectInvitationRequest = {
       organization: invitation.organizationId,
-      user: invitation.userId
+      userId: invitation.userId
     };
     this.invitationsService.reject(rejectInvitationRequest).subscribe({
       next:(response) => {
         if (this.userInvitationState.state == 'get-success') {
-          this.userInvitationState.result.splice(invitation, 1);
+          this.userInvitationState.result = this.userInvitationState.result.filter(item => item.organizationName != invitation.organizationName );
         }
       },
       error: (error) => {

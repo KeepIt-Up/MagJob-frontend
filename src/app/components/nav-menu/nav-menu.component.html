@@ -15,7 +15,10 @@
             <a class="nav-link me-2" [routerLink]="['/login']">Login</a>
           </li>
           <li class="nav-item second" *ngIf="authState.state == authStateValue.LOGGED_IN" [routerLinkActive]="['link-active']">
-            <a class="nav-link me-2" [routerLink]="['/user', authState.user.externalId]">Profile</a>
+            <a class="nav-link me-2" [routerLink]="['/user', authState.user.id]">Profile</a>
+          </li>
+          <li class="nav-item second" *ngIf="authState.state == authStateValue.LOGGED_IN" [routerLinkActive]="['link-active']">
+            <a class="nav-link me-2" [routerLink]="['/dashboard', authState.user.id]">Dashboard</a>
           </li>
           <li class="nav-item" *ngIf="authState.state == authStateValue.LOGGED_IN" [routerLinkActive]="['link-active']">
             <a class="btn btn-outline-light me-2" [routerLink]="['/welcome']" (click)="logout()">Logout</a>

@@ -48,14 +48,14 @@ export class AddMembersComponent implements OnInit{
   filterUsers() {
       const searchText: string = this.searchForm.get('text')?.value as string;
       this.filteredUsers = this.users.filter((user: User) => 
-        user.email.toLowerCase().includes(searchText.toLowerCase())
+        user.email?.toLowerCase().includes(searchText.toLowerCase())
     );
   }
 
-  inviteUser(user: any) {
+  inviteUser(user: User) {
     console.log(this.organizationId)
     const invitation: SendInvitationRequest = {
-      user: user.id,
+      userId: user.id,
       organization: Number(this.organizationId as string),
     }
     this.invitationsService.invite(invitation).subscribe({

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrganizationCreation } from "../../../model/organization-creation";
 import { OrganizationCreationService } from '../../organization-creation/service/organization-creation.service';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
+import { AuthStateService } from 'src/app/auth/service/auth.state.service';
 
 @Component({
   selector: 'app-organization-creation',
@@ -13,17 +14,20 @@ import { OrganizationService } from 'src/app/organization/service/organization.s
   styleUrls: ['./organization-creation.component.css']
 })
 export class OrganizationCreationComponent {
+  private authService = inject(AuthStateService);
+
+  authState$ = this.authService.state$;
 
   organizationModel: OrganizationCreation = {
     name: '',
     profileBannerUrl: '',
-    user: 0
+    userId: ''
   };
 
   organizationForm: FormGroup;
   selectedBannerUrl: string = '';
 
-  constructor(private organizationCreationService: OrganizationCreationService, private fb: FormBuilder, private router: Router, private organizationService: OrganizationService) {
+  constructor(private fb: FormBuilder, private router: Router, private organizationService: OrganizationService) {
     this.organizationForm = this.fb.group({
       name: ['', Validators.required]
     });
@@ -35,19 +39,23 @@ export class OrganizationCreationComponent {
     if (this.organizationForm.valid) {
       this.organizationModel.name = name;
       this.organizationModel.profileBannerUrl = ""; //this.selectedBannerUrl
-      this.organizationModel.user = parseInt(localStorage.getItem("User") ?? "0");
 
-
-      this.organizationCreationService.createOrganization(this.organizationModel).subscribe(
-        (response) => {
-          console.log('Organization created successfully:', response);
-          this.organizationService.setCurrentOrganizationId(response);
-          this.router.navigate(['/organization/'+response.id+'/addMembers']);
-        },
-        (error) => {
-          console.error('Error creating organization:', error);
-        }
-      );
+      this.authState$.subscribe({next: (state) => {
+        if(state.state == "LOGGED_IN")
+          {
+            this.organizationModel.userId = state.user.id;
+            this.organizationService.create(this.organizationModel).subscribe({
+              next:(response) => {
+                console.log('Organization created successfully:', response);
+                this.organizationService.setCurrentOrganizationId(response);
+                this.router.navigate(['/organization/'+response.id+'/addMembers']);
+              },
+              error: (error) => {
+                console.error('Error creating organization:', error);
+              }
+            });
+          }
+      }}).unsubscribe();
     }
   }
 

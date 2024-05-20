@@ -1,6 +1,6 @@
 export interface AcceptInvitationRequest
 {
     organization: number,
-    user: number,
+    userId: string,
     pseudonym: String
 }
