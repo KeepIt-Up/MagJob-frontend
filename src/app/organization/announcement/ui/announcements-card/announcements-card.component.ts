@@ -1,26 +1,17 @@
-import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, Signal, computed, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit, Signal, inject } from '@angular/core';
 import { AnnouncementCardComponent } from '../announcement-card/announcement-card.component';
 import { AnnouncementService } from '../../service/announcement.service';
 import { LIST_STATE_VALUE } from '../../utils/list-state.type';
-import { AnnouncementUpdatePayload } from '../../model/announcement-update-payload';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AnnouncementCreatePayload } from '../../model/announcement-create-payload';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AnnouncementCreateForm, AnnouncementCreatePayload, AnnouncementUpdatePayload } from '../../model/announcement';
 
-type TasksListFiltersForm = FormGroup<{
-  title: FormControl<string>;
-  content: FormControl<string>;
-  dateOfExpiration: FormControl<Date>;
-}>;
 
 @Component({
   selector: 'app-announcements-card',
@@ -32,16 +23,16 @@ type TasksListFiltersForm = FormGroup<{
 export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   @Input({ required: true }) organizationId!: string;
   @Input() id!: Signal<string>;
-  private roleService = inject(AnnouncementService);
+  private announcementService = inject(AnnouncementService);
   private formBuilder = inject(NonNullableFormBuilder);
   private route = inject(ActivatedRoute);
 
   routeSub?: Subscription;
 
   listStateValue = LIST_STATE_VALUE;
-  listState$ = this.roleService.listState$;
+  listState$ = this.announcementService.listState$;
 
-  form: TasksListFiltersForm = this.formBuilder.group({
+  form: AnnouncementCreateForm = this.formBuilder.group({
     title: this.formBuilder.control<string>('', Validators.required),
     content: this.formBuilder.control<string>('', Validators.required),
     dateOfExpiration: this.formBuilder.control<Date>(new Date(), Validators.required),
@@ -63,7 +54,7 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
           console.log(err)
         }
     });
-    this.roleService.getAllByOrganizationId(this.organizationId);
+    this.announcementService.getAllByOrganizationId(this.organizationId);
   }
 
   ngOnDestroy(): void {
@@ -71,11 +62,11 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   }
 
   deleteAnnouncemnet(id: string) {
-    this.roleService.delete(id);
+    this.announcementService.delete(id);
   }
 
   updateAnnouncement(payload: any) {
-    this.roleService.update(payload.id, payload as AnnouncementUpdatePayload);
+    this.announcementService.update(payload.id, payload as AnnouncementUpdatePayload);
   }
 
   createAnnouncement() {
@@ -87,7 +78,8 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
         title: formValue.title!,
         organization: this.organizationId
       }
-    this.roleService.create(payload);
+    this.announcementService.create(payload);
+    this.form.reset();
     }
   }
 }
