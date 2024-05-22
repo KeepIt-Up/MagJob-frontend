@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserProfileComponent } from './user/components/user-profile/view/user-profile.component';
-import { UserSettingsComponent } from './user/components/user-settings/view/user-settings.component';
 import { HomeComponent } from './home/view/home.component';
 import { RegisterComponent } from './register/view/register.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -18,6 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.page.compone
 import { OrganizationListComponent } from './organization/view/organization-list/organization-list.page.component';
 import { RolesComponent } from './roles/roles.page.component';
 import { RoleDetailsComponent } from './roles/role-details.page.component';
+import { UserProfileComponent } from './user/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -31,11 +30,6 @@ const routes: Routes = [
   {
     path: 'user/:id',
     component: UserProfileComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'user/:userId/settings',
-    component: UserSettingsComponent,
     canActivate: [AuthGuard],
   },
   {

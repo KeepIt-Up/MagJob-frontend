@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../service/user.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { User } from '../../../model/user';
 import { NgIf } from '@angular/common';
 import { UserInvitationsComponent } from 'src/app/invitations/ui/user-invitations/user-invitations.component';
+import { User } from './model/user';
+import { UserService } from './service/user.service';
 
 
 @Component({
