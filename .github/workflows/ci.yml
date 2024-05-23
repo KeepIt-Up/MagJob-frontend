@@ -3,8 +3,6 @@ name: magjob frontend CI with NodeJS and Docker
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
