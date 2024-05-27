@@ -1,0 +1,25 @@
+<div class="flex flex-col justify-center items-center gap-3">
+    <!-- Header -->
+    <div class="flex flex-row justify-between items-center gap-2">
+        <!-- Search Input -->
+        <div class="flex flex-row justify-between items-center gap-2 px-2 rounded border-2 border-gray-700 bg-white">
+            <input class="p-1 font-medium focus:outline-none" type="text" placeholder="Search members">
+            <i class="bi bi-search"></i>
+        </div>
+        <!-- Assign member to role button-->
+        <button class="p-2 rounded text-sm font-semibold  text-white  bg-blue-700 hover:bg-blue-800">Assign member</button>
+    </div>
+
+    <!-- Members container -->
+    <div class="flex flex-col justify-start items-start gap-3 py-5 px-10 max-w-lg w-screen">
+        @for (member of members; track $index) {
+            <div class="flex flex-row justify-between items-center p-1 rounded w-full hover:bg-gray-200">
+                <div class="inline-flex items-center gap-1">
+                    <img class="w-5 h-5 rounded-full" src="../../../../../../assets/profile.jpg"/>
+                    <div class="font-medium">{{member.firstname}} {{member.lastname}}</div>
+                </div>
+                <button class="hover:text-black text-gray-500 bi bi-x-circle-fill" (click)="unassignMember.emit(member.id)" ></button>
+            </div>
+        }
+    </div>
+</div>

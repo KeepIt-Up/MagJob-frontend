@@ -1,0 +1,30 @@
+@if(listState$ | async; as listState)
+{
+    @switch (listState.state) {
+        @case ("SUCCESS") {
+            dasd
+            @if(rolesState$ |async; as rolesState)
+            {
+                
+                @if(rolesState.selectedRole)
+                {
+                    <div class="flex flex-row items-start h-full">
+                        <!-- Roles Nav -->
+                        <app-roles-nav [roles]="listState.results" [selectedRole]="rolesState.selectedRole" (changeRole)="changeSelectedRole($event)" class="h-full"></app-roles-nav>
+                        <!-- Details about role -->
+                            <app-edit-role [state$]="rolesState$" class="h-full"></app-edit-role>
+                        <app-unsaved-changes-bar class="absolute bottom-10 left-0 w-screen"></app-unsaved-changes-bar>
+                    </div>
+                }
+            }
+        }
+        @case ("LOADING") {
+            Loading...
+        }
+        @case ("ERROR") {
+            Something went wrong...
+        }
+        @case ("IDLE") {
+        }
+    }
+}

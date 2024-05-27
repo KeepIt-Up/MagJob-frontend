@@ -1,0 +1,15 @@
+<div class="flex flex-col justify-start text-start gap-1 overflow-x-hidden overflow-y-auto max-w-xs p-2 h-full border-2">
+
+    <h6 class="uppercase font-medium text-xs truncate tracking-tight text-gray-600">Organization</h6>
+    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Przegląd</button>
+    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="['/app/settings/roles']" [routerLinkActive]="['bg-gray-200']">Role</button>
+    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Szablon organizacji</button>
+    <div class="border-2 w-full rounded"></div>
+
+    <h6 class="uppercase font-medium text-xs truncate tracking-tight text-gray-600">Zarządzanie użytkownikami</h6>
+    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Członkowie</button>
+    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Zaproszenia</button>
+    <div class="border-2 w-full rounded"></div>
+
+    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-red-600 hover:text-white" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Usuń organizację</button>
+</div>

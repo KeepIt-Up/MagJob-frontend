@@ -1,0 +1,12 @@
+<div class="flex flex-row justify-center gap-10 border-b-2 px-5 w-full">
+    <button
+        class="text-gray-500 hover:text-black font-semibold {{selectedSection == SectionTypeValue.APPEARANCE ? 'border-b-2':''}}  border-black capitalize"
+        (click)="changeSection.emit(SectionTypeValue.APPEARANCE)">Appearance</button>
+    <button
+        class="text-gray-500 hover:text-black font-semibold {{selectedSection == SectionTypeValue.PERMISSIONS ? 'border-b-2':''}} border-black capitalize"
+        (click)="changeSection.emit(SectionTypeValue.PERMISSIONS)">Permissions</button>
+    <button
+        class="text-gray-500 hover:text-black font-semibold {{selectedSection == SectionTypeValue.MEMBERS_MANAGEMENT ? 'border-b-2':''}} border-black capitalize"
+        (click)="changeSection.emit(SectionTypeValue.MEMBERS_MANAGEMENT)">Members Management
+        ({{membersCount$()}})</button>
+</div>
