@@ -1,5 +1,6 @@
+<app-filter-documents (requestFilterRefreshEvent)="this.applyFilters($event)"/>
 <div class="accordion" id="accordionExample" style="width:1250px;">
-    <div *ngFor="let doc of documentData" class="accordion-item" >
+    <div *ngFor="let doc of documentsData" class="accordion-item" >
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + doc.id" aria-expanded="false" [attr.aria-controls]="'#collapse' + doc.id">
             {{doc.title}}
