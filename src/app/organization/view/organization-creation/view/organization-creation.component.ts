@@ -5,6 +5,7 @@ import { OrganizationCreation } from "../../../model/organization-creation";
 import { OrganizationCreationService } from '../../organization-creation/service/organization-creation.service';
 import { OrganizationService } from 'src/app/organization/service/organization.service';
 import { AuthStateService } from 'src/app/auth/service/auth.state.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-organization-creation',
@@ -15,6 +16,7 @@ import { AuthStateService } from 'src/app/auth/service/auth.state.service';
 })
 export class OrganizationCreationComponent {
   private authService = inject(AuthStateService);
+  private oauthService = inject(OAuthService);
 
   authState$ = this.authService.state$;
 
@@ -47,6 +49,7 @@ export class OrganizationCreationComponent {
             this.organizationService.create(this.organizationModel).subscribe({
               next:(response) => {
                 console.log('Organization created successfully:', response);
+                this.oauthService.silentRefresh();
                 this.organizationService.setCurrentOrganizationId(response);
                 this.router.navigate(['/organization/'+response.id+'/addMembers']);
               },
