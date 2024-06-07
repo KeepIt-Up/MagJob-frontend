@@ -65,10 +65,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "magjob-frontend:build:production"
+              "buildTarget": "magjob-frontend:build:production"
             },
             "development": {
-              "browserTarget": "magjob-frontend:build:development"
+              "buildTarget": "magjob-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "magjob-frontend:build"
+            "buildTarget": "magjob-frontend:build"
           }
         },
         "test": {
