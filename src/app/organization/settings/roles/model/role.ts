@@ -1,5 +1,3 @@
-import { FormControl, FormGroup } from "@angular/forms";
-
 export interface Role {
     id: string,
     name: string,
@@ -15,7 +13,15 @@ export interface Role {
 
 export interface Member {
     id: string,
-    firstname: string,
-    lastname: string,
+    firstName: string,
+    lastName: string,
     organizationId: string
+}
+
+export interface UpdateRolePayload {
+    name: string,
+    canManageTasks: boolean,
+    canManageAnnouncements: boolean,
+    canManageInvitations: boolean,
+    canManageRoles: boolean
 }

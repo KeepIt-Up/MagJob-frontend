@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { EMPTY, Observable, catchError, tap } from 'rxjs';
-import { FetchingError } from '../../../../utils/list-state.type';
-import { Role } from '../../model/role';
+import { Role, UpdateRolePayload } from '../../model/role';
+import { FetchingError } from 'src/app/utils/entity-state.type';
 
 @Injectable({
   providedIn: 'root',
@@ -48,9 +48,23 @@ export class RoleApiService {
       })
     );
   }
+
   getAll() {
     return this.withLoadingState(
-      this._http.get<any>(this.apiEndpoint, {
+      this._http.get<any>(`api/organizations/102/roles`, {
+        observe: 'response',
+      })
+    );
+  }
+
+  /**
+   * Get all roles of given organization
+   * @param organizationId 
+   * @returns Observable with HttpResponse
+   */
+  getAllByOrganization(organizationId: string) {
+    return this.withLoadingState(
+      this._http.get<any>(`api/organizations/${organizationId}/roles`, {
         observe: 'response',
       })
     );
@@ -62,9 +76,9 @@ export class RoleApiService {
     )
   }
 
-  update(roleId: string, payload: any) {
+  update(roleId: string, payload: UpdateRolePayload) {
     return this.withLoadingState(
-      this._http.put<Role>(`${this.apiEndpoint}/${roleId}`, payload)
+      this._http.patch<Role>(`${this.apiEndpoint}/${roleId}`, payload)
     );
   }
 

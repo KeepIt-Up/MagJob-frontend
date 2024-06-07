@@ -1,6 +1,5 @@
-<div class="px-3 flex flex-col">
+<div class="px-3 d-flex flex-column">
     @for (role of roles; track $index) {
-        <button class="rounded p-1 px-2 font-normal text-start hover:bg-gray-200 truncate {{selectedRole.id == role.id ? 'bg-gray-200':''}}" (click)="selected.emit(role.id)">{{role.name}}</button>
+        <button class="btn btn-dark {{selectedRole.id == role.id ? 'btn-outline-primary':''}}" (click)="selected.emit(role.id)">{{role.name}}</button>
     }
-    
 </div>

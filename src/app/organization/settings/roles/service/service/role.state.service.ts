@@ -3,8 +3,7 @@ import { BehaviorSubject, tap, throwError } from 'rxjs';
 import { Role } from '../../model/role';
 import { FormGroup } from '@angular/forms';
 import { RoleFormService } from './role-form.service';
-import { SectionType, SectionTypeValue } from '../../roles.component';
-import { getRoles } from '../roleLogic.service';
+import { SectionTypeValue } from '../../roles.component';
 
 export type RoleState = {
   roles: Role[],
@@ -14,8 +13,8 @@ export type RoleState = {
 }
 
 const initialState = {
-  roles: getRoles(),
-  selectedRole: getRoles()[0],
+  roles: [],
+  selectedRole: undefined,
   forms: [],
   selectedSection: "APPEARANCE" as SectionTypeValue
 }
@@ -27,9 +26,6 @@ export class RoleStateService {
   private roleFormService = inject(RoleFormService);
   constructor() 
   { 
-    this.state$.subscribe({next: (se) => {
-      console.log(se);
-    }})
     this.roleFormService.value$.subscribe({next:(value) => {
       console.log(value);
       this.state$.next({
@@ -37,7 +33,6 @@ export class RoleStateService {
         forms: value
       })
     }})
-    this.roleFormService.setForms(getRoles()[0])
   }
 
   private state$ = new BehaviorSubject<RoleState>(initialState);
@@ -54,18 +49,18 @@ export class RoleStateService {
 
   setRoles(roles: Role[])
   {
-    this.roleFormService.setForms(getRoles()[0]);
+    this.roleFormService.setForms(roles[0]);
     this.state$.next({
       ...this.state$.value,
       selectedRole: roles[0],
-      roles: getRoles(),
+      roles: roles,
     });
   }
 
   removeRole(roleId: string)
   {
     const updatedRoles = this.state$.value.roles.filter((role) => {
-      return role.id.toString() !== roleId;
+      return role.id != roleId;
     });
 
     this.state$.next({
@@ -92,13 +87,14 @@ export class RoleStateService {
       ...this.state$.value,
       selectedRole: this.state$.value.roles.find(item => item.id == roleId)
     });
+
     if(this.state$.value.selectedRole)
       {
         this.roleFormService.setForms(this.state$.value.selectedRole);
       }
       else {
         throwError(()=> {
-          console.log("NOT FOUND ROLE OF GIVEN ID");
+          console.error("NOT FOUND ROLE OF GIVEN ID");
         })
       }
   }

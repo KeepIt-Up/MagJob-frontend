@@ -1,15 +1,17 @@
-<div class="flex flex-col justify-start text-start gap-1 overflow-x-hidden overflow-y-auto max-w-xs p-2 h-full border-2">
+<div class="d-flex flex-column justify-content-start text-start overflow-hidden p-2 h-100 gap-1 border-end border-2">
 
-    <h6 class="uppercase font-medium text-xs truncate tracking-tight text-gray-600">Organization</h6>
-    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Przegląd</button>
-    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="['/app/settings/roles']" [routerLinkActive]="['bg-gray-200']">Role</button>
-    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Szablon organizacji</button>
-    <div class="border-2 w-full rounded"></div>
+    <h6 class="text-uppercase fw-medium text-truncate text-muted">Organization</h6>
+    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Przegląd</button>
+    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="['roles']" [routerLinkActive]="['btn-primary','text-light']">Role</button>
+    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Szablon organizacji</button>
 
-    <h6 class="uppercase font-medium text-xs truncate tracking-tight text-gray-600">Zarządzanie użytkownikami</h6>
-    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Członkowie</button>
-    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-gray-200" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Zaproszenia</button>
-    <div class="border-2 w-full rounded"></div>
+    <div class="border my-2 w-100 rounded"></div>
 
-    <button class="truncate rounded p-1 px-2 font-medium text-start hover:bg-red-600 hover:text-white" [routerLink]="" [routerLinkActive]="['bg-gray-200']">Usuń organizację</button>
+    <h6 class="text-uppercase fw-medium text-truncate text-muted">Zarządzanie użytkownikami</h6>
+    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Członkowie</button>
+    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Zaproszenia</button>
+
+    <div class="border my-2 w-100 rounded"></div>
+
+    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-danger" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Usuń organizację</button>
 </div>

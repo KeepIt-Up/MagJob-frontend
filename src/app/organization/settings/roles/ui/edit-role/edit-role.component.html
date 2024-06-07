@@ -1,14 +1,14 @@
-@if(state$ |async; as state)
+@if(state$ | async; as state)
 {
     @if(state.selectedRole)
     {
-        <div class="flex flex-col p-2 items-center border-r-2 h-full">
+        <div class="d-flex flex-column p-2 align-items-center border-end border-2 h-100">
             <!-- Header -->
-            <app-header [role]="state.selectedRole" class="w-full"></app-header>
+            <app-header (delete)="deleteRole.emit($event)" [role]="state.selectedRole" class="w-100"></app-header>
             <!-- Nav -->
             <app-sections-nav [membersCount$]="membersCount$" (changeSection)="changeSection.emit($event)" [selectedSection]="state.selectedSection"></app-sections-nav>
             <!-- Sections -->
-            <div class="flex flex-col justify-start items-center gap-1 py-2 h-full">
+            <div class="d-flex flex-column justify-content-start align-items-center gap-1 py-2 h-100">
                 @switch (state.selectedSection) {
                     @case (SectionTypeValue.APPEARANCE) {
                         <app-appearance [roleForm]="state.forms[0]"></app-appearance>
@@ -24,4 +24,3 @@
         </div>
     }
 }
-    

@@ -1,6 +1,6 @@
-<div class="d-flex justify-content-between" style="width: 100vw; height: 80vh;">
+<div class="d-flex justify-content-between" style="width: 100vw; height: 85vh;">
     <app-organizaton-nav [organizationId]="organizationId"></app-organizaton-nav>
-    <div class="d-flex justify-content-center ml-auto mr-auto" style="width: 100vw;">
+    <div class="d-flex justify-content-center ml-auto mr-auto" style="width: 100vw; overflow-y: hidden;">
         <router-outlet (activate)="handleRouterActivation($event)" (attach)="handleRouterActivation($event)"></router-outlet>
     </div>
     

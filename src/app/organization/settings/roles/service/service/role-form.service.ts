@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Role } from '../../model/role';
-import { group } from '@angular/animations';
 
 export type RoleForm = FormGroup<{
   name: FormControl<string>;
@@ -20,21 +19,23 @@ export type PermissionForm = FormGroup<{
 export type PermissionFormValue = ReturnType<PermissionForm['getRawValue']>;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleFormService {
   private formBuilder = inject(NonNullableFormBuilder);
 
   roleForm: RoleForm = this.formBuilder.group({
-    name: this.formBuilder.control<string>('')
-  })
-  
+    name: this.formBuilder.control<string>(''),
+  });
+
   permissionForm: PermissionForm = this.formBuilder.group({
     canManageAnnouncements: this.formBuilder.control<boolean>(false),
     canManageTasks: this.formBuilder.control<boolean>(false),
     canManageInvitations: this.formBuilder.control<boolean>(false),
     canManageRoles: this.formBuilder.control<boolean>(false),
   });
+
+  currentRole?: Role;
 
   private state$: BehaviorSubject<FormGroup[]>;
 
@@ -43,32 +44,36 @@ export class RoleFormService {
   constructor() {
     this.state$ = new BehaviorSubject<FormGroup[]>([]);
     this.value$ = this.state$.asObservable();
-   }
+  }
 
-   setPermissionForm(role: Role)
-  {
+  private setPermissionForm(role: Role) {
     this.permissionForm.setValue({
       canManageAnnouncements: role.canManageAnnouncements,
       canManageInvitations: role.canManageInvitations,
       canManageRoles: role.canManageRoles,
-      canManageTasks: role.canManageTasks
+      canManageTasks: role.canManageTasks,
     });
   }
 
-  setRoleForm(role: Role)
-  {
+  private setRoleForm(role: Role) {
     this.roleForm.setValue({
-      name: role.name
+      name: role.name,
     });
   }
 
-  setForms(role: Role)
-  {
+  setForms(role: Role) {
+    this.currentRole = role;
     this.setRoleForm(role);
     this.setPermissionForm(role);
 
-    this.state$.next(
-      [this.roleForm, this.permissionForm]
-    )
+    this.state$.next([this.roleForm, this.permissionForm]);
+  }
+
+  resetForms() {
+    if (this.currentRole) {
+      this.setForms(this.currentRole);
+    } else {
+      console.error("Cannot reset forms because no role is selected");
+    }
   }
 }

@@ -20,6 +20,7 @@ import { AsyncPipe } from '@angular/common';
 export class EditRoleComponent implements OnInit {
   @Input({required: true}) state$!: Observable<RoleState>;
   @Output() changeSection = new EventEmitter<SectionTypeValue>();
+  @Output() deleteRole = new EventEmitter<string>();
   SectionTypeValue = SectionType;
 
   membersCount$ = signal<number>(0);
@@ -28,7 +29,13 @@ export class EditRoleComponent implements OnInit {
     this.state$.subscribe({next: (state) => {
       if(state.selectedRole)
         {
-          this.membersCount$.set(state.selectedRole.members.length);
+          if(state.selectedRole.members)
+            {
+              this.membersCount$.set(state.selectedRole.members.length);
+            }
+            else {
+          this.membersCount$.set(0);
+            }
         }
     }});
   }

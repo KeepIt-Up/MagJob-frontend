@@ -12,7 +12,8 @@ import { OrganizationTasksComponent } from './organization/components/organizati
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
 import { AddMembersComponent } from './organization/components/organization-members/view/add-members/add-members.component';
 import { RoleDetailsComponent } from './roles/role-details.page.component';
-import { SettingsComponent } from './organization/settings/settings.component';
+import { RolesComponent } from './organization/settings/roles/roles.component';
+import { SettingsComponent } from './organization/settings/settings/settings.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -38,11 +39,12 @@ export const routes: Routes = [
       { path: 'home', component: OrganizationHomeComponent },
       { path: 'schedule', component: OrganizationScheduleComponent },
       { path: 'members', component: ListMembersComponent },
-      //{ path: 'settings', component: SettingsComponent },
+      { path: 'settings', component: SettingsComponent, children: [
+        { path: 'roles', component: RolesComponent}
+      ] },
       { path: 'tasks', component: OrganizationTasksComponent },
       { path: 'documents', component: OrganizationDocumentsComponent },
       { path: 'addMembers', component: AddMembersComponent },
-      { path: 'roles', component: RoleDetailsComponent },
       { path: 'roles/:roleId', component: RoleDetailsComponent },
     ],
   },

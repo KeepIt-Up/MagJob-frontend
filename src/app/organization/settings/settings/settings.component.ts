@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SidenavComponent } from '../sidenav/sidenav.component';
 import { RouterOutlet } from '@angular/router';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 
 @Component({
   selector: 'app-settings',
