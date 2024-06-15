@@ -17,7 +17,7 @@
                         <app-permissions [permissionsForm]="state.forms[1]"></app-permissions>
                     }
                     @case (SectionTypeValue.MEMBERS_MANAGEMENT) {
-                        <app-members-management [members]="state.selectedRole.members"></app-members-management>
+                        <app-members-management [members]="state.selectedRole.members" (unassignMember)="unassignMember" (assignMembers)="assignMembers.emit($event)"></app-members-management>
                     }
                 }
             </div>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Permission } from '../../../../model/permission';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { PermissionForm } from '../../../../service/service/role-form.service';
 
 @Component({
   selector: 'app-permissions',
@@ -9,7 +10,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './permissions.component.html'
 })
 export class PermissionsComponent {
-  @Input({required: true}) permissionsForm!: FormGroup;
+  @Input({required: true}) permissionsForm?: PermissionForm;
   
   //TODO refactor !!!
   permissions: Permission[] = [

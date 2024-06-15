@@ -87,4 +87,15 @@ export class RoleApiService {
       this._http.delete<any>(`${this.apiEndpoint}/${roleId}`)
     );
   }
+
+  assignMembers(payload: any)
+  {
+    return this._http.post(`/api/role-members/list`, payload, {observe: 'response'});
+  }
+
+  unassignMember(memberId: string, roleId: string)
+  {
+    //TO VERIFY
+    return this._http.delete(`/api/roles/${roleId}/member/${memberId}`, {observe: 'response'});
+  }
 }

@@ -6,6 +6,7 @@ import { RoleService } from './service/service/role.service';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Role } from './model/role';
 
 export const SectionType = {
   APPEARANCE: "APPEARANCE",
@@ -31,6 +32,8 @@ export class RolesComponent implements OnInit {
 
   routeSub?: Subscription;
 
+  private currentSelectedRole?: Role;
+
   constructor() {
     
   }
@@ -38,7 +41,6 @@ export class RolesComponent implements OnInit {
   ngOnInit(): void {
     this.route.parent?.parent?.paramMap.subscribe({
       next: (value) => {
-        console.log(value)
         const organizationId = value.get('organizationId');
         if (organizationId !== null) {
           this.organizationId = organizationId;
@@ -53,6 +55,13 @@ export class RolesComponent implements OnInit {
     });
     
     this.roleService.getAllByOrganization(this.organizationId);
+
+    this.rolesState$.subscribe({next: (state) => {
+      if(state.selectedRole)
+        {
+          this.currentSelectedRole = state.selectedRole;
+        }
+    }})
   }
 
   ngOnDestroy(): void {
@@ -79,4 +88,20 @@ export class RolesComponent implements OnInit {
     this.roleService.delete(roleId);
   }
 
+  assignMembers(membersIds: string[])
+  {
+    if(this.currentSelectedRole)
+      {
+        this.roleService.assignMembers(membersIds, this.currentSelectedRole.id);
+
+      }
+  }
+
+  unassignMember(memberId: string)
+  {
+    if(this.currentSelectedRole)
+      {
+        this.roleService.unassignMember(memberId, this.currentSelectedRole.id);
+      }
+  }
 }

@@ -135,6 +135,24 @@ export class RoleService {
       .subscribe();
   }
 
+  assignMembers(memberIds: string[], roleId: string)
+  {
+    let members: {memberId: string}[] = [];
+    for(let member of memberIds)
+      {
+        members.push({memberId: member});
+      }
+    const payload = { roleId: roleId, roleMembers: members};
+    console.log(payload);
+    return this.httpService.assignMembers(payload).pipe().subscribe();
+  }
+
+  unassignMember(memberId: string, roleId: string)
+  {
+    return this.httpService.unassignMember(memberId, roleId)
+  }
+
+
   changeSection(sectionType: SectionTypeValue) {
     this.state.changeSection(sectionType);
   }

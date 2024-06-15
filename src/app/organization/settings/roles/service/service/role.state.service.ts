@@ -27,7 +27,6 @@ export class RoleStateService {
   constructor() 
   { 
     this.roleFormService.value$.subscribe({next:(value) => {
-      console.log(value);
       this.state$.next({
         ...this.state$.value,
         forms: value

@@ -7,12 +7,12 @@
             <i class="bi bi-search text-light"></i>
         </div>
         <!-- Assign member to role button-->
-        <button class="btn btn-sm btn-primary p-2 fw-semibold">Assign member</button>
+        <button class="btn btn-sm btn-primary p-2 fw-semibold" data-bs-toggle="modal" data-bs-target="#assignModal">Assign member</button>
     </div>
 
     <!-- Members container -->
     <div class="d-flex flex-column justify-content-start align-items-start gap-3 py-5 px-10 w-100" style="max-width: 40rem;">
-        @for (member of members; track $index) {
+        @for(member of members; track $index) {
             <div class="d-flex flex-row justify-content-between align-items-center p-1 rounded w-100 hover-bg-light">
                 <div class="d-flex align-items-center gap-1">
                     <img class="rounded-circle" src="../../../../../../assets/profile.jpg" style="width: 1.25rem; height: 1.25rem;"/>
@@ -23,3 +23,33 @@
         }
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="assignModalLabel">Assign members to role</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          @for(member of allMembers; track $index) 
+          {
+            <div class="d-flex flex-row justify-content-between align-items-center px-2">
+              <div class="">{{member.firstName}} {{member.lastName}}</div>
+              <button class="btn btn-outline-secondary" (click)="assignMember(member.id)">Assign</button> 
+            </div>
+            
+          }
+          @empty {
+            <div class="">No Members in Organization</div>
+          }
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Assign</button>
+        </div> -->
+      </div>
+    </div>
+  </div>

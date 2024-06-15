@@ -21,6 +21,8 @@ export class EditRoleComponent implements OnInit {
   @Input({required: true}) state$!: Observable<RoleState>;
   @Output() changeSection = new EventEmitter<SectionTypeValue>();
   @Output() deleteRole = new EventEmitter<string>();
+  @Output() assignMembers = new EventEmitter<string[]>();
+  @Output() unassignMember = new EventEmitter<string>();
   SectionTypeValue = SectionType;
 
   membersCount$ = signal<number>(0);
