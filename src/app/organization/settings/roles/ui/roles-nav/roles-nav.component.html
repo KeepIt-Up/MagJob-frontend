@@ -1,0 +1,36 @@
+<div class="d-flex flex-column justify-content-start gap-2 p-2 border-end border-2 h-100" style="min-width: 250px;">
+    <!-- header -->
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <button class="text-uppercase btn btn-outline-secondary d-flex flex-row justify-content-center align-items-center gap-1" [routerLink]="['../']">
+            <span class=" bi bi-arrow-left-short"></span> Wstecz
+        </button>
+        <button class="px-1 rounded btn btn-outline-warning bi bi-plus" data-bs-toggle="modal" data-bs-target="#roleNameModal"></button>
+    </div>
+    <!-- Role list -->
+    <app-roles-list [roles]="roles" [selectedRole]="selectedRole" (selected)="changeRole.emit($event)"></app-roles-list>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="roleNameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add new announcement</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form >
+            <div class="mb-3">
+              <label for="title" class="form-label">RoleName</label>
+              <input #roleName type="text" class="form-control" id="roleName" aria-describedby="emailHelp" formControlName="roleName">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createNewRole.emit(roleName.value)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

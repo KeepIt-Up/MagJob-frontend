@@ -1,0 +1,5 @@
+<div class="px-3 d-flex flex-column">
+    @for (role of roles; track $index) {
+        <button class="btn btn-dark {{selectedRole.id == role.id ? 'btn-outline-primary':''}}" (click)="selected.emit(role.id)">{{role.name}}</button>
+    }
+</div>

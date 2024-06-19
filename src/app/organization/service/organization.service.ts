@@ -1,26 +1,38 @@
 import { Organization } from './../model/organization';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthStateService } from 'src/app/auth/service/auth.state.service';
+import { OrganizationCreation } from '../model/organization-creation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
   private currentOrganizationId: number | null = null;
-
   private apiUrl = '/api/organizations';
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) 
+  {
+    
+  }
+
+
+
+  getAll(): Observable<any>
+  {
+    return this.http.get<any>(`${this.apiUrl}`);
+  }
 
   getAllOrganizations(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
 
-  getUserOrganizations(userId: number): Observable<any> {
+  getAllByUserId(userId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/users/${userId}`);
   }
 
-  getMembers(organizationId: number): Observable<any>
+  getMembers(organizationId: string): Observable<any>
   {
     return this.http.get<any>(`${this.apiUrl}/${organizationId}/members`);
   }
@@ -40,5 +52,10 @@ export class OrganizationService {
 
   clearCurrentOrganization(): void {
     this.currentOrganizationId = null;
+  }
+
+  create(payload: OrganizationCreation) : Observable<any>
+  {
+    return this.http.post(`${this.apiUrl}`, payload);
   }
 }

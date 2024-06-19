@@ -1,0 +1,138 @@
+{
+    "roles": [
+        {
+          "id": 1,
+          "name": "Admin",
+          "color": { "r": 255, "g": 0, "b": 0 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": true },
+            { "id": 2, "name": "Manage Roles", "value": true },
+            { "id": 3, "name": "Access Admin Panel", "value": true }
+          ],
+          "members": [
+            { "id": 101, "pseudonym": "admin1", "firstName": "John", "lastName": "Doe" },
+            { "id": 102, "pseudonym": "admin2", "firstName": "Jane", "lastName": "Smith" }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Moderator",
+          "color": { "r": 0, "g": 255, "b": 0 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": true },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 103, "pseudonym": "mod1", "firstName": "Alice", "lastName": "Johnson" },
+            { "id": 104, "pseudonym": "mod2", "firstName": "Bob", "lastName": "Brown" }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "User",
+          "color": { "r": 0, "g": 0, "b": 255 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": false },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 105, "pseudonym": "user1", "firstName": "Emily", "lastName": "Wilson" },
+            { "id": 106, "pseudonym": "user2", "firstName": "David", "lastName": "Lee" }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Guest",
+          "color": { "r": 128, "g": 128, "b": 128 },
+          "permissions": [],
+          "members": []
+        },
+        {
+          "id": 5,
+          "name": "SuperAdmin",
+          "color": { "r": 255, "g": 255, "b": 0 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": true },
+            { "id": 2, "name": "Manage Roles", "value": true },
+            { "id": 3, "name": "Access Admin Panel", "value": true }
+          ],
+          "members": [
+            { "id": 107, "pseudonym": "superadmin1", "firstName": "Ella", "lastName": "Davis" },
+            { "id": 108, "pseudonym": "superadmin2", "firstName": "Finn", "lastName": "Martinez" }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Tester",
+          "color": { "r": 192, "g": 192, "b": 192 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": false },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 109, "pseudonym": "tester1", "firstName": "Grace", "lastName": "Taylor" },
+            { "id": 110, "pseudonym": "tester2", "firstName": "Henry", "lastName": "Anderson" }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "Developer",
+          "color": { "r": 0, "g": 255, "b": 255 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": false },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 111, "pseudonym": "dev1", "firstName": "Ivy", "lastName": "Harris" },
+            { "id": 112, "pseudonym": "dev2", "firstName": "Jack", "lastName": "Thompson" }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Viewer",
+          "color": { "r": 255, "g": 165, "b": 0 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": false },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 113, "pseudonym": "viewer1", "firstName": "Kevin", "lastName": "Clark" },
+            { "id": 114, "pseudonym": "viewer2", "firstName": "Lily", "lastName": "Wright" }
+          ]
+        },
+        {
+          "id": 9,
+          "name": "Editor",
+          "color": { "r": 128, "g": 0, "b": 128 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": false },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 115, "pseudonym": "editor1", "firstName": "Mia", "lastName": "Walker" },
+            { "id": 116, "pseudonym": "editor2", "firstName": "Noah", "lastName": "White" }
+          ]
+        },
+        {
+          "id": 10,
+          "name": "Writer",
+          "color": { "r": 255, "g": 192, "b": 203 },
+          "permissions": [
+            { "id": 1, "name": "Manage Users", "value": false },
+            { "id": 2, "name": "Manage Roles", "value": false },
+            { "id": 3, "name": "Access Admin Panel", "value": false }
+          ],
+          "members": [
+            { "id": 117, "pseudonym": "writer1", "firstName": "Olivia", "lastName": "Martin" },
+            { "id": 118, "pseudonym": "writer2", "firstName": "Peter", "lastName": "Adams" }
+          ]
+        }
+      ]
+      
+}

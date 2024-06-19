@@ -1,0 +1,12 @@
+<div class="d-flex flex-row justify-content-center gap-4 border-bottom px-5 w-100">
+    <button
+        class="btn {{selectedSection == SectionTypeValue.APPEARANCE ? 'fw-medium':''}} text-capitalize"
+        (click)="changeSection.emit(SectionTypeValue.APPEARANCE)">Appearance</button>
+    <button
+        class="btn {{selectedSection == SectionTypeValue.PERMISSIONS ? 'fw-medium':''}} text-capitalize"
+        (click)="changeSection.emit(SectionTypeValue.PERMISSIONS)">Permissions</button>
+    <button
+        class="btn {{selectedSection == SectionTypeValue.MEMBERS_MANAGEMENT ? 'fw-medium':''}} text-capitalize"
+        (click)="changeSection.emit(SectionTypeValue.MEMBERS_MANAGEMENT)">Members Management
+        ({{membersCount$()}})</button>
+</div>

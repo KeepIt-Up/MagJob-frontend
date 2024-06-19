@@ -1,0 +1,40 @@
+<div *ngIf="!isEditMode; else editModeView">
+  <div class="card m-2" style="min-width: 20rem; max-width: 20rem">
+    <div class="d-flex justify-content-between m-2 mx-2 align-items-center">
+      <h5 class="mx-2" style="color: var(--Gold)">{{ announcement.title }}</h5>
+      <div class="d-flex flex-nowrap">
+        <button class="btn btn-outline-warning btn-sm mx-1" (click)="toggleMode()">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1">
+          <i class="bi bi-trash3" (click)="delete.emit(announcement.id)"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="text-wrap">{{ announcement.content }}</p>
+        <div *ngif="announcement.dateOfExpiration" class="d-flex row">
+          <i class="bi bi-calendar-x-fill"></i>
+          <p class="text-wrap">{{ announcement.dateOfExpiration | date:'short' }}</p>
+        </div>
+    </div>
+  </div>
+</div>
+<ng-template #editModeView>
+  <form [formGroup]="announcementUpdateForm" class="card m-2" style="min-width: 20rem; max-width: 20rem">
+    <div class="d-flex justify-content-between m-2 mx-2 align-items-center">
+      <input class="form-control mx-1 me-3" id="title" formControlName="title"/>
+      <div class="d-flex flex-nowrap gap-1">
+        <button class="btn btn-primary bi bi-check-lg" (click)="submit()"></button>
+        <button class="btn btn-outline-secondary bi bi-x-lg" (click)="reject()"></button>
+      </div>
+    </div>
+    <div class="card-body">
+        <textarea
+      formControlName="content"
+      class="form-control d-block w-100"
+      (click)="$event.stopPropagation()"
+    ></textarea>
+    </div>
+  </form>
+</ng-template>
