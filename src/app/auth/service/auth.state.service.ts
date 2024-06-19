@@ -25,8 +25,6 @@ export class AuthStateService {
     if (this.oauthService.hasValidAccessToken()) {
       const claims = this.oauthService.getIdentityClaims();
       this.userExistingCheck(claims['sub']);
-
-          console.log("true")
           this.initUserData(claims['sub']);
 
     }
@@ -56,11 +54,8 @@ export class AuthStateService {
           value.type == 'token_received'
         ) {
           const claims = this.oauthService.getIdentityClaims();
-          console.log(claims)
           this.userExistingCheck(claims['sub']);
-              console.log("true")
               this.initUserData(claims['sub']);
-            console.log(this.state$)
         }
       },
     });
