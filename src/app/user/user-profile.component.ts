@@ -40,8 +40,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.originalFormData = { ...this.userData };
 
         this.userForm = this.formBuilder.group({
-          firstname: [this.userData?.firstname],
-          lastname: [this.userData?.lastname],
+          firstname: [this.userData?.firstName],
+          lastname: [this.userData?.lastName],
           email: [this.userData?.email],
           phoneNumber: [this.userData?.phoneNumber],
           birthDate: [this.userData?.birthDate]
