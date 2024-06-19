@@ -2,9 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { EMPTY, Observable, catchError, tap } from 'rxjs';
 import { FetchingError } from '../utils/list-state.type';
-import { Announcement } from '../model/announcement';
-import { AnnouncementCreatePayload } from '../model/announcement-create-payload';
-import { AnnouncementUpdatePayload } from '../model/announcement-update-payload';
+import { Announcement, AnnouncementCreatePayload, AnnouncementUpdatePayload } from '../model/announcement';
 
 @Injectable({
   providedIn: 'root',
@@ -73,7 +71,6 @@ export class AnnouncementApiService {
   }
 
   update(id: string, payload: AnnouncementUpdatePayload) {
-    console.log("tu");
     return this.withLoadingState(
       this._http.patch<Announcement>(`${this.apiEndpoint}/${id}`, payload)
     );

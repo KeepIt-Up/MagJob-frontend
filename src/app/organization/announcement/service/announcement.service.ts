@@ -3,9 +3,8 @@ import { AnnouncementApiService } from './announcement.api.service';
 import { tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { createListState } from '../utils/create-list-state';
-import { AnnouncementCreatePayload } from '../model/announcement-create-payload';
-import { AnnouncementUpdatePayload } from '../model/announcement-update-payload';
 import { AnnouncementStateService } from './announcement.state.service';
+import { AnnouncementCreatePayload, AnnouncementUpdatePayload } from '../model/announcement';
 
 type FetchingError = { message: string; status: number };
 

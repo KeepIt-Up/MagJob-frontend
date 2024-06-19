@@ -1,0 +1,26 @@
+@if(state$ | async; as state)
+{
+    @if(state.selectedRole)
+    {
+        <div class="d-flex flex-column p-2 align-items-center border-end border-2 h-100">
+            <!-- Header -->
+            <app-header (delete)="deleteRole.emit($event)" [role]="state.selectedRole" class="w-100"></app-header>
+            <!-- Nav -->
+            <app-sections-nav [membersCount$]="membersCount$" (changeSection)="changeSection.emit($event)" [selectedSection]="state.selectedSection"></app-sections-nav>
+            <!-- Sections -->
+            <div class="d-flex flex-column justify-content-start align-items-center gap-1 py-2 h-100">
+                @switch (state.selectedSection) {
+                    @case (SectionTypeValue.APPEARANCE) {
+                        <app-appearance [roleForm]="state.forms[0]"></app-appearance>
+                    }
+                    @case (SectionTypeValue.PERMISSIONS) {
+                        <app-permissions [permissionsForm]="state.forms[1]"></app-permissions>
+                    }
+                    @case (SectionTypeValue.MEMBERS_MANAGEMENT) {
+                        <app-members-management [members]="state.selectedRole.members" (unassignMember)="unassignMember" (assignMembers)="assignMembers.emit($event)"></app-members-management>
+                    }
+                }
+            </div>
+        </div>
+    }
+}

@@ -1,41 +1,45 @@
-import { UserService } from './../../user/service/user.service';
-import { AuthService } from './../../jwt/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AUTH_STATE_VALUE, AuthState } from 'src/app/utils/auth-state.type';
+import { AuthStateService } from 'src/app/auth/service/auth.state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nav-menu',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, NgIf],
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['./nav-menu.component.css'],
 })
-export class NavMenuComponent {
-  constructor(private authService: AuthService, private userService: UserService) {}
+export class NavMenuComponent implements OnInit, OnDestroy {
+  private authStateService = inject(AuthStateService);
 
-  isExpanded = false;
-  isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
+  authStateValue = AUTH_STATE_VALUE;
+
+  authStateSub?: Subscription;
+  authState: AuthState = { state: AUTH_STATE_VALUE.IDLE };
+
+  ngOnInit(): void {
+    this.authStateSub = this.authStateService.state$.subscribe({
+      next: (state) => {
+        this.authState = state;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
-  getUserId(): string | null {
-    const currentUser = this.userService.getCurrentUserId();
-    return currentUser ? currentUser : null;
+  ngOnDestroy(): void {
+    this.authStateSub?.unsubscribe();
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.userService.clearCurrentUser();
-    // Optionally, navigate to the login page or another route
-    // this.router.navigate(['/login']);
+  login() {
+    this.authStateService.login();
   }
 
-  collapse() {
-    this.isExpanded = false;
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  logout() {
+    this.authStateService.logOut();
   }
 }

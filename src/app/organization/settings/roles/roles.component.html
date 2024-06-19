@@ -1,0 +1,28 @@
+@if(listState$ | async; as listState)
+{
+    @switch (listState.state) {
+        @case ("SUCCESS") {
+            @if(rolesState$ | async; as rolesState)
+            {
+                @if(rolesState.selectedRole)
+                {
+                    <div class="d-flex flex-row align-items-start h-100">
+                        <!-- Roles Nav -->
+                        <app-roles-nav [roles]="listState.results" [selectedRole]="rolesState.selectedRole" (createNewRole)="createNewRole($event)" (changeRole)="changeSelectedRole($event)"  class="h-100"></app-roles-nav>
+                        <!-- Details about role -->
+                        <app-edit-role [state$]="rolesState$" (assignMembers)="assignMembers($event)" (unassignMember)="unassignMember($event)" (deleteRole)="deleteRole($event)" (changeSection)="changeSection($event)" class="h-100"></app-edit-role>
+                        <app-unsaved-changes-bar style="position: absolute; bottom: 10px; width: 50%; margin: 0px auto 0px auto;"></app-unsaved-changes-bar>
+                    </div>
+                }
+            }
+        }
+        @case ("LOADING") {
+            Loading...
+        }
+        @case ("ERROR") {
+            Something went wrong...
+        }
+        @case ("IDLE") {
+        }
+    }
+}

@@ -1,0 +1,56 @@
+<div class="d-flex flex-column justify-content-center align-items-center gap-3">
+    <!-- Search Input -->
+    <div class="d-flex flex-row justify-content-between align-items-center gap-2 rounded border border-2 border-light bg-dark px-2 w-50" style="max-width: 80rem;">
+        <input class="form-control p-1 fw-normal border-0 focus:outline-none w-100 text-light bg-dark" type="text" placeholder="Search">
+        <i class="bi bi-search text-light"></i>
+    </div>
+    <!-- Permissions container -->
+     @if(permissionsForm)
+     {
+        <form [formGroup]="permissionsForm" class="d-flex flex-column justify-content-start align-items-start gap-3 p-5 pb-5 overflow-auto w-100 rounded bg-dark" style="height: 60vh; max-width: 30rem;">
+            <!-- Permission card -->
+            <div class="d-flex flex-column gap-1 w-100">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="fw-medium text-light">{{permissions[0].name}}</div>
+                    <label class="form-check-inline d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input" formControlName="canManageTasks">
+                    </label>
+                </div>
+                <div class="text-muted text-light">{{permissions[0].description}}</div>
+            </div>
+            
+            <!-- Permission card -->
+            <div class="d-flex flex-column gap-1 w-100">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="fw-medium text-light">{{permissions[1].name}}</div>
+                    <label class="form-check-inline d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input" formControlName="canManageRoles">
+                    </label>
+                </div>
+                <div class="text-muted text-light">{{permissions[1].description}}</div>
+            </div>
+    
+            <!-- Permission card -->
+            <div class="d-flex flex-column gap-1 w-100">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="fw-medium text-light">{{permissions[2].name}}</div>
+                    <label class="form-check-inline d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input" formControlName="canManageAnnouncements">
+                    </label>
+                </div>
+                <div class="text-muted text-light">{{permissions[2].description}}</div>
+            </div>
+    
+            <!-- Permission card -->
+            <div class="d-flex flex-column gap-1 w-100">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="fw-medium text-light">{{permissions[3].name}}</div>
+                    <label class="form-check-inline d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input" formControlName="canManageInvitations">
+                    </label>
+                </div>
+                <div class="text-muted text-light">{{permissions[3].description}}</div>
+            </div>
+        </form>
+     }
+</div>
