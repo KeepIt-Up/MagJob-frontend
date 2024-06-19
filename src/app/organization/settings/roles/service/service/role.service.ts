@@ -34,19 +34,6 @@ export class RoleService {
 
   state$ = this.state.value$;
 
-  getAll() {
-    this.httpService
-      .getAll()
-      .pipe(
-        tap((response) => {
-          if (response.body) {
-            this.state.setRoles(response.body.roles);
-          }
-        })
-      )
-      .subscribe();
-  }
-
   getAllByOrganization(organizationId: string) {
     this.httpService
       .getAllByOrganization(organizationId)
@@ -149,7 +136,9 @@ export class RoleService {
 
   unassignMember(memberId: string, roleId: string)
   {
-    return this.httpService.unassignMember(memberId, roleId)
+    return this.httpService.unassignMember(memberId, roleId).pipe(tap((response) => {
+      this.state.unassignMember(roleId, memberId);
+    })).subscribe();
   }
 
 
