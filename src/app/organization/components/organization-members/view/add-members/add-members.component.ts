@@ -4,9 +4,10 @@ import { InvitationsService } from 'src/app/invitations/service/invitations.serv
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/user/model/user';
 import { UserService } from 'src/app/user/service/user.service';
-import { NgFor } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SendInvitationRequest } from 'src/app/invitations/model/send-invitation-request';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 type SearchForm = FormGroup<{
   text: FormControl<string>;
@@ -15,14 +16,15 @@ type SearchForm = FormGroup<{
 @Component({
   selector: 'app-add-members',
   standalone: true,
-  imports: [NgFor, ReactiveFormsModule],
+  imports: [NgFor, ReactiveFormsModule, AsyncPipe],
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.css']
 })
 export class AddMembersComponent implements OnInit{
   @Input() organizationId?: string;
-  users: User[] = [];
-  filteredUsers: User[] = [];
+
+  users$ = new BehaviorSubject<User[]>([]);
+  filteredUsers$ = new BehaviorSubject<User[]>([]);
 
   constructor(private userService: UserService, private invitationsService: InvitationsService, private organizationService: OrganizationService)  {}
 
@@ -38,18 +40,17 @@ export class AddMembersComponent implements OnInit{
 
 
   searchUsers() {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = data.users;
-      console.log(this.users);
+    this.userService.getUsers().subscribe({next: (data) => {
+      this.users$.next(data.users);
       this.filterUsers();
-    });
+    }});
   }
 
   filterUsers() {
-      const searchText: string = this.searchForm.get('text')?.value as string;
-      this.filteredUsers = this.users.filter((user: User) => 
-        user.email?.toLowerCase().includes(searchText.toLowerCase())
-    );
+      const searchFormValue = this.searchForm.getRawValue().text;
+      this.filteredUsers$.next(this.users$.getValue().filter((user: User) => 
+        user.firstName?.toLowerCase().includes(searchFormValue.toLowerCase()) || user.lastName?.toLowerCase().includes(searchFormValue.toLowerCase())
+    ));
   }
 
   inviteUser(user: User) {

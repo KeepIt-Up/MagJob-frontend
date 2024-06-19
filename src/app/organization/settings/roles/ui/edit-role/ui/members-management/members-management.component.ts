@@ -18,6 +18,7 @@ import { MembersService } from 'src/app/organization/service/members.service';
   styleUrl: './members-management.component.css',
 })
 export class MembersManagementComponent implements OnInit {
+  @Input({required: true}) organizationId!: string;
   @Input({ required: true }) members!: Member[];
   @Output() unassignMember = new EventEmitter<string>();
   @Output() assignMembers = new EventEmitter<string[]>();
@@ -27,7 +28,7 @@ export class MembersManagementComponent implements OnInit {
   private membersService = inject(MembersService);
 
   ngOnInit(): void {
-    this.membersService.getAllByOrganization('1').subscribe({
+    this.membersService.getAllByOrganization(this.organizationId).subscribe({
       next: (value) => {
         if (value.body) {
           this.allMembers = value.body.members as Member[];

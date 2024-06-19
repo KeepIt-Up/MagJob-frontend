@@ -4,12 +4,14 @@
     <button class="btn btn-primary m-1" (click)="searchUsers()">Search</button>
   </form>
 </div>
-
-<div class="card m-2" *ngFor="let user of filteredUsers">
-  <div class="card-header d-flex justify-content-between">
-    <div class="d-flex flex-column align-self-center">
-        {{user.email}}
+@if(filteredUsers$ | async; as filteredUsers)
+{
+  <div class="card m-2" *ngFor="let user of filteredUsers">
+    <div class="card-header d-flex justify-content-between">
+      <div class="d-flex flex-column align-self-center">
+          {{user.firstName}} {{user.lastName}}
+      </div>
+      <button class="btn btn-outline-warning" (click)="inviteUser(user)">Invite</button>
     </div>
-    <button class="btn btn-outline-warning" (click)="inviteUser(user)">Invite</button>
   </div>
-</div>
+}

@@ -7,6 +7,7 @@ import { AcceptInvitationRequest } from 'src/app/invitations/model/accept-invita
 import { RejectInvitationRequest } from 'src/app/invitations/model/reject-invitation-request';
 import { InvitationCardComponent } from '../invitation-card/invitation-card.component';
 import { Subscription } from 'rxjs';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-user-invitations',
@@ -19,6 +20,7 @@ export class UserInvitationsComponent implements OnInit, OnDestroy {
   userInvitationState: ComponentGetState<Invitation[]> = { state: 'idle' };
   invitationsSub!: Subscription;
   private invitationsService = inject(InvitationsService);
+  private oauthService = inject(OAuthService);
 
   ngOnInit(): void {
     this.userInvitationState = { state: 'loading' };
@@ -50,6 +52,7 @@ export class UserInvitationsComponent implements OnInit, OnDestroy {
       next: (response) => {
         if (this.userInvitationState.state == 'get-success') {
           this.userInvitationState.result = this.userInvitationState.result.filter(item => item.organizationName != invitation.organizationName );
+          this.oauthService.refreshToken();
         }
       },
       error: (error) => {

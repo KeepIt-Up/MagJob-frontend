@@ -18,6 +18,7 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './edit-role.component.css'
 })
 export class EditRoleComponent implements OnInit {
+  @Input({required: true}) organizationId!: string;
   @Input({required: true}) state$!: Observable<RoleState>;
   @Output() changeSection = new EventEmitter<SectionTypeValue>();
   @Output() deleteRole = new EventEmitter<string>();

@@ -49,14 +49,6 @@ export class RoleApiService {
     );
   }
 
-  getAll() {
-    return this.withLoadingState(
-      this._http.get<any>(`api/organizations/102/roles`, {
-        observe: 'response',
-      })
-    );
-  }
-
   /**
    * Get all roles of given organization
    * @param organizationId 
@@ -96,6 +88,6 @@ export class RoleApiService {
   unassignMember(memberId: string, roleId: string)
   {
     //TO VERIFY
-    return this._http.delete(`/api/roles/${roleId}/member/${memberId}`, {observe: 'response'});
+    return this._http.delete(`/api/role-members/${memberId}/${roleId}`, {observe: 'response'});
   }
 }

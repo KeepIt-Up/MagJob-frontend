@@ -105,4 +105,26 @@ export class RoleStateService {
       selectedSection: sectionType
     });
   }
+
+  unassignMember(roleId: string, memberId: string)
+  {
+    let role = this.state$.value.roles.find((role) => role.id == roleId);
+    const members = role?.members.filter((member) => member.id != memberId);
+    if(role)
+      {
+        if(members)
+          {
+            role.members = members;
+          }
+          else if (role)
+          {
+            role.members = [];
+          }
+
+          this.state$.next({
+            ...this.state$.value,
+            roles: this.state$.value.roles.filter((role) => role.id != roleId).concat(role)
+          })
+      }
+  }
 }
