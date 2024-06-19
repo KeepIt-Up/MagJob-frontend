@@ -14,6 +14,7 @@ import { AddMembersComponent } from './organization/components/organization-memb
 import { RoleDetailsComponent } from './roles/role-details.page.component';
 import { RolesComponent } from './organization/settings/roles/roles.component';
 import { SettingsComponent } from './organization/settings/settings/settings.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -52,5 +53,5 @@ export const routes: Routes = [
     path: 'organization/:organizationId/settings',
     component: SettingsComponent,
   },
-  { path: '**', redirectTo: '/welcome' },
+  { path: '**', component: PageNotFoundComponent },
 ];
