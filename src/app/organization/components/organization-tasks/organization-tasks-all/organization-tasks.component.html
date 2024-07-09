@@ -1,0 +1,40 @@
+<button class="create-button" type="button" (click)="navigateToCreateTask()">Create New Task</button>
+
+<p></p>
+<h2>FILTERS</h2>
+<p></p>
+
+<h4>Deadline</h4>
+<input type="date" class="form-control" [(ngModel)]="filter.deadlineDate" (change)="filterTasks()" />
+
+<label>
+  <input type="checkbox" [(ngModel)]="filter.completed" (change)="filterTasks()"> Completed
+</label>
+<label>
+  <input type="checkbox" [(ngModel)]="filter.notCompleted" (change)="filterTasks()"> Not Completed
+</label>
+<label>
+  <input type="checkbox" [(ngModel)]="filter.isImportant" (change)="filterTasks()"> Important
+</label>
+
+<p></p>
+<h2>TASKS</h2>
+<p></p>
+
+<ng-template class="main-tasks" [ngIf]="filteredTasks && filteredTasks.length > 0" [ngIfElse]="noTasks">
+  <div *ngFor="let task of filteredTasks" class="task-container">
+    <h3>{{ task.title }}</h3>
+    <p>{{ task.description }}</p>
+    <p>Created: {{ task.dateOfCreation ? task.dateOfCreation : 'none' }}</p>
+    <p>Deadline: {{ task.deadLine ? task.deadLine : 'none' }}</p>
+    <p *ngIf="task.isImportant" class="important">Important</p>
+    <p>Completed:  {{ task.isDone }}</p>
+    <p>{{ task.dateOfCompletion ? task.dateOfCompletion : 'none' }}</p>
+    <button *ngIf="!task.isDone" (click)="toggleIsDone(task)">Mark as Done</button>
+    <button class="update-button" (click)="navigateToUpdate(task.id)">Update</button>
+    <button class="delete-button" (click)="deleteTask(task.id)">Delete</button>
+  </div>
+</ng-template>
+<ng-template #noTasks>
+  <p class="no-tasks">No tasks available.</p>
+</ng-template>

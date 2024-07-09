@@ -8,13 +8,19 @@ import { OrganizationComponent } from './organization/organization/organization.
 import { OrganizationHomeComponent } from './organization/components/organization-home-page/view/organization-home.page.component';
 import { OrganizationScheduleComponent } from './organization/components/organization-schedule/organization-schedule.component';
 import { ListMembersComponent } from './organization/components/organization-members/view/list-members/list-members.component';
-import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks.component';
+import { OrganizationTasksComponent } from './organization/components/organization-tasks/organization-tasks-all/organization-tasks.component';
 import { OrganizationDocumentsComponent } from './organization/components/organization-documents/organization-documents.component';
 import { AddMembersComponent } from './organization/components/organization-members/view/add-members/add-members.component';
 import { RoleDetailsComponent } from './roles/role-details.page.component';
 import { RolesComponent } from './organization/settings/roles/roles.component';
 import { SettingsComponent } from './organization/settings/settings/settings.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {
+  OrganizationTasksCreateComponent
+} from "./organization/components/organization-tasks/organization-tasks-create/organization-tasks-create.component";
+import {
+  OrganizationTasksUpdateComponent
+} from "./organization/components/organization-tasks/organization-tasks-update/organization-tasks-update.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -44,6 +50,8 @@ export const routes: Routes = [
         { path: 'roles', component: RolesComponent}
       ] },
       { path: 'tasks', component: OrganizationTasksComponent },
+      { path: 'tasks-create', component: OrganizationTasksCreateComponent },
+      { path: 'task-update/:idUpdate', component: OrganizationTasksUpdateComponent },
       { path: 'documents', component: OrganizationDocumentsComponent },
       { path: 'addMembers', component: AddMembersComponent },
       { path: 'roles/:roleId', component: RoleDetailsComponent },
