@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Announcement, AnnouncementUpdateForm, AnnouncementUpdateFormValue } from '../../model/announcement';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {AuthStateService} from "../../../../auth/service/auth.state.service";
 
 @Component({
   selector: 'app-announcement-card',
@@ -16,8 +17,10 @@ export class AnnouncementCardComponent implements OnInit, OnChanges{
   @Output() update = new EventEmitter<{id: string, title: string, content: string}>();
 
   private formBuilder = inject(NonNullableFormBuilder);
+  private authStateService = inject(AuthStateService);
 
   isEditMode: boolean = false;
+  userRole: string = '';
 
   announcementUpdateForm: AnnouncementUpdateForm = this.formBuilder.group({
     title: this.formBuilder.control<string>(""),
@@ -25,6 +28,7 @@ export class AnnouncementCardComponent implements OnInit, OnChanges{
   });
 
   ngOnInit(): void {
+    this.userRole = this.authStateService.getUserRole();
     this.initFormValue();
   }
 

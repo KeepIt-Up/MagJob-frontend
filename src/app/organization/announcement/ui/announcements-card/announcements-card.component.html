@@ -1,4 +1,4 @@
-<div *ngIf="listState$ | async as listState">
+<div *ngIf="listState$ | async as listState ">
   <div *ngIf="listState.state === listStateValue.LOADING">
     <h1>Loading ...</h1>
   </div>
@@ -9,7 +9,13 @@
       </div>
       <div class="card justify-content-center align-items-center m-2" style="min-width: 20rem; max-width: 20rem; height: auto;">
         <h6 class="my-2">Add Announcement</h6>
-        <button class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle"></i></button>
+        <div *ngIf="userRole !== 'Member'">
+          <button class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle"></i></button>
+        </div>
+        <div *ngIf="userRole === 'Member'" class="tooltip-container">
+          <button class="btn btn-primary m-2 disabled-button"><i class="bi bi-plus-circle"></i></button>
+          <span class="tooltip-text">Nie masz uprawnień</span>
+        </div>
       </div>
     </div>
   </div>
@@ -17,7 +23,6 @@
     <p>Error while fetching data</p>
   </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

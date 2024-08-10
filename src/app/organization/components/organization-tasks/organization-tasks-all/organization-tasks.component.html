@@ -1,4 +1,11 @@
-<button class="create-button" type="button" (click)="navigateToCreateTask()">Create New Task</button>
+<div *ngIf="userRole !== 'Member'">
+  <button (click)="navigateToCreateTask()">Create Task</button>
+</div>
+
+<div *ngIf="userRole === 'Member'" class="tooltip-container">
+  <button disabled class="disabled-button" (click)="navigateToCreateTask() ">Create Task</button>
+  <span class="tooltip-text">Nie masz uprawnień</span>
+</div>
 
 <p></p>
 <h2>FILTERS</h2>
@@ -30,9 +37,18 @@
     <p *ngIf="task.isImportant" class="important">Important</p>
     <p>Completed:  {{ task.isDone }}</p>
     <p>{{ task.dateOfCompletion ? task.dateOfCompletion : 'none' }}</p>
-    <button *ngIf="!task.isDone" (click)="toggleIsDone(task)">Mark as Done</button>
-    <button class="update-button" (click)="navigateToUpdate(task.id)">Update</button>
-    <button class="delete-button" (click)="deleteTask(task.id)">Delete</button>
+    <div class="task-actions">
+      <button *ngIf="!task.isDone" (click)="toggleIsDone(task)">Mark as Done</button>
+      <div *ngIf="userRole !== 'Member'" class="admin-actions">
+        <button class="update-button" (click)="navigateToUpdate(task.id)">Update</button>
+        <button class="delete-button" (click)="deleteTask(task.id)">Delete</button>
+      </div>
+      <div *ngIf="userRole === 'Member'" class="tooltip-container">
+        <button class="disabled-button">Update</button>
+        <button class="disabled-button">Delete</button>
+        <span class="tooltip-text">Nie masz uprawnień</span>
+      </div>
+    </div>
   </div>
 </ng-template>
 <ng-template #noTasks>

@@ -1,12 +1,12 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { OAuthService, OAuthSuccessEvent } from 'angular-oauth2-oidc';
-import { Subscription } from 'rxjs';
-import { User } from 'src/app/user/model/user';
-import { UserService } from 'src/app/user/service/user.service';
-import { AUTH_STATE_VALUE, AuthState } from 'src/app/utils/auth-state.type';
-import { ENTITY_STATE_VALUE } from 'src/app/utils/entity-state.type';
+import {HttpErrorResponse} from '@angular/common/http';
+import {inject, Injectable, signal} from '@angular/core';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {OAuthService, OAuthSuccessEvent} from 'angular-oauth2-oidc';
+import {Subscription} from 'rxjs';
+import {User} from 'src/app/user/model/user';
+import {UserService} from 'src/app/user/service/user.service';
+import {AUTH_STATE_VALUE, AuthState} from 'src/app/utils/auth-state.type';
+import {ENTITY_STATE_VALUE} from 'src/app/utils/entity-state.type';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +18,7 @@ export class AuthStateService {
   private $authState = signal<AuthState>({ state: AUTH_STATE_VALUE.IDLE });
 
   private oauthEventsSubscription?: Subscription;
+  private userStateSubscription?: Subscription; // tu dodałem
 
   state$ = toObservable(this.$authState);
 
@@ -79,7 +80,7 @@ export class AuthStateService {
   }
 
   private initUserData(userUid: string) {
-    this.userService.state$.subscribe({
+    this.userStateSubscription = this.userService.state$.subscribe({
       next: (state) => {
         if (
           state.state == ENTITY_STATE_VALUE.IDLE
@@ -108,5 +109,11 @@ export class AuthStateService {
         this.oauthService.logOut();
       },
     });
+  }
+
+  getUserRole(): string {
+    const claims: any = this.oauthService.getIdentityClaims();
+    const parts = claims?.membership[0].split('/');
+    return parts.pop() || '?'; //last part
   }
 }

@@ -11,6 +11,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AnnouncementCreateForm, AnnouncementCreatePayload, AnnouncementUpdatePayload } from '../../model/announcement';
+import {AuthStateService} from "../../../../auth/service/auth.state.service";
 
 
 @Component({
@@ -26,11 +27,14 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   private announcementService = inject(AnnouncementService);
   private formBuilder = inject(NonNullableFormBuilder);
   private route = inject(ActivatedRoute);
+  private authStateService = inject(AuthStateService);
 
   routeSub?: Subscription;
 
   listStateValue = LIST_STATE_VALUE;
   listState$ = this.announcementService.listState$;
+
+  userRole: string = '';
 
   form: AnnouncementCreateForm = this.formBuilder.group({
     title: this.formBuilder.control<string>('', Validators.required),
@@ -38,7 +42,7 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
     dateOfExpiration: this.formBuilder.control<Date>(new Date(), Validators.required),
   });
 
-  
+
   ngOnInit() {
     this.routeSub = this.route.parent?.paramMap.subscribe({
       next: (value) => {
@@ -54,6 +58,7 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
           console.log(err)
         }
     });
+    this.userRole = this.authStateService.getUserRole();
     this.announcementService.getAllByOrganizationId(this.organizationId);
   }
 

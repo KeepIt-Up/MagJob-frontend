@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { concatMap, map, toArray } from 'rxjs/operators';
+import {AuthStateService} from "../../../../auth/service/auth.state.service";
 
 @Component({
   selector: 'app-organization-tasks',
@@ -26,15 +27,18 @@ export class OrganizationTasksComponent implements OnInit {
     notCompleted: false,
     isImportant: false
   };
+  userRole: string = '';
+  showNoPermission = false;
 
-  constructor(private taskService: TaskService, private router: Router, private route: ActivatedRoute) {
+  constructor(private taskService: TaskService, private router: Router, private route: ActivatedRoute, private authStateService: AuthStateService) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.organizationId = params['organizationId'] || 1; // domyślna wartość !!!
+      this.organizationId = params['organizationId'];
     });
     this.loadTasks();
+    this.userRole = this.authStateService.getUserRole();
   }
 
   loadTasks(): void {
@@ -53,6 +57,14 @@ export class OrganizationTasksComponent implements OnInit {
         console.error('Error loading tasks:', error);
       },
     });
+  }
+
+  showNoPermissionMessage(event: Event): void {
+    event.preventDefault();
+    this.showNoPermission = true;
+    setTimeout(() => {
+      this.showNoPermission = false;
+    }, 3000);
   }
 
   filterTasks(): void {
