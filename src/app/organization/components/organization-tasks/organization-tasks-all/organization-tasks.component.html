@@ -1,11 +1,13 @@
-<div *ngIf="userRole !== 'Member'">
-  <button (click)="navigateToCreateTask()">Create Task</button>
-</div>
+<!--<div *ngIf="userID !== 'Member'">-->
+<!--  <button (click)="navigateToCreateTask()">Create Task</button>-->
+<!--</div>-->
 
-<div *ngIf="userRole === 'Member'" class="tooltip-container">
-  <button disabled class="disabled-button" (click)="navigateToCreateTask() ">Create Task</button>
-  <span class="tooltip-text">Nie masz uprawnień</span>
-</div>
+<!--<div *ngIf="userID === 'Member'" class="tooltip-container">-->
+<!--  <button disabled class="disabled-button" (click)="navigateToCreateTask() ">Create Task</button>-->
+<!--  <span class="tooltip-text">Nie masz uprawnień</span>-->
+<!--</div>-->
+
+<app-organization-tasks-create [userID]="userID"></app-organization-tasks-create>
 
 <p></p>
 <h2>FILTERS</h2>
@@ -28,27 +30,16 @@
 <h2>TASKS</h2>
 <p></p>
 
+
+
 <ng-template class="main-tasks" [ngIf]="filteredTasks && filteredTasks.length > 0" [ngIfElse]="noTasks">
   <div *ngFor="let task of filteredTasks" class="task-container">
-    <h3>{{ task.title }}</h3>
-    <p>{{ task.description }}</p>
-    <p>Created: {{ task.dateOfCreation ? task.dateOfCreation : 'none' }}</p>
-    <p>Deadline: {{ task.deadLine ? task.deadLine : 'none' }}</p>
-    <p *ngIf="task.isImportant" class="important">Important</p>
-    <p>Completed:  {{ task.isDone }}</p>
-    <p>{{ task.dateOfCompletion ? task.dateOfCompletion : 'none' }}</p>
-    <div class="task-actions">
-      <button *ngIf="!task.isDone" (click)="toggleIsDone(task)">Mark as Done</button>
-      <div *ngIf="userRole !== 'Member'" class="admin-actions">
-        <button class="update-button" (click)="navigateToUpdate(task.id)">Update</button>
-        <button class="delete-button" (click)="deleteTask(task.id)">Delete</button>
-      </div>
-      <div *ngIf="userRole === 'Member'" class="tooltip-container">
-        <button class="disabled-button">Update</button>
-        <button class="disabled-button">Delete</button>
-        <span class="tooltip-text">Nie masz uprawnień</span>
-      </div>
-    </div>
+    <app-organization-task
+      [task]="task"
+      [permission]="!permission"
+      (toggleDone)="toggleIsDone(task)"
+      (delete)="deleteTask(task.id)">
+    </app-organization-task>
   </div>
 </ng-template>
 <ng-template #noTasks>

@@ -1,0 +1,61 @@
+<div class="task-container">
+  <h3 class="title">{{ task.title }}</h3>
+  <p>{{ task.description }}</p>
+  <p>Created: {{ task.dateOfCreation   }}</p>
+  <p>Deadline: {{ task.deadLine ? task.deadLine : 'unknown' }}</p>
+  <p *ngIf="task.isImportant" class="important">Important</p>
+  <p>Completed:  {{ task.isDone ? task.dateOfCompletion : 'Not yet'}}</p>
+  <div class="task-actions">
+    <app-buttons [buttonType]="'markAsDone'" [buttonText]="'Mark as done'" [disabled]="!task.isDone" [permission]="!permission" (click)="onToggleDone()"></app-buttons>
+
+    <div class="d-flex justify-content-center align-items-center m-2">
+      <div *ngIf="task.id">
+        <app-buttons
+          [buttonType]="'edit-icon'"
+          [permission]="!permission"
+          data-bs-toggle="modal"
+          data-bs-target="#updateTaskModal"
+          (click)="loadTask()">
+        </app-buttons>
+      </div>
+    </div>
+
+    <app-buttons [buttonType]="'delete-icon'" [buttonText]="'Delete'" [permission]="!permission" (click)="onDelete()"></app-buttons>
+  </div>
+</div>
+
+<!-- Update Task Modal -->
+<div class="modal fade" id="updateTaskModal" tabindex="-1" aria-labelledby="updateTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateTaskModalLabel">Update Task</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" [(ngModel)]="updateTask.title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" [(ngModel)]="updateTask.description" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="deadline" class="form-label">Deadline {{updateTask.deadLine}}</label>
+            <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="updateTask.deadLine" name="deadLine" required>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="important" [(ngModel)]="updateTask.isImportant" name="important">
+            <label class="form-check-label" for="important">Important</label>
+          </div>
+          <div class="modal-footer">
+            <app-buttons [buttonType]="'normal'" [buttonText]="'Save Task'" [color]="'green'" data-bs-dismiss="modal" (click)="onSubmit()"></app-buttons>
+            <app-buttons [buttonType]="'normal'" [buttonText]="'Cancel'" [color]="'red'" data-bs-dismiss="modal" (click)="onCancel()"></app-buttons>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

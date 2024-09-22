@@ -19,16 +19,27 @@ import {AuthStateService} from "../../../../../auth/service/auth.state.service";
 export class ListMembersComponent implements OnInit {
   organizationId?: number;
   members: Member[] = [];
-  userRole: string = '';
+  userID: string = '';
+  permission: boolean = false;
 
   constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private organizationMembersService: OrganizationMembersService, private authStateService: AuthStateService) {}
 
   ngOnInit(): void {
       this.organizationId = this.organizationService.getCurrentOrganizationId();
-      this.userRole = this.authStateService.getUserRole();
+      this.checkPermission();
       if (this.organizationId) {
         this.loadMembers(this.organizationId);
       }
+  }
+
+  async checkPermission() {
+    this.userID = this.authStateService.getUserID();
+    this.permission = await this.authStateService.getUserPermissions('Role');
+    if (this.permission) {
+      console.log('User has permission for Role.');
+    } else {
+      console.log('User does not have permission for Role.');
+    }
   }
 
   loadMembers(organizationId: number): void {

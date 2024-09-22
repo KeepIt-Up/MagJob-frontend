@@ -1,15 +1,17 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Role, RoleUpdatePayload, RoleCreatePayload } from '../model/role';
 import { FetchingError } from '../utils/list-state.type';
 import { EMPTY, Observable, catchError, tap } from 'rxjs';
+import {MemberRole, MemberRoleCreateManyPayload, MemberRoleCreatePayload} from "../model/member-role";
 
 @Injectable({
   providedIn: 'root',
 })
-export class RoleApiService {
+export class MemberRoleApiService {
   private _http = inject(HttpClient);
-  readonly apiEndpoint: string = 'api/roles';
+  readonly roleMembersEndpoint: string = '/api/role-members';
+  readonly rolesEndpoint: string = 'api/roles';
+  readonly membersEndpoint: string = 'api/members';
 
   private $idle = signal(true);
   private $loading = signal(false);
@@ -41,36 +43,53 @@ export class RoleApiService {
     );
   }
 
-  getById(roleId: string) {
+  getMemberRoleById(Id: string) {
     return this.withLoadingState(
-      this._http.get<Role>(`${this.apiEndpoint}/${roleId}`, {
-        observe: 'response',
-      })
-    );
-  }
-  getAll() {
-    return this.withLoadingState(
-      this._http.get<any>(this.apiEndpoint, {
+      this._http.get<MemberRole>(`${this.roleMembersEndpoint}/${Id}`, {
         observe: 'response',
       })
     );
   }
 
-  create(payload: RoleCreatePayload) {
+  getAll() {
     return this.withLoadingState(
-      this._http.post<Role>(`${this.apiEndpoint}`, payload)
+      this._http.get<any>(this.roleMembersEndpoint, {
+        observe: 'response',
+      })
+    );
+  }
+
+  getAllFromRole(roleId: string) {
+    return this.withLoadingState(
+      this._http.get<any>(`${this.rolesEndpoint}/${roleId}/role-members`, {
+        observe: 'response',
+      })
+    );
+  }
+
+  getAllFromMember(memberId: string) {
+    return this.withLoadingState(
+      this._http.get<any>(`${this.membersEndpoint}/${memberId}/role-members`, {
+        observe: 'response',
+      })
+    );
+  }
+
+  create(payload: MemberRoleCreatePayload) {
+    return this.withLoadingState(
+      this._http.post<MemberRole>(`${this.roleMembersEndpoint}`, payload)
     )
   }
 
-  update(roleId: string, payload: RoleUpdatePayload) {
+  createMany(payload: MemberRoleCreateManyPayload) {
     return this.withLoadingState(
-      this._http.put<Role>(`${this.apiEndpoint}/${roleId}`, payload)
-    );
+      this._http.post<MemberRole[]>(`${this.roleMembersEndpoint}/list`, payload)
+    )
   }
 
-  delete(roleId: string) {
+  delete(memberId: string, roleId: string) {
     return this.withLoadingState(
-      this._http.delete<any>(`${this.apiEndpoint}/${roleId}`)
+      this._http.delete<any>(`${this.roleMembersEndpoint}/${memberId}/${roleId}`)
     );
   }
 }

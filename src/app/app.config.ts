@@ -5,6 +5,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { authCodeFlowConfig } from './auth/auth.config';
 import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +21,7 @@ export const appConfig: ApplicationConfig = {
       },
       multi: true,
       deps: [OAuthService],
-    },
+    }, provideAnimationsAsync(),
   ],
 };
 

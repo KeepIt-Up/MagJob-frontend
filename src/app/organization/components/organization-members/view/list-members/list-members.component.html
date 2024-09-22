@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-between">
     <h2>Members List</h2>
     <div>
-      <button *ngIf="userRole !== 'Member'" class="btn btn-outline-warning m-1" [routerLink]="['../addMembers']">Add New</button>
+      <button *ngIf="permission" class="btn btn-outline-warning m-1" [routerLink]="['../addMembers']">Add New</button>
     </div>
   </div>
   <table class="table table-dark table-hover">
@@ -23,8 +23,8 @@
       <td>{{member.pseudonym}}</td>
       <td>
         <div class="d-flex justify-content-end">
-          <app-edit-member *ngIf="userRole !== 'Member'" [member]="member" (requestMemberUpdate)="updateMember($event)"></app-edit-member>
-          <app-delete-members *ngIf="userRole !== 'Member'" [member]="member" (requestListRefreshEvent)="loadMembers(organizationId!)"></app-delete-members>
+          <app-edit-member *ngIf="permission" [member]="member" (requestMemberUpdate)="updateMember($event)"></app-edit-member>
+          <app-delete-members *ngIf="permission" [member]="member" (requestListRefreshEvent)="loadMembers(organizationId!)"></app-delete-members>
         </div>
       </td>
     </tr>

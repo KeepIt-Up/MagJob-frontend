@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { RoleApiService } from './role.api.service';
 import { RoleStateService } from './role.state.service';
-import { tap } from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import { toObservable } from "@angular/core/rxjs-interop";
-import { RoleUpdatePayload } from '../model/role-update-payload';
-import { RoleCreatePayload } from '../model/role-create-payload';
+import {RoleUpdatePayload, RoleCreatePayload, RoleResponse, Role} from '../model/role';
 import { createListState } from '../utils/create-list-state';
+import {map} from "rxjs/operators";
 
 type FetchingError = { message: string, status: number };
 
@@ -54,6 +54,18 @@ export class RoleService {
         })
       )
       .subscribe();
+  }
+
+  getRoleById(id: string): Observable<RoleResponse> {
+    // @ts-ignore
+    return this.httpService.getById(id).pipe(
+      tap((response) => {
+        if (response.body) {
+          this.state.addRole(response.body);
+        }
+      }),
+      map((response) => response.body)
+    );
   }
 
   create(newRole: RoleCreatePayload) {

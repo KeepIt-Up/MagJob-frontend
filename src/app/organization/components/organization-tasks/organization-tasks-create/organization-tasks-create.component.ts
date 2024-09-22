@@ -1,20 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../../service/task-service.service';
-import { Task, CreateTask } from '../../../model/task';
+import { CreateTask } from '../../../model/task';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from "@angular/forms";
+import {NgIf} from "@angular/common";
+import {ButtonsComponent} from "../../../../components/buttons/buttons.component";
 
 @Component({
   selector: 'app-organization-tasks-create',
   templateUrl: './organization-tasks-create.component.html',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf,
+    ButtonsComponent
   ],
   styleUrls: ['./organization-tasks-create.component.css']
 })
-export class OrganizationTasksCreateComponent {
-  @Input() id?: string;
+export class OrganizationTasksCreateComponent implements OnInit {
+  @Input() userID: string = '';
 
   newTask: CreateTask = {
     title: '',
@@ -36,7 +40,9 @@ export class OrganizationTasksCreateComponent {
   }
 
   onSubmit(): void {
+    console.log(this.newTask.deadLine)
     this.newTask.deadLine = this.getFormattedDeadline(new Date(this.newTask.deadLine));
+    console.log(this.newTask.deadLine)
 
     if (this.newTask.title.trim() === '') {
       console.error('Title is required.');
@@ -45,8 +51,9 @@ export class OrganizationTasksCreateComponent {
 
     this.taskService.createTask(this.newTask).subscribe(
       () => {
-        console.log('Task created successfully.');
         this.router.navigate([`organization/${this.organizationId}/tasks`]);
+        window.location.reload();
+
       },
       (error: any) => {
         console.error('Error creating task:', error);

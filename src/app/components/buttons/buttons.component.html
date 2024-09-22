@@ -1,0 +1,36 @@
+<!-- Zwykły przycisk -->
+<div *ngIf="buttonType==='normal'" class="tooltip-container">
+  <button [disabled]="permission" [ngClass]="getButtonClass(color)">
+    {{buttonText}}
+  </button>
+  <span class="tooltip-text">{{ permission ? 'You dont have permission' : '' }}</span>
+</div>
+
+<!-- Przycisk delete icon-->
+<div *ngIf="buttonType==='delete-icon'" class="tooltip-container">
+  <button [disabled]="permission" class="btn btn-danger btn-sm mx-1">
+    <i class="bi bi-trash3"></i>
+  </button>
+  <span class="tooltip-text">{{ permission ? 'You cannot delete this task' : 'Delete' }}</span>
+</div>
+
+
+<!-- Przycisk edit icon -->
+<div *ngIf="buttonType==='edit-icon'" class="tooltip-container">
+  <button [disabled]="permission" class="btn btn-outline-warning btn-sm mx-1">
+    <i class="bi bi-pencil"></i>
+  </button>
+  <span class="tooltip-text">{{ permission ? 'You cannot edit this task' : 'Edit' }}</span>
+</div>
+
+<!-- Przycisk edit text -->
+
+<!-- Przycisk Mark as done -->
+<div *ngIf="buttonType==='markAsDone' && disabled" class="tooltip-container">
+  <button [disabled]="permission" class="btn btn-outline-warning btn-sm mx-1">
+    <i class="bi bi-check-circle" ></i>
+  </button>
+  <span class="tooltip-text">{{ permission ? 'You dont have permission' : 'Mark task as done' }}</span>
+</div>
+
+<!-- Przycisk cancel -->

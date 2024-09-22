@@ -18,9 +18,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import {
   OrganizationTasksCreateComponent
 } from "./organization/components/organization-tasks/organization-tasks-create/organization-tasks-create.component";
-import {
-  OrganizationTasksUpdateComponent
-} from "./organization/components/organization-tasks/organization-tasks-update/organization-tasks-update.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -51,7 +48,6 @@ export const routes: Routes = [
       ] },
       { path: 'tasks', component: OrganizationTasksComponent },
       { path: 'tasks-create', component: OrganizationTasksCreateComponent },
-      { path: 'task-update/:idUpdate', component: OrganizationTasksUpdateComponent },
       { path: 'documents', component: OrganizationDocumentsComponent },
       { path: 'addMembers', component: AddMembersComponent },
       { path: 'roles/:roleId', component: RoleDetailsComponent },

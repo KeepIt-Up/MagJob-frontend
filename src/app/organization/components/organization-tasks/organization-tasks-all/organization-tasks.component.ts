@@ -7,11 +7,19 @@ import { FormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { concatMap, map, toArray } from 'rxjs/operators';
 import {AuthStateService} from "../../../../auth/service/auth.state.service";
+import {RoleService} from "../../../../roles/service/role.service";
+import {ButtonsComponent} from "../../../../components/buttons/buttons.component";
+import {MatButton} from "@angular/material/button";
+import {MatTooltip} from "@angular/material/tooltip";
+import {OrganizationTasksCreateComponent} from "../organization-tasks-create/organization-tasks-create.component";
+import {OrganizationTaskComponent} from "../organization-task/organization-task.component";
+import {RoleResponse} from "../../../../roles/model/role";
+import {MemberRoleService} from "../../../../roles/service/member-role.service";
 
 @Component({
   selector: 'app-organization-tasks',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ButtonsComponent, MatButton, MatTooltip, OrganizationTasksCreateComponent,  OrganizationTaskComponent],
   templateUrl: './organization-tasks.component.html',
   styleUrls: ['./organization-tasks.component.css'],
 })
@@ -27,10 +35,18 @@ export class OrganizationTasksComponent implements OnInit {
     notCompleted: false,
     isImportant: false
   };
-  userRole: string = '';
-  showNoPermission = false;
+  userID: string = '';
 
-  constructor(private taskService: TaskService, private router: Router, private route: ActivatedRoute, private authStateService: AuthStateService) {
+  permission: boolean = false;
+  role: RoleResponse | null = null;
+
+  constructor(private taskService: TaskService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private authStateService: AuthStateService,
+              private roleService: RoleService,
+              private memberRoleService: MemberRoleService
+    ) {
   }
 
   ngOnInit(): void {
@@ -38,8 +54,35 @@ export class OrganizationTasksComponent implements OnInit {
       this.organizationId = params['organizationId'];
     });
     this.loadTasks();
-    this.userRole = this.authStateService.getUserRole();
+    this.checkPermission()
+    //this.loadUserRolePermissions();
   }
+
+  async checkPermission() {
+    this.userID = this.authStateService.getUserID();
+    this.permission = await this.authStateService.getUserPermissions('Task');
+    if (this.permission) {
+      console.log('User has permission for Task.');
+    } else {
+      console.log('User does not have permission for Task.');
+    }
+  }
+
+
+  loadUserRolePermissions(): void {
+    this.memberRoleService.getMemberRoleById("1").subscribe({
+      next: (role) => {
+        console.log('Loaded member role:', role);
+      },
+      error: (err) => {
+        console.error('Failed to load member role:', err);
+        if (err.status === 400) {
+          console.error('Bad Request: Check the ID format and request parameters.');
+        }
+      },
+    });
+  }
+
 
   loadTasks(): void {
     this.taskService.getTasks().pipe(
@@ -57,14 +100,6 @@ export class OrganizationTasksComponent implements OnInit {
         console.error('Error loading tasks:', error);
       },
     });
-  }
-
-  showNoPermissionMessage(event: Event): void {
-    event.preventDefault();
-    this.showNoPermission = true;
-    setTimeout(() => {
-      this.showNoPermission = false;
-    }, 3000);
   }
 
   filterTasks(): void {
@@ -108,7 +143,7 @@ export class OrganizationTasksComponent implements OnInit {
     }
   }
 
-  deleteTask(id: BigInteger): void {
+  deleteTask(id: number): void {
     this.taskService.deleteTask(id).subscribe(
       () => {
         console.log('Task deleted successfully.');
@@ -120,12 +155,5 @@ export class OrganizationTasksComponent implements OnInit {
     );
   }
 
-  navigateToCreateTask(): void {
-    this.router.navigate([`organization/${this.organizationId}/tasks-create`]);
-  }
-
-  navigateToUpdate(idUpdate: BigInteger): void {
-    this.router.navigate([`organization/${this.organizationId}/task-update`, idUpdate]);
-  }
 }
 

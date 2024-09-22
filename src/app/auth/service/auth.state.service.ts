@@ -2,11 +2,14 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {inject, Injectable, signal} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {OAuthService, OAuthSuccessEvent} from 'angular-oauth2-oidc';
-import {Subscription} from 'rxjs';
+import {firstValueFrom, Observable, Subscription} from 'rxjs';
 import {User} from 'src/app/user/model/user';
 import {UserService} from 'src/app/user/service/user.service';
 import {AUTH_STATE_VALUE, AuthState} from 'src/app/utils/auth-state.type';
 import {ENTITY_STATE_VALUE} from 'src/app/utils/entity-state.type';
+import {MemberRoleService} from "../../roles/service/member-role.service";
+import {RoleService} from "../../roles/service/role.service";
+import {RoleResponse} from "../../roles/model/role";
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +17,15 @@ import {ENTITY_STATE_VALUE} from 'src/app/utils/entity-state.type';
 export class AuthStateService {
   private oauthService = inject(OAuthService);
   private userService = inject(UserService);
+  private roleMemberService = inject(MemberRoleService);
+  private roleService = inject(RoleService);
 
   private $authState = signal<AuthState>({ state: AUTH_STATE_VALUE.IDLE });
 
   private oauthEventsSubscription?: Subscription;
-  private userStateSubscription?: Subscription; // tu dodałem
+  private userStateSubscription?: Subscription;
+
+  role: boolean = true;
 
   state$ = toObservable(this.$authState);
 
@@ -111,9 +118,35 @@ export class AuthStateService {
     });
   }
 
-  getUserRole(): string {
+  getUserID(): string {
     const claims: any = this.oauthService.getIdentityClaims();
-    const parts = claims?.membership[0].split('/');
-    return parts.pop() || '?'; //last part
+    console.log(claims)
+    return claims.sub
+  }
+
+  async getUserPermissions(question: string): Promise<boolean> {
+    try {
+      const role = await firstValueFrom(this.roleService.getRoleById("1"));
+
+      switch (question) {
+      case 'Task':
+        return role.canManageTasks;
+
+      case 'Announcement':
+        return role.canManageAnnouncements;
+
+      case 'Invitation':
+        return role.canManageInvitations;
+
+      case 'Role':
+        return role.canManageRoles;
+
+      default:
+        return false;
+      }
+    } catch (err) {
+      console.error('Failed to load role:', err);
+      return false;
+    }
   }
 }

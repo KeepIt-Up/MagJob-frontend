@@ -30,12 +30,12 @@ export class TaskService {
     return this.http.patch<Task>(url, updateTask);
   }
 
-  completeTask(id: BigInteger): Observable<void> {
+  completeTask(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}/complete`;
     return this.http.post<void>(url, null);
   }
 
-  deleteTask(id: BigInteger): Observable<void> {
+  deleteTask(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
   }

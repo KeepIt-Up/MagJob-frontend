@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Role } from '../model/role';
+import {Role, RoleResponse} from '../model/role';
 import { BehaviorSubject } from 'rxjs';
 
 export type RoleState = {
@@ -23,7 +23,6 @@ export class RoleStateService {
 
   addRole(role: Role)
   {
-    console.log(role)
     this.state$.next({
       roles: [...this.state$.value.roles, role]
     });

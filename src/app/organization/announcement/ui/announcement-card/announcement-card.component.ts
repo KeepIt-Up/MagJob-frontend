@@ -20,7 +20,9 @@ export class AnnouncementCardComponent implements OnInit, OnChanges{
   private authStateService = inject(AuthStateService);
 
   isEditMode: boolean = false;
-  userRole: string = '';
+  userID: string = '';
+  permission: boolean = false;
+
 
   announcementUpdateForm: AnnouncementUpdateForm = this.formBuilder.group({
     title: this.formBuilder.control<string>(""),
@@ -28,8 +30,18 @@ export class AnnouncementCardComponent implements OnInit, OnChanges{
   });
 
   ngOnInit(): void {
-    this.userRole = this.authStateService.getUserRole();
+    this.checkPermission();
     this.initFormValue();
+  }
+
+  async checkPermission() {
+    this.userID = this.authStateService.getUserID();
+    this.permission = await this.authStateService.getUserPermissions('Announcement');
+    if (this.permission) {
+      console.log('User has permission for Announcement.');
+    } else {
+      console.log('User does not have permission for Announcement.');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

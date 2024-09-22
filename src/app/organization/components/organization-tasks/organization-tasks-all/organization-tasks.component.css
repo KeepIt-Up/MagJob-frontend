@@ -67,50 +67,8 @@ input[type="date"] {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.task-container .admin-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.task-container button {
-  background-color: #f0ad4e;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.task-container button:hover {
-  background-color: #ec971f;
-}
-
-.task-container .delete-button {
-  background-color: #d9534f;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.task-container .delete-button:hover {
-  background-color: #c9302c;
-}
-
-.task-container .update-button {
-  background-color: #86d94f;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.task-container .update-button:hover {
-  background-color: #49c92c;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .main-tasks {
@@ -123,42 +81,3 @@ input[type="date"] {
   color: #000000;
 }
 
-/*.disabled-button {*/
-/*  background-color: grey;*/
-/*  color: white;*/
-/*  cursor: not-allowed;*/
-/*  border: none;*/
-/*  padding: 10px;*/
-/*  border-radius: 5px;*/
-/*  position: relative;*/
-/*}*/
-
-/*.disabled-button:hover {*/
-/*  background-color: #c9302c;*/
-/*}*/
-
-/*.tooltip-container {*/
-/*  position: relative;*/
-/*  display: inline-block;*/
-/*}*/
-
-/*.tooltip-text {*/
-/*  visibility: hidden;*/
-/*  background-color: #ffffff;*/
-/*  color: #000000;*/
-/*  text-align: center;*/
-/*  border-radius: 5px;*/
-/*  padding: 5px;*/
-/*  position: absolute;*/
-/*  z-index: 1;*/
-/*  left: 50%;*/
-/*  transform: translateX(-50%);*/
-/*  opacity: 0;*/
-/*  transition: opacity 0.3s;*/
-/*  white-space: nowrap;*/
-/*}*/
-
-/*.tooltip-container:hover .tooltip-text {*/
-/*  visibility: visible;*/
-/*  opacity: 1;*/
-/*}*/

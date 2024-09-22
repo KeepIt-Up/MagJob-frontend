@@ -8,7 +8,7 @@ export interface TaskResponse {
   count: number;
 }
 export interface Task {
-    id: BigInteger;
+    id: number;
     title: string;
     description: string;
     dateOfCreation: Date;

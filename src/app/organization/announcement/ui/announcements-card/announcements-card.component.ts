@@ -34,13 +34,14 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   listStateValue = LIST_STATE_VALUE;
   listState$ = this.announcementService.listState$;
 
-  userRole: string = '';
-
   form: AnnouncementCreateForm = this.formBuilder.group({
     title: this.formBuilder.control<string>('', Validators.required),
     content: this.formBuilder.control<string>('', Validators.required),
     dateOfExpiration: this.formBuilder.control<Date>(new Date(), Validators.required),
   });
+
+  userID: string = '';
+  permission: boolean = false;
 
 
   ngOnInit() {
@@ -58,8 +59,18 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
           console.log(err)
         }
     });
-    this.userRole = this.authStateService.getUserRole();
+    this.checkPermission();
     this.announcementService.getAllByOrganizationId(this.organizationId);
+  }
+
+  async checkPermission() {
+    this.userID = this.authStateService.getUserID();
+    this.permission = await this.authStateService.getUserPermissions('Announcement');
+    if (this.permission) {
+      console.log('User has permission for Announcement.');
+    } else {
+      console.log('User does not have permission for Announcement.');
+    }
   }
 
   ngOnDestroy(): void {
