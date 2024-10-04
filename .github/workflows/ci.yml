@@ -29,8 +29,12 @@ jobs:
          node-version: 21
       - name: Install dependencies with npm
         run: npm install
+      - name: Install Chrome dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 xvfb
       - name: Test with npm
-        run: npm test
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" npm test --watch=false --no-progress --browsers=ChromeHeadless
       - name: Build with npm
         run: npm run build
       - name: Build and push Docker Image
