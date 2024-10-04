@@ -34,7 +34,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libnss3 xvfb
       - name: Test with npm
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" npm test --watch=false --no-progress --browsers=ChromeHeadless
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" npm run test --watch=false --no-progress --browsers=ChromeHeadless
       - name: Build with npm
         run: npm run build
       - name: Build and push Docker Image

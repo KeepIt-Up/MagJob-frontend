@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "testAPI": "json-server testDB.json"
+    "testAPI": "json-server testDB.json",
+    "test:ci": "ng test --watch=false --no-progress --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
