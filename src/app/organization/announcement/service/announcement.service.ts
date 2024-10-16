@@ -85,7 +85,6 @@ export class AnnouncementService {
   update(id: string, payload: AnnouncementUpdatePayload) {
     return this.httpService.update(id, payload).pipe(
       tap((response) => {
-        console.log(response);
         this.state.updateAnnouncement(response);
       })
     ).subscribe();

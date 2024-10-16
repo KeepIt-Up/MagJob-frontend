@@ -91,8 +91,8 @@ export class RoleService {
   /**
    * Update role of given id
    * @param id Role Id
-   * @param payload 
-   * @returns 
+   * @param payload
+   * @returns
    */
   update(id: string, payload: UpdateRolePayload) {
     return this.httpService
@@ -108,8 +108,8 @@ export class RoleService {
 
   /**
    * Delete role of given Id
-   * @param id 
-   * @returns 
+   * @param id
+   * @returns
    */
   delete(id: string) {
     return this.httpService
@@ -130,7 +130,6 @@ export class RoleService {
         members.push({memberId: member});
       }
     const payload = { roleId: roleId, roleMembers: members};
-    console.log(payload);
     return this.httpService.assignMembers(payload).pipe().subscribe();
   }
 

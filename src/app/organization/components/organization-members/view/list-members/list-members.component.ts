@@ -35,11 +35,6 @@ export class ListMembersComponent implements OnInit {
   async checkPermission() {
     this.userID = this.authStateService.getUserID();
     this.permission = await this.authStateService.getUserPermissions('Role');
-    if (this.permission) {
-      console.log('User has permission for Role.');
-    } else {
-      console.log('User does not have permission for Role.');
-    }
   }
 
   loadMembers(organizationId: number): void {
@@ -57,7 +52,6 @@ export class ListMembersComponent implements OnInit {
   updateMember(payload: {id: number, pseudonym: string}) {
     this.organizationMembersService.update(payload.id, payload.pseudonym).subscribe(
       (response) => {
-        console.log('Response:', response);
         this.loadMembers(this.organizationId!);
       },
       (error) => {

@@ -33,7 +33,6 @@ export class RoleListComponent implements OnInit, OnChanges {
   }
 
   createRole(name: string) {
-    console.log(name);
     this.roleService.create({name: name, organization: 5} as RoleCreatePayload)
   }
 

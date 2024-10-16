@@ -99,10 +99,8 @@ export class UserService {
       this.organizationService.getAllByUserId(userId).subscribe(
         (data: any) => {
           this.organizations = data.organizations;
-          console.log(data);
 
           if (this.organizations.length === 0) {
-            console.log(this.organizations.length);
             observer.next(false);
           } else {
             observer.next(true);

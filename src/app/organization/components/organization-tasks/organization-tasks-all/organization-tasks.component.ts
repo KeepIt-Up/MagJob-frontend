@@ -55,32 +55,11 @@ export class OrganizationTasksComponent implements OnInit {
     });
     this.loadTasks();
     this.checkPermission()
-    //this.loadUserRolePermissions();
   }
 
   async checkPermission() {
     this.userID = this.authStateService.getUserID();
     this.permission = await this.authStateService.getUserPermissions('Task');
-    if (this.permission) {
-      console.log('User has permission for Task.');
-    } else {
-      console.log('User does not have permission for Task.');
-    }
-  }
-
-
-  loadUserRolePermissions(): void {
-    this.memberRoleService.getMemberRoleById("1").subscribe({
-      next: (role) => {
-        console.log('Loaded member role:', role);
-      },
-      error: (err) => {
-        console.error('Failed to load member role:', err);
-        if (err.status === 400) {
-          console.error('Bad Request: Check the ID format and request parameters.');
-        }
-      },
-    });
   }
 
 
@@ -131,7 +110,6 @@ export class OrganizationTasksComponent implements OnInit {
       task.isDone = !task.isDone;
       this.taskService.completeTask(task.id).subscribe(
         () => {
-          console.log('Task updated successfully.');
           this.filterTasks();
         },
         (error: any) => {
@@ -139,7 +117,6 @@ export class OrganizationTasksComponent implements OnInit {
         }
       );
     } else {
-      console.log('Task is already done.');
     }
   }
 

@@ -39,7 +39,7 @@ export class OrganizationTaskComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.organizationId = params['organizationId'] || 1;
+      this.organizationId = params['organizationId'];
     });
     this.loadTask()
   }
@@ -65,7 +65,6 @@ export class OrganizationTaskComponent {
     this.updateTask.deadLine = this.formatDate(new Date(this.updateTask.deadLine));
     this.taskService.updateTask(this.task.id, this.updateTask).subscribe({
       next: () => {
-        console.log('Task updated successfully.');
         this.router.navigate([`organization/${this.organizationId}/tasks`]);
         window.location.reload();
       },

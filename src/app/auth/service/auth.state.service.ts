@@ -120,7 +120,6 @@ export class AuthStateService {
 
   getUserID(): string {
     const claims: any = this.oauthService.getIdentityClaims();
-    console.log(claims)
     return claims.sub
   }
 

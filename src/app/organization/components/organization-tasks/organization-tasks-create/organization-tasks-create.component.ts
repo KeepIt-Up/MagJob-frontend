@@ -34,15 +34,13 @@ export class OrganizationTasksCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.organizationId = params['organizationId'] || 1; // domyślna wartość !!!
+      this.organizationId = params['organizationId'];
       this.newTask.organization = this.organizationId;
     });
   }
 
   onSubmit(): void {
-    console.log(this.newTask.deadLine)
     this.newTask.deadLine = this.getFormattedDeadline(new Date(this.newTask.deadLine));
-    console.log(this.newTask.deadLine)
 
     if (this.newTask.title.trim() === '') {
       console.error('Title is required.');

@@ -37,11 +37,6 @@ export class AnnouncementCardComponent implements OnInit, OnChanges{
   async checkPermission() {
     this.userID = this.authStateService.getUserID();
     this.permission = await this.authStateService.getUserPermissions('Announcement');
-    if (this.permission) {
-      console.log('User has permission for Announcement.');
-    } else {
-      console.log('User does not have permission for Announcement.');
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
