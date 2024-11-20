@@ -10,6 +10,8 @@ import {ENTITY_STATE_VALUE} from 'src/app/utils/entity-state.type';
 import {MemberRoleService} from "../../roles/service/member-role.service";
 import {RoleService} from "../../roles/service/role.service";
 import {RoleResponse} from "../../roles/model/role";
+import {MembersService} from "../../organization/service/members.service";
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,8 @@ export class AuthStateService {
   private userService = inject(UserService);
   private roleMemberService = inject(MemberRoleService);
   private roleService = inject(RoleService);
+  private memberService = inject(MembersService);
+  private route = inject( ActivatedRoute);
 
   private $authState = signal<AuthState>({ state: AUTH_STATE_VALUE.IDLE });
 
@@ -118,34 +122,4 @@ export class AuthStateService {
     });
   }
 
-  getUserID(): string {
-    const claims: any = this.oauthService.getIdentityClaims();
-    return claims.sub
-  }
-
-  async getUserPermissions(question: string): Promise<boolean> {
-    try {
-      const role = await firstValueFrom(this.roleService.getRoleById("1"));
-
-      switch (question) {
-      case 'Task':
-        return role.canManageTasks;
-
-      case 'Announcement':
-        return role.canManageAnnouncements;
-
-      case 'Invitation':
-        return role.canManageInvitations;
-
-      case 'Role':
-        return role.canManageRoles;
-
-      default:
-        return false;
-      }
-    } catch (err) {
-      console.error('Failed to load role:', err);
-      return false;
-    }
-  }
 }

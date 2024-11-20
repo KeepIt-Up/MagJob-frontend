@@ -7,6 +7,7 @@ import { DeleteMembersComponent } from 'src/app/organization/components/organiza
 import { EditMemberComponent } from "../edit-member/edit-member.component";
 import { OrganizationMembersService } from '../../service/organization-members.service';
 import {AuthStateService} from "../../../../../auth/service/auth.state.service";
+import {RolePermission} from "../../../../../auth/service/role.permission";
 
 @Component({
     selector: 'app-list-members',
@@ -19,10 +20,9 @@ import {AuthStateService} from "../../../../../auth/service/auth.state.service";
 export class ListMembersComponent implements OnInit {
   organizationId?: number;
   members: Member[] = [];
-  userID: string = '';
   permission: boolean = false;
 
-  constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private organizationMembersService: OrganizationMembersService, private authStateService: AuthStateService) {}
+  constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private organizationMembersService: OrganizationMembersService, private rolePermission: RolePermission) {}
 
   ngOnInit(): void {
       this.organizationId = this.organizationService.getCurrentOrganizationId();
@@ -33,8 +33,9 @@ export class ListMembersComponent implements OnInit {
   }
 
   async checkPermission() {
-    this.userID = this.authStateService.getUserID();
-    this.permission = await this.authStateService.getUserPermissions('Role');
+    if (this.organizationId) {
+      this.permission = await this.rolePermission.getUserPermissions('Role', String(this.organizationId));
+    }
   }
 
   loadMembers(organizationId: number): void {

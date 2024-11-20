@@ -4,7 +4,7 @@ import { Task } from '../../../model/task';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { forkJoin, of } from 'rxjs';
+import {forkJoin, of, Subscription} from 'rxjs';
 import { concatMap, map, toArray } from 'rxjs/operators';
 import {AuthStateService} from "../../../../auth/service/auth.state.service";
 import {RoleService} from "../../../../roles/service/role.service";
@@ -15,6 +15,7 @@ import {OrganizationTasksCreateComponent} from "../organization-tasks-create/org
 import {OrganizationTaskComponent} from "../organization-task/organization-task.component";
 import {RoleResponse} from "../../../../roles/model/role";
 import {MemberRoleService} from "../../../../roles/service/member-role.service";
+import {RolePermission} from "../../../../auth/service/role.permission";
 
 @Component({
   selector: 'app-organization-tasks',
@@ -24,10 +25,11 @@ import {MemberRoleService} from "../../../../roles/service/member-role.service";
   styleUrls: ['./organization-tasks.component.css'],
 })
 export class OrganizationTasksComponent implements OnInit {
+  @Input() organizationId!: string;
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
 
-  organizationId!: number;
+  //organizationId!: number;
 
   filter = {
     deadlineDate: null,
@@ -40,26 +42,40 @@ export class OrganizationTasksComponent implements OnInit {
   permission: boolean = false;
   role: RoleResponse | null = null;
 
+  routeSub?: Subscription;
+
   constructor(private taskService: TaskService,
               private router: Router,
               private route: ActivatedRoute,
               private authStateService: AuthStateService,
               private roleService: RoleService,
-              private memberRoleService: MemberRoleService
+              private memberRoleService: MemberRoleService,
+              private rolePermissionService: RolePermission
     ) {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.organizationId = params['organizationId'];
+    this.routeSub = this.route.parent?.paramMap.subscribe({
+      next: (value) => {
+        const organizationId = value.get('organizationId');
+        if (organizationId !== null) {
+          this.organizationId = organizationId;
+        } else {
+          alert('Error while getting organizationId from route');
+        }
+      },
+      error: (err) =>
+      {
+        console.log(err)
+      }
     });
     this.loadTasks();
     this.checkPermission()
   }
 
   async checkPermission() {
-    this.userID = this.authStateService.getUserID();
-    this.permission = await this.authStateService.getUserPermissions('Task');
+    this.userID = this.rolePermissionService.getUserID();
+    this.permission = await this.rolePermissionService.getUserPermissions('Task', this.organizationId);
   }
 
 

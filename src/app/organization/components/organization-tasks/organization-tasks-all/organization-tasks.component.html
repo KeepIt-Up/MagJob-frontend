@@ -36,7 +36,7 @@
   <div *ngFor="let task of filteredTasks" class="task-container">
     <app-organization-task
       [task]="task"
-      [permission]="!permission"
+      [permission]="permission"
       (toggleDone)="toggleIsDone(task)"
       (delete)="deleteTask(task.id)">
     </app-organization-task>
