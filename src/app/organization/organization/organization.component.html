@@ -3,5 +3,5 @@
     <div class="d-flex justify-content-center ml-auto mr-auto" style="width: 100vw; overflow-y: auto; scrollbar-width: none;">
         <router-outlet (activate)="handleRouterActivation($event)" (attach)="handleRouterActivation($event)"></router-outlet>
     </div>
-
+    <app-chats [organizationId]="organizationId"></app-chats>
 </div>
