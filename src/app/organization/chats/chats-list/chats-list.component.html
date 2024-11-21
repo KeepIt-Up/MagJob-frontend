@@ -1,0 +1,17 @@
+<div class="chat-list-section">
+  <h4>Chat List</h4>
+  <ul>
+    <li *ngFor="let chat of chats" (click)="selectChat(chat)" class="chat-item">
+      <span>{{ chat.title }}</span>
+
+      <div *ngIf="!isMemberInChat(chat)" class="button-container">
+        <app-buttons [buttonType]="'accept'" [disabled]="false" [buttonText]="'Accept Invitation'" (click)="acceptInvitation(chat)"></app-buttons>
+        <app-buttons [buttonType]="'reject'" [disabled]="false" [buttonText]="'Reject Invitation'" (click)="rejectInvitation(chat)"></app-buttons>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<ng-template #loadingTemplate>
+  <p>Loading chats...</p>
+</ng-template>
