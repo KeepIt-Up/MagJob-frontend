@@ -1,0 +1,9 @@
+<h4>Create a New Chat</h4>
+<form (submit)="createChat(); $event.preventDefault()">
+  <div class="form-group">
+    <label for="chatTitle">Chat Title:</label>
+    <input id="chatTitle" [(ngModel)]="newChat.title" name="chatTitle" required />
+    <button type="submit">Create Chat</button>
+  </div>
+</form>
+

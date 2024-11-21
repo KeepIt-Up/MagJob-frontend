@@ -1,0 +1,49 @@
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+/*Buttons*/
+button {
+  background-color: #7289da;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button.active {
+  background-color: #5b6eae;
+}
+
+button:hover {
+  background-color: #5b6eae;
+}
+
+h4 {
+  margin-top: 30px;
+  text-align: center;
+}
