@@ -1,0 +1,36 @@
+<div
+  class="chat-toggle-button"
+  (click)="toggleChatPanel()"
+  *ngIf="!isChatOpen">
+  Open Chats
+</div>
+
+<div class="chat-container" [ngClass]="{ 'open': isChatOpen, 'closed': !isChatOpen }">
+  <div class="chat-navigation">
+    <button (click)="viewSection = 'list'">Chat List</button>
+    <button (click)="viewSection = 'create'">Create Chat</button>
+    <button (click)="toggleChatPanel()">Close Chat</button>
+  </div>
+
+  <div *ngIf="viewSection === 'list'">
+    <app-chats-list
+      [organizationId]="organizationId"
+      (chatSelected)="selectChat($event)">
+    </app-chats-list>
+  </div>
+
+  <div *ngIf="viewSection === 'detail'">
+    <app-chats-details
+      [selectedChat]="selectedChat"
+      [organizationId]="organizationId"
+      (chatDeleted)="onChatDeleted()">
+    </app-chats-details>
+  </div>
+
+  <div *ngIf="viewSection === 'create'">
+    <app-chats-create
+      [organizationId]="organizationId"
+      (chatCreated)="onChatCreate()">
+    </app-chats-create>
+  </div>
+</div>
