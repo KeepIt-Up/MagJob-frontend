@@ -1,0 +1,73 @@
+<h4>Chat Details: {{ selectedChat?.title }}</h4>
+
+<div class="chat-detail-tabs">
+  <button (click)="detailView = 'details'" [class.active]="detailView === 'details'">
+    Chat Details
+  </button>
+  <button (click)="detailView = 'invitations'" [class.active]="detailView === 'invitations'">
+    Invitations
+  </button>
+  <button (click)="detailView = 'members'" [class.active]="detailView === 'members'">
+    Members
+  </button>
+</div>
+
+<!-- Chat Details View -->
+<div *ngIf="detailView === 'details'" class="chat-details-view">
+  <p><strong>Chat ID:</strong> {{ selectedChat?.id }}</p>
+  <p><strong>Title:</strong> {{ selectedChat?.title }}</p>
+
+  <button (click)="deleteChat()" class="delete-chat-button">Delete Chat</button>
+</div>
+
+<!-- Invitations View -->
+<div *ngIf="detailView === 'invitations'" class="invitations-view">
+  <h4>Invite Members to {{ selectedChat?.title }}</h4>
+  <input
+    type="text"
+    placeholder="Enter nickname"
+    [(ngModel)]="nickname"
+    [ngModelOptions]="{ standalone: true }"
+  />
+  <ul>
+    <li *ngFor="let member of filteredOrganizationMembers">
+      {{ member.firstName }} {{ member.lastName }}
+
+      <button (click)="inviteMemberToChat(member)">Invite</button>
+    </li>
+  </ul>
+</div>
+
+<!-- Members Section -->
+<div *ngIf="detailView === 'members'" class="chat-members-container">
+  <h4>Members of Chat</h4>
+  <ul>
+    <li *ngFor="let member of chatMembers">
+      <div *ngIf="editingMemberId === member.memberId; else displayMember">
+        <!-- Input + Buttons View -->
+        <input
+          type="text"
+          [(ngModel)]="nickname"
+          placeholder="Enter new nickname"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <div class="edit-buttons">
+          <button (click)="acceptNicknameChange(member, nickname)">Accept</button>
+          <button (click)="cancelNicknameChange()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Default Member Display -->
+      <ng-template #displayMember>
+        <p>
+          <strong>Nickname:</strong> {{ member.nickname || 'No nickname' }}
+        </p>
+        <p>
+          <strong>Member ID:</strong> {{ member.memberId }}
+        </p>
+        <button (click)="editNickname(member.memberId)" class="edit-nickname-button">Change Nickname</button>
+      </ng-template>
+    </li>
+  </ul>
+</div>
+
