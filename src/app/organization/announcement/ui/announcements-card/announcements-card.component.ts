@@ -11,7 +11,6 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AnnouncementCreateForm, AnnouncementCreatePayload, AnnouncementUpdatePayload } from '../../model/announcement';
-import {AuthStateService} from "../../../../auth/service/auth.state.service";
 import {RolePermission} from "../../../../auth/service/role.permission";
 
 
@@ -29,7 +28,6 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   private rolePermission = inject(RolePermission);
   private formBuilder = inject(NonNullableFormBuilder);
   private route = inject(ActivatedRoute);
-  private authStateService = inject(AuthStateService);
 
   routeSub?: Subscription;
 

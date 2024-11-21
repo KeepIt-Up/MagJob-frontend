@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {Chat, CreateChatRequest} from "../../model/chat";
+import {CreateChatRequest} from "../../model/chat";
 import {ChatService} from "../../service/chat.service";
 
 @Component({

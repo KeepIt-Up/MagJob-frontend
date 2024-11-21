@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { OrganizationService } from '../../../../service/organization.service';
 import { Member } from 'src/app/organization/components/organization-members/model/member';
@@ -6,7 +6,6 @@ import { NgFor, CommonModule } from '@angular/common';
 import { DeleteMembersComponent } from 'src/app/organization/components/organization-members/view/delete-members/delete-members.component';
 import { EditMemberComponent } from "../edit-member/edit-member.component";
 import { OrganizationMembersService } from '../../service/organization-members.service';
-import {AuthStateService} from "../../../../../auth/service/auth.state.service";
 import {RolePermission} from "../../../../../auth/service/role.permission";
 
 @Component({
@@ -52,7 +51,7 @@ export class ListMembersComponent implements OnInit {
 
   updateMember(payload: {id: number, pseudonym: string}) {
     this.organizationMembersService.update(payload.id, payload.pseudonym).subscribe(
-      (response) => {
+      () => {
         this.loadMembers(this.organizationId!);
       },
       (error) => {

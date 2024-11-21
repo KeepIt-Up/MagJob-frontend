@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Announcement, AnnouncementUpdateForm, AnnouncementUpdateFormValue } from '../../model/announcement';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {AuthStateService} from "../../../../auth/service/auth.state.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {RolePermission} from "../../../../auth/service/role.permission";

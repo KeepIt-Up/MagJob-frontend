@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Chat, ChatMember, ChatMembers} from "../../model/chat";
+import {Chat, ChatMembers} from "../../model/chat";
 import {Member} from "../../settings/roles/model/role";
 import {NgForOf, NgIf} from "@angular/common";
 import {ChatService} from "../../service/chat.service";
@@ -95,7 +95,7 @@ export class ChatsDetailsComponent implements OnInit{
     };
 
     this.chatMemberService.inviteChatMember(inviteData).subscribe({
-      next: (response) => {
+      next: () => {
         this.nickname = '';
       },
       error: (error) => {

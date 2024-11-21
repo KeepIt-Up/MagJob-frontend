@@ -1,9 +1,8 @@
-import {inject, Injectable, OnInit,} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {OAuthService, } from 'angular-oauth2-oidc';
-import {firstValueFrom, Observable, Subscription,} from 'rxjs';
+import {firstValueFrom} from 'rxjs';
 import {RoleService} from "../../roles/service/role.service";
 import {MembersService} from "../../organization/service/members.service";
-import {ActivatedRoute, Params} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',

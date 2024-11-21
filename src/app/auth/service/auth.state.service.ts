@@ -2,16 +2,11 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {inject, Injectable, signal} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {OAuthService, OAuthSuccessEvent} from 'angular-oauth2-oidc';
-import {firstValueFrom, Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {User} from 'src/app/user/model/user';
 import {UserService} from 'src/app/user/service/user.service';
 import {AUTH_STATE_VALUE, AuthState} from 'src/app/utils/auth-state.type';
 import {ENTITY_STATE_VALUE} from 'src/app/utils/entity-state.type';
-import {MemberRoleService} from "../../roles/service/member-role.service";
-import {RoleService} from "../../roles/service/role.service";
-import {RoleResponse} from "../../roles/model/role";
-import {MembersService} from "../../organization/service/members.service";
-import {ActivatedRoute, Params} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +14,6 @@ import {ActivatedRoute, Params} from "@angular/router";
 export class AuthStateService {
   private oauthService = inject(OAuthService);
   private userService = inject(UserService);
-  private roleMemberService = inject(MemberRoleService);
-  private roleService = inject(RoleService);
-  private memberService = inject(MembersService);
-  private route = inject( ActivatedRoute);
 
   private $authState = signal<AuthState>({ state: AUTH_STATE_VALUE.IDLE });
 
@@ -113,7 +104,7 @@ export class AuthStateService {
           user: value,
         });
       },
-      error: (error) => {
+      error: () => {
         window.confirm(
           'We have a problem with your account. Please contact with our support or try again'
         );

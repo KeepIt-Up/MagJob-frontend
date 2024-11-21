@@ -1,14 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
-import {Member} from "../settings/roles/model/role";
-import {MembersService} from "../service/members.service";
-import {OrganizationService} from "../service/organization.service";
 import {DeleteMembersComponent} from "../components/organization-members/view/delete-members/delete-members.component";
 import {EditMemberComponent} from "../components/organization-members/view/edit-member/edit-member.component";
-import {ChatService} from "../service/chat.service";
-import {Chat, ChatResponse, ChatsResponse, CreateChatRequest} from "../model/chat";
+import {Chat} from "../model/chat";
 import {FormsModule} from "@angular/forms";
-import {ChatMemberService} from "../service/chat.member.service";
 import {ChatsListComponent} from "./chats-list/chats-list.component";
 import {ChatsDetailsComponent} from "./chats-details/chats-details.component";
 import {ChatsCreateComponent} from "./chats-create/chats-create.component";
