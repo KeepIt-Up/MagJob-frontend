@@ -3,7 +3,12 @@ import { MemberRoleApiService } from './member-role.api.service';
 import { MemberRoleStateService } from './member-role.state.service';
 import { Observable, tap } from 'rxjs';
 import { toObservable } from "@angular/core/rxjs-interop";
-import { MemberRole, MemberRoleCreatePayload, MemberRoleCreateManyPayload } from '../model/member-role';
+import {
+  MemberRole,
+  MemberRoleCreatePayload,
+  MemberRoleCreateManyPayload,
+  MemberRoleResponse
+} from '../model/member-role';
 import { createListState } from '../utils/create-list-state';
 import { map } from 'rxjs/operators';
 
@@ -31,7 +36,7 @@ export class MemberRoleService {
   );
 
   // Get all role members
-  getAll(): Observable<MemberRole[]> {
+  getAll(): Observable<any> {
     return this.httpService.getAll().pipe(
       tap((response) => {
         if (response.body) {
@@ -43,7 +48,7 @@ export class MemberRoleService {
   }
 
   // Get a role member by ID
-  getMemberRoleById(id: string): Observable<MemberRole> {
+  getMemberRoleById(id: string): Observable<MemberRoleResponse> {
     // @ts-ignore
     return this.httpService.getMemberRoleById(id).pipe(
       tap((response) => {

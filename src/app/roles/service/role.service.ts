@@ -97,4 +97,17 @@ export class RoleService {
       })
     );
   }
+
+  getRolesByOrganization(organizationId: string, pageNumber: number = 0, pageSize: number = 10) {
+    return this.httpService
+      .getRolesByOrganization(organizationId, pageNumber, pageSize)
+      .pipe(
+        tap((response: any) => {
+          if (response?.roles) {
+            this.state.setRoles(response.roles);
+          }
+        })
+      );
+  }
+
 }

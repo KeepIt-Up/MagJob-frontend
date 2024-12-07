@@ -21,12 +21,15 @@ export class MemberRoleStateService {
 
   value$ = this.state$.asObservable();
 
-  addRoleMember(memberRole: MemberRole)
-  {
+  addRoleMember(memberRole: MemberRole) {
+    const existingRoles = Array.isArray(this.state$.value.memberRoles)
+      ? this.state$.value.memberRoles
+      : [];
     this.state$.next({
-      memberRoles: [...this.state$.value.memberRoles, memberRole]
+      memberRoles: [...existingRoles, memberRole],
     });
   }
+
 
   setRoleMembers(memberRoles: MemberRole[])
   {

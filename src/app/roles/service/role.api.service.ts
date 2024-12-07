@@ -73,4 +73,19 @@ export class RoleApiService {
       this._http.delete<any>(`${this.apiEndpoint}/${roleId}`)
     );
   }
+
+  getRolesByOrganization(organizationId: string, pageNumber: number = 0, pageSize: number = 10): Observable<any> {
+    return this.withLoadingState(
+      this._http.get<any>(
+        `api/organizations/${organizationId}/roles`,
+        {
+          params: {
+            'page-number': pageNumber.toString(),
+            'page-size': pageSize.toString()
+          }
+        }
+      )
+    );
+  }
+
 }
