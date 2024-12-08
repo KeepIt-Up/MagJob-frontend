@@ -1,20 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskService } from '../../../service/task-service.service';
-import {Task, UpdateTask} from '../../../model/task';
+import {Task} from '../../../model/task';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute} from '@angular/router';
+import {  ActivatedRoute} from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {forkJoin, Subscription} from 'rxjs';
-import { concatMap, toArray } from 'rxjs/operators';
-import {AuthStateService} from "../../../../auth/service/auth.state.service";
-import {RoleService} from "../../../../roles/service/role.service";
+import { Subscription} from 'rxjs';
 import {ButtonsComponent} from "../../../../components/buttons/buttons.component";
 import {MatButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
 import {OrganizationTasksCreateComponent} from "../organization-tasks-create/organization-tasks-create.component";
 import {OrganizationTaskComponent} from "../organization-task/organization-task.component";
 import {RoleResponse} from "../../../../roles/model/role";
-import {MemberRoleService} from "../../../../roles/service/member-role.service";
 import {RolePermission} from "../../../../auth/service/role.permission";
 
 @Component({
