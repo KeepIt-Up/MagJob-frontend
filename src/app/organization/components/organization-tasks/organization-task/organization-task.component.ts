@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Task, UpdateTask} from '../../../model/task';
-import {ButtonsComponent} from "../../../../components/buttons/buttons.component";
-import {NgIf} from "@angular/common";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Task, UpdateTask } from '../../../model/task';
+import { ButtonsComponent } from "../../../../components/buttons/buttons.component";
+import { NgIf } from "@angular/common";
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../../service/task-service.service';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-organization-task',
@@ -15,21 +15,22 @@ import {FormsModule} from "@angular/forms";
     FormsModule
   ],
   templateUrl: './organization-task.component.html',
-  styleUrl: './organization-task.component.css'
+  styleUrls: ['./organization-task.component.css']
 })
-export class OrganizationTaskComponent {
+export class OrganizationTaskComponent implements OnInit{
   @Input() task!: Task;
   @Input() permission: boolean = false;
-  @Output() toggleDone: EventEmitter<void> = new EventEmitter();
   @Output() delete: EventEmitter<void> = new EventEmitter();
 
   updateTask: UpdateTask = {
     title: '',
     description: '',
-    deadLine: '',
-    isImportant: false
+    priority: '',
+    status: '',
+    deadLine: ''
   };
-  private organizationId: any;
+
+  organizationId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -41,28 +42,27 @@ export class OrganizationTaskComponent {
     this.route.params.subscribe(params => {
       this.organizationId = params['organizationId'];
     });
-    this.loadTask()
+    this.loadTask();
   }
 
   loadTask(): void {
     this.updateTask.deadLine = this.formatDate(this.task.deadLine);
     this.updateTask.title = this.task.title;
-    this.updateTask.isImportant = this.task.isImportant;
+    this.updateTask.priority = this.task.priority || 'LOW';
+    this.updateTask.status = this.task.status || 'NEW';
     this.updateTask.description = this.task.description;
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: Date | string | undefined): string {
+    if (!date) return '';
     const d = new Date(date);
-    const year = d.getFullYear();
-    const month = (d.getMonth() + 1).toString().padStart(2, '0');
-    const day = d.getDate().toString().padStart(2, '0');
-    const hours = d.getHours().toString().padStart(2, '0');
-    const minutes = d.getMinutes().toString().padStart(2, '0');
-    return `${year}-${month}-${day}T${hours}:${minutes}.000Z`;
+    return d.toISOString();
   }
 
   onSubmit(): void {
-    this.updateTask.deadLine = this.formatDate(new Date(this.updateTask.deadLine));
+    if (this.updateTask.deadLine) {
+    this.updateTask.deadLine = this.formatDate(this.updateTask.deadLine);
+  }
     this.taskService.updateTask(this.task.id, this.updateTask).subscribe({
       next: () => {
         this.router.navigate([`organization/${this.organizationId}/tasks`]);
@@ -74,15 +74,11 @@ export class OrganizationTaskComponent {
     });
   }
 
-  onCancel() {
+  onCancel(): void {
     this.router.navigate([`organization/${this.organizationId}/tasks`]);
   }
 
-  onToggleDone() {
-    this.toggleDone.emit();
-  }
-
-  onDelete() {
+  onDelete(): void {
     this.delete.emit();
   }
 }

@@ -11,34 +11,52 @@
   </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="createTaskModalLabel">Create new task</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-circle"></i></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form (ngSubmit)="onSubmit()">
+          <!-- Title -->
           <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" [(ngModel)]="newTask.title" name="title" required>
           </div>
+
           <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" [(ngModel)]="newTask.description" name="description" required></textarea>
           </div>
+
           <div class="mb-3">
             <label for="deadline" class="form-label">Deadline</label>
             <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="newTask.deadLine" name="deadLine" required>
           </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="important" [(ngModel)]="newTask.isImportant" name="important">
-            <label class="form-check-label" for="important">Important</label>
+
+          <div class="mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-select" id="priority" [(ngModel)]="newTask.priority" name="priority" required>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
           </div>
+
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" [(ngModel)]="newTask.status" name="status" required>
+              <option value="NEW">New</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DONE">Completed</option>
+            </select>
+          </div>
+
+
           <div class="modal-footer">
-            <app-buttons [buttonType]="'normal'" [buttonText]="'Save Task'" [color]="'green'" data-bs-dismiss="modal" (click)="onSubmit()"></app-buttons>
+            <app-buttons [buttonType]="'normal'" [buttonText]="'Save Task'" [color]="'green'"  type="submit"></app-buttons>
             <app-buttons [buttonType]="'normal'" [buttonText]="'Cancel'" [color]="'red'" data-bs-dismiss="modal" (click)="onCancel()"></app-buttons>
           </div>
         </form>

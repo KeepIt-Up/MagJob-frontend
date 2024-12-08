@@ -1,26 +1,26 @@
 <div class="task-container">
   <h3 class="title">{{ task.title }}</h3>
   <p>{{ task.description }}</p>
-  <p>Created: {{ task.dateOfCreation   }}</p>
+  <p>Created: {{ task.dateOfCreation }}</p>
   <p>Deadline: {{ task.deadLine ? task.deadLine : 'unknown' }}</p>
-  <p *ngIf="task.isImportant" class="important">Important</p>
-  <p>Completed:  {{ task.isDone ? task.dateOfCompletion : 'Not yet'}}</p>
+  <p *ngIf="task.priority" class="important">{{task.priority}}</p>
+  <p>Status: {{ task.status}}</p>
+
   <div class="task-actions">
-    <app-buttons [buttonType]="'markAsDone'" [buttonText]="'Mark as done'" [disabled]="!task.isDone" [permission]="!permission" (click)="onToggleDone()"></app-buttons>
+    <app-buttons
+      [buttonType]="'edit-icon'"
+      [permission]="permission"
+      data-bs-toggle="modal"
+      data-bs-target="#updateTaskModal"
+      (click)="loadTask()">
+    </app-buttons>
 
-    <div class="d-flex justify-content-center align-items-center m-2">
-      <div *ngIf="task.id">
-        <app-buttons
-          [buttonType]="'edit-icon'"
-          [permission]="!permission"
-          data-bs-toggle="modal"
-          data-bs-target="#updateTaskModal"
-          (click)="loadTask()">
-        </app-buttons>
-      </div>
-    </div>
-
-    <app-buttons [buttonType]="'delete-icon'" [buttonText]="'Delete'" [permission]="!permission" (click)="onDelete()"></app-buttons>
+    <app-buttons
+      [buttonType]="'delete-icon'"
+      [buttonText]="'Delete'"
+      [permission]="permission"
+      (click)="onDelete()">
+    </app-buttons>
   </div>
 </div>
 
@@ -43,12 +43,24 @@
             <textarea class="form-control" id="description" [(ngModel)]="updateTask.description" name="description" required></textarea>
           </div>
           <div class="mb-3">
-            <label for="deadline" class="form-label">Deadline {{updateTask.deadLine}}</label>
-            <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="updateTask.deadLine" name="deadLine" required>
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-control" id="priority" [(ngModel)]="updateTask.priority" name="priority" required>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
           </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="important" [(ngModel)]="updateTask.isImportant" name="important">
-            <label class="form-check-label" for="important">Important</label>
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-control" id="status" [(ngModel)]="updateTask.status" name="status" required>
+              <option value="NEW">New</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DONE">Done</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="deadline" class="form-label">Deadline</label>
+            <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="updateTask.deadLine" name="deadLine" required>
           </div>
           <div class="modal-footer">
             <app-buttons [buttonType]="'normal'" [buttonText]="'Save Task'" [color]="'green'" data-bs-dismiss="modal" (click)="onSubmit()"></app-buttons>

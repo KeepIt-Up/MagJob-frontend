@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskService } from '../../../service/task-service.service';
-import { Task } from '../../../model/task';
+import {Task, UpdateTask} from '../../../model/task';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute} from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -29,7 +29,6 @@ export class OrganizationTasksComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
 
-  //organizationId!: number;
 
   filter = {
     deadlineDate: null,
@@ -38,6 +37,7 @@ export class OrganizationTasksComponent implements OnInit {
     isImportant: false
   };
   userID: string = '';
+  memberId: string = '';
 
   permission: boolean = false;
   role: RoleResponse | null = null;
@@ -45,57 +45,60 @@ export class OrganizationTasksComponent implements OnInit {
   routeSub?: Subscription;
 
   constructor(private taskService: TaskService,
-              private router: Router,
               private route: ActivatedRoute,
-              private authStateService: AuthStateService,
-              private roleService: RoleService,
-              private memberRoleService: MemberRoleService,
               private rolePermissionService: RolePermission
     ) {
   }
 
-  ngOnInit(): void {
-    this.routeSub = this.route.parent?.paramMap.subscribe({
-      next: (value) => {
-        const organizationId = value.get('organizationId');
-        if (organizationId !== null) {
-          this.organizationId = organizationId;
-        } else {
-          alert('Error while getting organizationId from route');
-        }
-      },
-      error: (err) =>
-      {
-        console.log(err)
-      }
-    });
-    this.loadTasks();
-    this.checkPermission()
+  async ngOnInit(): Promise<void> {
+    try {
+      this.routeSub = this.route.parent?.paramMap.subscribe({
+        next: (value) => {
+          const organizationId = value.get('organizationId');
+          if (organizationId !== null) {
+            this.organizationId = organizationId;
+          } else {
+            alert('Error while getting organizationId from route');
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+
+      await this.checkPermission();
+
+      this.loadTasks();
+    } catch (error) {
+      console.error('Error during initialization:', error);
+    }
   }
 
-  async checkPermission() {
-    this.userID = this.rolePermissionService.getUserID();
-    this.permission = await this.rolePermissionService.getUserPermissions('Task', this.organizationId);
+  async checkPermission(): Promise<void> {
+    try {
+      this.userID = this.rolePermissionService.getUserID();
+
+      this.memberId = await this.rolePermissionService.getMemberID(this.organizationId);
+
+      this.permission = await this.rolePermissionService.getUserPermissions('Task', this.organizationId);
+    } catch (error) {
+      console.error('Error in checkPermission:', error);
+    }
   }
 
 
   loadTasks(): void {
-    this.taskService.getTasks().pipe(
-      concatMap(response => {
-        const taskDetails$ = response.tasks.map(task => this.taskService.getTask(task.id));
-        return forkJoin(taskDetails$);
-      }),
-      toArray()
-    ).subscribe({
-      next: (tasks) => {
-        this.tasks = tasks[0];
-        this.filteredTasks = tasks[0];
+    this.taskService.getTasksByOrganization(this.organizationId).subscribe({
+      next: (tasks: any) => {
+        this.tasks = tasks.tasks;
+        this.filteredTasks = tasks.tasks;
       },
       error: (error: any) => {
         console.error('Error loading tasks:', error);
       },
     });
   }
+
 
   filterTasks(): void {
     this.filteredTasks = this.tasks.filter(task => {
@@ -104,36 +107,21 @@ export class OrganizationTasksComponent implements OnInit {
       let matchesImportantFilter = true;
 
       if (this.filter.deadlineDate) {
-        matchesDeadlineFilter = new Date(task.deadLine) > new Date(this.filter.deadlineDate);
+        matchesDeadlineFilter = new Date(task.deadLine) >= new Date(this.filter.deadlineDate);
       }
 
       if (this.filter.completed && !this.filter.notCompleted) {
-        matchesCompletionFilter = task.isDone;
+        matchesCompletionFilter = task.status === 'DONE';
       } else if (!this.filter.completed && this.filter.notCompleted) {
-        matchesCompletionFilter = !task.isDone;
+        matchesCompletionFilter = task.status !== 'DONE';
       }
 
       if (this.filter.isImportant) {
-        matchesImportantFilter = task.isImportant;
+        matchesImportantFilter = task.priority === 'HIGH';
       }
 
       return matchesDeadlineFilter && matchesCompletionFilter && matchesImportantFilter;
     });
-  }
-
-  toggleIsDone(task: Task): void {
-    if (task.isDone === false) {
-      task.isDone = !task.isDone;
-      this.taskService.completeTask(task.id).subscribe(
-        () => {
-          this.filterTasks();
-        },
-        (error: any) => {
-          console.error('Error updating task:', error);
-        }
-      );
-    } else {
-    }
   }
 
   deleteTask(id: number): void {

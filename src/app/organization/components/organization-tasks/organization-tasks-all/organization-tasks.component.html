@@ -1,13 +1,4 @@
-<!--<div *ngIf="userID !== 'Member'">-->
-<!--  <button (click)="navigateToCreateTask()">Create Task</button>-->
-<!--</div>-->
-
-<!--<div *ngIf="userID === 'Member'" class="tooltip-container">-->
-<!--  <button disabled class="disabled-button" (click)="navigateToCreateTask() ">Create Task</button>-->
-<!--  <span class="tooltip-text">Nie masz uprawnień</span>-->
-<!--</div>-->
-
-<app-organization-tasks-create [userID]="userID"></app-organization-tasks-create>
+<app-organization-tasks-create [userID]="userID" [organizationId]="organizationId"></app-organization-tasks-create>
 
 <p></p>
 <h2>FILTERS</h2>
@@ -23,7 +14,7 @@
   <input type="checkbox" [(ngModel)]="filter.notCompleted" (change)="filterTasks()"> Not Completed
 </label>
 <label>
-  <input type="checkbox" [(ngModel)]="filter.isImportant" (change)="filterTasks()"> Important
+  <input type="checkbox" [(ngModel)]="filter.isImportant" (change)="filterTasks()"> High Priority
 </label>
 
 <p></p>
@@ -37,7 +28,6 @@
     <app-organization-task
       [task]="task"
       [permission]="permission"
-      (toggleDone)="toggleIsDone(task)"
       (delete)="deleteTask(task.id)">
     </app-organization-task>
   </div>
