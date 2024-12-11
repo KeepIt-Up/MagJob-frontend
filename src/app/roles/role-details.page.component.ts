@@ -64,7 +64,6 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
   state$ = this.roleService.listState$;
 
   ngOnInit(): void {
-    console.log(this.roleId);
     if (this.roleId) {
       this.roleService.getById(this.roleId);
     }
@@ -73,7 +72,6 @@ export class RoleDetailsComponent implements OnInit, OnDestroy {
         console.log(state2)
         if (state2.state == LIST_STATE_VALUE.SUCCESS) {
           this.role = state2.results.find((role) => role.id.toString() === this.roleId);
-          console.log(this.role)
         }
         else
         {

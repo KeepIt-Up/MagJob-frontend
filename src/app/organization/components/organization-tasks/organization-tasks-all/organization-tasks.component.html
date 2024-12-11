@@ -1,0 +1,37 @@
+<app-organization-tasks-create [userID]="userID" [organizationId]="organizationId"></app-organization-tasks-create>
+
+<p></p>
+<h2>FILTERS</h2>
+<p></p>
+
+<h4>Deadline</h4>
+<input type="date" class="form-control" [(ngModel)]="filter.deadlineDate" (change)="filterTasks()" />
+
+<label>
+  <input type="checkbox" [(ngModel)]="filter.completed" (change)="filterTasks()"> Completed
+</label>
+<label>
+  <input type="checkbox" [(ngModel)]="filter.notCompleted" (change)="filterTasks()"> Not Completed
+</label>
+<label>
+  <input type="checkbox" [(ngModel)]="filter.isImportant" (change)="filterTasks()"> High Priority
+</label>
+
+<p></p>
+<h2>TASKS</h2>
+<p></p>
+
+
+
+<ng-template class="main-tasks" [ngIf]="filteredTasks && filteredTasks.length > 0" [ngIfElse]="noTasks">
+  <div *ngFor="let task of filteredTasks" class="task-container">
+    <app-organization-task
+      [task]="task"
+      [permission]="permission"
+      (delete)="deleteTask(task.id)">
+    </app-organization-task>
+  </div>
+</ng-template>
+<ng-template #noTasks>
+  <p class="no-tasks">No tasks available.</p>
+</ng-template>

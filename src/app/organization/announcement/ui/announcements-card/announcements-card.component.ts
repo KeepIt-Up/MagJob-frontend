@@ -11,6 +11,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AnnouncementCreateForm, AnnouncementCreatePayload, AnnouncementUpdatePayload } from '../../model/announcement';
+import {RolePermission} from "../../../../auth/service/role.permission";
 
 
 @Component({
@@ -24,6 +25,7 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
   @Input({ required: true }) organizationId!: string;
   @Input() id!: Signal<string>;
   private announcementService = inject(AnnouncementService);
+  private rolePermission = inject(RolePermission);
   private formBuilder = inject(NonNullableFormBuilder);
   private route = inject(ActivatedRoute);
 
@@ -38,7 +40,9 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
     dateOfExpiration: this.formBuilder.control<Date>(new Date(), Validators.required),
   });
 
-  
+  permission: boolean = false;
+
+
   ngOnInit() {
     this.routeSub = this.route.parent?.paramMap.subscribe({
       next: (value) => {
@@ -54,7 +58,12 @@ export class AnnouncementsCardComponent implements OnInit, OnDestroy {
           console.log(err)
         }
     });
+    this.checkPermission();
     this.announcementService.getAllByOrganizationId(this.organizationId);
+  }
+
+  async checkPermission() {
+    this.permission = await this.rolePermission.getUserPermissions('Announcement', this.organizationId);
   }
 
   ngOnDestroy(): void {

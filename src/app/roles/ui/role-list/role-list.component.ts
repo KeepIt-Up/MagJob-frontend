@@ -4,7 +4,7 @@ import { RoleListItemComponent } from '../role-list-item/role-list-item.componen
 import { RouterLink } from '@angular/router';
 import { RoleService } from '../../service/role.service';
 import { LIST_STATE_VALUE } from '../../utils/list-state.type';
-import { RoleCreatePayload } from '../../model/role-create-payload';
+import { RoleCreatePayload } from '../../model/role';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class RoleListComponent implements OnInit, OnChanges {
     this.getAllRoles();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    
+
   }
 
   getAllRoles(): void {
@@ -33,7 +33,6 @@ export class RoleListComponent implements OnInit, OnChanges {
   }
 
   createRole(name: string) {
-    console.log(name);
     this.roleService.create({name: name, organization: 5} as RoleCreatePayload)
   }
 

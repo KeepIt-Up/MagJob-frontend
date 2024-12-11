@@ -1,0 +1,73 @@
+<div class="task-container">
+  <h3 class="title">{{ task.title }}</h3>
+  <p>{{ task.description }}</p>
+  <p>Created: {{ task.dateOfCreation }}</p>
+  <p>Deadline: {{ task.deadLine ? task.deadLine : 'unknown' }}</p>
+  <p *ngIf="task.priority" class="important">{{task.priority}}</p>
+  <p>Status: {{ task.status}}</p>
+
+  <div class="task-actions">
+    <app-buttons
+      [buttonType]="'edit-icon'"
+      [permission]="permission"
+      data-bs-toggle="modal"
+      data-bs-target="#updateTaskModal"
+      (click)="loadTask()">
+    </app-buttons>
+
+    <app-buttons
+      [buttonType]="'delete-icon'"
+      [buttonText]="'Delete'"
+      [permission]="permission"
+      (click)="onDelete()">
+    </app-buttons>
+  </div>
+</div>
+
+<!-- Update Task Modal -->
+<div class="modal fade" id="updateTaskModal" tabindex="-1" aria-labelledby="updateTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateTaskModalLabel">Update Task</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" [(ngModel)]="updateTask.title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" [(ngModel)]="updateTask.description" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-control" id="priority" [(ngModel)]="updateTask.priority" name="priority" required>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-control" id="status" [(ngModel)]="updateTask.status" name="status" required>
+              <option value="NEW">New</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DONE">Done</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="deadline" class="form-label">Deadline</label>
+            <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="updateTask.deadLine" name="deadLine" required>
+          </div>
+          <div class="modal-footer">
+            <app-buttons [buttonType]="'normal'" [buttonText]="'Save Task'" [color]="'green'" data-bs-dismiss="modal" (click)="onSubmit()"></app-buttons>
+            <app-buttons [buttonType]="'normal'" [buttonText]="'Cancel'" [color]="'red'" data-bs-dismiss="modal" (click)="onCancel()"></app-buttons>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

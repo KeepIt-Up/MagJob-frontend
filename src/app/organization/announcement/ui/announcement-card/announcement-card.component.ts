@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Announcement, AnnouncementUpdateForm, AnnouncementUpdateFormValue } from '../../model/announcement';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+import {RolePermission} from "../../../../auth/service/role.permission";
 
 @Component({
   selector: 'app-announcement-card',
@@ -12,12 +15,18 @@ import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class AnnouncementCardComponent implements OnInit, OnChanges{
   @Input({required: true}) announcement!: Announcement;
+  @Input() organizationId!: string;
   @Output() delete = new EventEmitter<string>();
   @Output() update = new EventEmitter<{id: string, title: string, content: string}>();
 
   private formBuilder = inject(NonNullableFormBuilder);
+  private rolePermission = inject(RolePermission);
+  private route = inject(ActivatedRoute);
 
   isEditMode: boolean = false;
+  permission: boolean = false;
+
+  routeSub?: Subscription;
 
   announcementUpdateForm: AnnouncementUpdateForm = this.formBuilder.group({
     title: this.formBuilder.control<string>(""),
@@ -25,7 +34,26 @@ export class AnnouncementCardComponent implements OnInit, OnChanges{
   });
 
   ngOnInit(): void {
+    this.routeSub = this.route.parent?.paramMap.subscribe({
+      next: (value) => {
+        const organizationId = value.get('organizationId');
+        if (organizationId !== null) {
+          this.organizationId = organizationId;
+        } else {
+          alert('Error while getting organizationId from route');
+        }
+      },
+      error: (err) =>
+      {
+        console.log(err)
+      }
+    });
+    this.checkPermission();
     this.initFormValue();
+  }
+
+  async checkPermission() {
+    this.permission = await this.rolePermission.getUserPermissions('Announcement', this.organizationId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

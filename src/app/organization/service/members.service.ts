@@ -15,4 +15,10 @@ export class MembersService {
       { observe: 'response' }
     );
   }
+
+  getMemberById(memberId: string) {
+    return this._httpClient.get<any>(`api/members/${memberId}`, {
+      observe: 'response',
+    });
+  }
 }

@@ -1,0 +1,65 @@
+/* Ogólne style dla wszystkich przycisków */
+button {
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: inline-block;
+  margin: 5px;
+}
+
+
+/* Styl dla zwykłego przycisku */
+.normal .enabled-button {
+  background-color: #606560;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.normal .enabled-button:hover {
+  background-color: #393a39;
+}
+
+.normal .disabled-button {
+  background-color: grey;
+  color: white;
+  border: none;
+  cursor: not-allowed;
+}
+
+/* Styl dla przycisku delete */
+
+
+/* Styl dla przycisku edit */
+
+/* Styl dla przycisku mark as done */
+
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.6s;
+  white-space: nowrap;
+  top: 100%; /* Tooltip below the button */
+  margin-top: 5px; /* Space between button and tooltip */
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+

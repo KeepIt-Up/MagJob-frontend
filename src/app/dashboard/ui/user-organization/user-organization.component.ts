@@ -37,7 +37,6 @@ export class UserOrganizationComponent implements OnInit, OnDestroy {
 
     this.organizationSub = this.organizationService.getAllByUserId(this.userId!).subscribe({
       next: (response) => {
-        console.log(response)
         this.componentState = { state: 'get-success', result: response.organizations};
       },
       error: (err) => {

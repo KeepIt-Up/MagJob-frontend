@@ -2,33 +2,32 @@
   <div class="d-flex justify-content-between">
     <h2>Members List</h2>
     <div>
-      <button class="btn btn-outline-warning m-1" [routerLink]="['../addMembers']">Add New</button>
+      <button *ngIf="permission" class="btn btn-outline-warning m-1" [routerLink]="['../addMembers']">Add New</button>
     </div>
   </div>
   <table class="table table-dark table-hover">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Pseudonym</th>
-        <th scope="col"></th>
-      </tr>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Pseudonym</th>
+      <th scope="col"></th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let member of members">
-        <th scope="row">1</th>
-        <td>{{member.firstName}}</td>
-        <td>{{member.lastName}}</td>
-        <td>{{member.pseudonym}}</td>
-        <td>
-          <div class="d-flex justify-content-end">
-            <app-edit-member [member]="member" (requestMemberUpdate)="this.updateMember($event)"/>
-            <app-delete-members [member]="member" (requestListRefreshEvent)="this.loadMembers(this.organizationId!)"/> 
-          </div>
-            
-        </td>
-      </tr>
+    <tr *ngFor="let member of members; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{member.firstName}}</td>
+      <td>{{member.lastName}}</td>
+      <td>{{member.pseudonym}}</td>
+      <td>
+        <div class="d-flex justify-content-end">
+          <app-edit-member *ngIf="permission" [member]="member" (requestMemberUpdate)="updateMember($event)"></app-edit-member>
+          <app-delete-members *ngIf="permission" [member]="member" (requestListRefreshEvent)="loadMembers(organizationId!)"></app-delete-members>
+        </div>
+      </td>
+    </tr>
     </tbody>
   </table>
 </div>

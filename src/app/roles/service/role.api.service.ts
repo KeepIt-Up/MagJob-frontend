@@ -1,8 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Role } from '../model/role';
-import { RoleUpdatePayload } from '../model/role-update-payload';
-import { RoleCreatePayload } from '../model/role-create-payload';
+import { Role, RoleUpdatePayload, RoleCreatePayload } from '../model/role';
 import { FetchingError } from '../utils/list-state.type';
 import { EMPTY, Observable, catchError, tap } from 'rxjs';
 
@@ -75,4 +73,19 @@ export class RoleApiService {
       this._http.delete<any>(`${this.apiEndpoint}/${roleId}`)
     );
   }
+
+  getRolesByOrganization(organizationId: string, pageNumber: number = 0, pageSize: number = 10): Observable<any> {
+    return this.withLoadingState(
+      this._http.get<any>(
+        `api/organizations/${organizationId}/roles`,
+        {
+          params: {
+            'page-number': pageNumber.toString(),
+            'page-size': pageSize.toString()
+          }
+        }
+      )
+    );
+  }
+
 }

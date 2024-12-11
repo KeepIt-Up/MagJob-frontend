@@ -48,7 +48,6 @@ export class OrganizationCreationComponent {
             this.organizationModel.userId = state.user.id;
             this.organizationService.create(this.organizationModel).subscribe({
               next:(response) => {
-                console.log('Organization created successfully:', response);
                 this.oauthService.silentRefresh();
                 this.organizationService.setCurrentOrganizationId(response);
                 this.router.navigate(['/organization/'+response.id+'/addMembers']);

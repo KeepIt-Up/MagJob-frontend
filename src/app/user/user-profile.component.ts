@@ -70,11 +70,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   submitChanges(): void {
     this.userService.updateUserData(this.userId, this.userForm.value).subscribe(response => {
-      console.log('User updated successfully', response);
       this.userForm.reset(this.userForm.value);
     }
     )
   }
 
-  
+
 }
