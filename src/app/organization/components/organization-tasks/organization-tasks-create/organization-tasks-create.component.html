@@ -4,7 +4,8 @@
       [buttonType]="'normal'"
       [buttonText]="'Create Task'"
       [color]="'yellow'"
-      [disabled]="userID === 'Member'"
+      [disabled]="!permission"
+      *ngIf="permission"
       data-bs-toggle="modal"
       data-bs-target="#createTaskModal">
     </app-buttons>

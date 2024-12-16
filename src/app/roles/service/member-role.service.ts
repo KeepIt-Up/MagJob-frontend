@@ -73,7 +73,7 @@ export class MemberRoleService {
   }
 
   // Get role members by member ID
-  getRoleMembersByMemberId(memberId: string): Observable<MemberRole[]> {
+  getRoleMembersByMemberId(memberId: string): Observable<any> {
     return this.httpService.getAllFromMember(memberId).pipe(
       tap((response) => {
         if (response.body) {

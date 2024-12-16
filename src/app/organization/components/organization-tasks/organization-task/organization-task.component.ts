@@ -5,6 +5,8 @@ import { NgIf } from "@angular/common";
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../../service/task-service.service';
 import { FormsModule } from "@angular/forms";
+import {RolePermission} from "../../../../auth/service/role.permission";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-organization-task',
@@ -31,18 +33,37 @@ export class OrganizationTaskComponent implements OnInit{
   };
 
   organizationId: string = '';
+  routeSub?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private rolePermissionService: RolePermission
   ) {}
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.organizationId = params['organizationId'];
-    });
-    this.loadTask();
+  async ngOnInit(): Promise<void> {
+    try {
+      this.routeSub = this.route.parent?.paramMap.subscribe({
+        next: (value) => {
+          const organizationId = value.get('organizationId');
+          if (organizationId !== null) {
+            this.organizationId = organizationId;
+          } else {
+            alert('Error while getting organizationId from route');
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+
+      await this.checkPermission();
+
+      this.loadTask();
+    } catch (error) {
+      console.error('Error during initialization:', error);
+    }
   }
 
   loadTask(): void {
@@ -51,6 +72,14 @@ export class OrganizationTaskComponent implements OnInit{
     this.updateTask.priority = this.task.priority || 'LOW';
     this.updateTask.status = this.task.status || 'NEW';
     this.updateTask.description = this.task.description;
+  }
+
+  async checkPermission(): Promise<void> {
+    try {
+      this.permission = await this.rolePermissionService.getUserPermissions('Role', this.organizationId);
+    } catch (error) {
+      console.error('Error in checkPermission:', error);
+    }
   }
 
   formatDate(date: Date | string | undefined): string {

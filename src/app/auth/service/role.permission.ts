@@ -1,11 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {OAuthService, } from 'angular-oauth2-oidc';
-import {catchError, first, firstValueFrom, forkJoin, map, mergeMap, Observable, of} from 'rxjs';
+import { firstValueFrom} from 'rxjs';
 import {MemberRoleService} from "../../roles/service/member-role.service";
 import {RoleService} from "../../roles/service/role.service";
 import {MembersService} from "../../organization/service/members.service";
 import {RoleResponse} from "../../roles/model/role";
-import {MemberRole, MemberRoleResponse} from "../../roles/model/member-role";
 
 
 
@@ -53,57 +52,27 @@ export class RolePermission {
     });
   }
 
-
   async getUserPermissions(question: string, organizationID: string): Promise<boolean> {
     try {
-      const member = await this.getMemberID(organizationID);
-      if (!member) {
+      const memberId = await this.getMemberID(organizationID);
+      if (!memberId) {
         console.log('No matching member found. Permissions cannot be checked.');
         return false;
       }
 
-      const matchingRoleId = await this.roleService
-        .getRolesByOrganization(organizationID)
-        .pipe(
-          mergeMap((response: any) => {
-            if (!response?.roles || !Array.isArray(response.roles)) {
-              console.log('Invalid roles response structure.');
-              return [];
-            }
-            return response.roles;
-          }),
-          mergeMap((role: any) =>
-            this.memberRoleService.getRoleMembersByRoleId(role.id).pipe(
-              mergeMap((memberRoles: any) => {
-                if (!memberRoles.roleMembers || memberRoles.roleMembers.length === 0) {
-                  return [];
-                }
-                return memberRoles.roleMembers;
-              }),
-              mergeMap((roleMember: any) =>
-                this.memberRoleService.getMemberRoleById(roleMember.id).pipe(
-                  map((detailedRoleMember: any) => ({
-                    detailedRoleMember,
-                    roleId: role.id,
-                  }))
-                )
-              )
-            )
-          ),
-          first(
-            ({ detailedRoleMember }) => detailedRoleMember.member.id === member,
-            null
-          ),
-          map((match: any) => (match ? match.roleId : null))
-        )
-        .toPromise();
+      const roleMembersResponse = await firstValueFrom(
+        this.memberRoleService.getRoleMembersByMemberId(memberId)
+      );
 
-      if (!matchingRoleId) {
-        console.log('No matching role found. Permissions cannot be checked.');
+      const matchingRole = roleMembersResponse?.roleMembers?.find(
+        (roleMember: any) => roleMember.memberId === memberId
+      );
+
+      if (!matchingRole?.roleId) {
         return false;
       }
 
-      const role = await this.getRole(matchingRoleId);
+      const role = await this.getRole(matchingRole.roleId);
       if (!role) {
         console.log('Role not found. Permissions cannot be checked.');
         return false;
@@ -141,7 +110,4 @@ export class RolePermission {
         return false;
     }
   }
-
-
-
 }

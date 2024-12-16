@@ -9,7 +9,8 @@
   <div class="task-actions">
     <app-buttons
       [buttonType]="'edit-icon'"
-      [permission]="permission"
+      [permission]="!permission"
+      [disabled]="permission"
       data-bs-toggle="modal"
       data-bs-target="#updateTaskModal"
       (click)="loadTask()">
@@ -18,7 +19,8 @@
     <app-buttons
       [buttonType]="'delete-icon'"
       [buttonText]="'Delete'"
-      [permission]="permission"
+      [permission]="!permission"
+      [disabled]="permission"
       (click)="onDelete()">
     </app-buttons>
   </div>
@@ -43,6 +45,10 @@
             <textarea class="form-control" id="description" [(ngModel)]="updateTask.description" name="description" required></textarea>
           </div>
           <div class="mb-3">
+            <label for="deadline" class="form-label">Deadline</label>
+            <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="updateTask.deadLine" name="deadLine" required>
+          </div>
+          <div class="mb-3">
             <label for="priority" class="form-label">Priority</label>
             <select class="form-control" id="priority" [(ngModel)]="updateTask.priority" name="priority" required>
               <option value="LOW">Low</option>
@@ -57,10 +63,6 @@
               <option value="IN_PROGRESS">In Progress</option>
               <option value="DONE">Done</option>
             </select>
-          </div>
-          <div class="mb-3">
-            <label for="deadline" class="form-label">Deadline</label>
-            <input type="datetime-local" class="form-control" id="deadline" [(ngModel)]="updateTask.deadLine" name="deadLine" required>
           </div>
           <div class="modal-footer">
             <app-buttons [buttonType]="'normal'" [buttonText]="'Save Task'" [color]="'green'" data-bs-dismiss="modal" (click)="onSubmit()"></app-buttons>

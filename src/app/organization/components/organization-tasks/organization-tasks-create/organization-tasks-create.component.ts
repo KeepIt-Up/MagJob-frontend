@@ -21,6 +21,9 @@ import {RolePermission} from "../../../../auth/service/role.permission";
 export class OrganizationTasksCreateComponent implements OnInit {
   @Input() userID: string = '';
   @Input() organizationId: string = '';
+  memberId: string = '';
+
+  permission: boolean = false;
 
   newTask: CreateTask = {
     title: '',
@@ -34,19 +37,25 @@ export class OrganizationTasksCreateComponent implements OnInit {
 
   constructor(private taskService: TaskService, private router: Router, private route: ActivatedRoute, private rolePermissionService: RolePermission) {}
 
-  ngOnInit(): void {
-    this.rolePermissionService.getMemberID(this.organizationId)
-      .then(userID => {
-        this.userID = userID;
-      })
-      .catch(error => {
-        console.error('Error fetching member ID:', error);
-      });
+  async ngOnInit(): Promise<void>  {
+    await this.checkPermission();
+  }
+
+  async checkPermission(): Promise<void> {
+    try {
+      this.permission = await this.rolePermissionService.getUserPermissions('Role', this.organizationId);
+
+      this.memberId = await this.rolePermissionService.getMemberID(this.organizationId);
+    } catch (error) {
+      console.error('Error in checkPermission:', error);
+    }
   }
 
   onSubmit(): void {
     this.newTask.organization = Number(this.organizationId);
-    this.newTask.creator = Number(this.userID);
+    console.log(this.organizationId)
+    this.newTask.creator = Number(this.memberId);
+    console.log(this.memberId)
 
     this.newTask.deadLine = this.getFormattedDeadline(new Date(this.newTask.deadLine));
 

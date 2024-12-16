@@ -2,7 +2,7 @@
 
     <h6 class="text-uppercase fw-medium text-truncate text-muted">Organization</h6>
     <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Przegląd</button>
-    <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="['roles']" [routerLinkActive]="['btn-primary','text-light']">Role</button>
+    <button *ngIf="permission" class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="['roles']" [routerLinkActive]="['btn-primary','text-light']">Role</button>
     <button class="text-truncate rounded p-1 px-2 fw-medium text-start btn btn-outline-secondary" [routerLink]="" [routerLinkActive]="['btn-primary','text-light']">Szablon organizacji</button>
 
     <div class="border my-2 w-100 rounded"></div>
